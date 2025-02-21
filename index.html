@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Coming Soon | Rohith V</title>
+    <title>Coming Soon</title>
     
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
@@ -15,91 +15,58 @@
     <script src="https://cdn.tailwindcss.com"></script>
 
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
         body {
             font-family: 'Poppins', sans-serif;
-            background: url('https://source.unsplash.com/1920x1080/?abstract,tech') no-repeat center center/cover;
-            background-attachment: fixed;
+            background: linear-gradient(135deg, #1e3c72, #2a5298);
             color: white;
-            overflow: hidden;
-            height: 100vh;
+            text-align: center;
             display: flex;
             justify-content: center;
             align-items: center;
-            text-align: center;
+            height: 100vh;
+            margin: 0;
         }
 
-        .glass-container {
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(10px);
-            padding: 40px;
-            border-radius: 20px;
-            box-shadow: 0 0 15px rgba(255, 255, 255, 0.2);
-            width: 90%;
+        .container {
             max-width: 600px;
-            transition: all 0.3s ease;
+            padding: 20px;
         }
 
         h1 {
             font-size: 2.5rem;
             font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 3px;
-            margin-bottom: 10px;
-            text-shadow: 0 0 10px rgba(255, 255, 255, 0.7);
         }
 
         p {
             font-size: 1.2rem;
-            font-weight: 300;
-            margin-bottom: 20px;
-        }
-
-        .social-icons {
-            margin-top: 20px;
+            margin-top: 10px;
         }
 
         .social-icons a {
             margin: 10px;
             color: white;
-            font-size: 1.8rem;
-            transition: transform 0.3s ease, color 0.3s ease;
+            font-size: 1.5rem;
+            transition: transform 0.3s ease;
         }
 
         .social-icons a:hover {
             transform: scale(1.2);
             color: #00ffcc;
         }
-
-        /* Animation */
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(-10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .glass-container {
-            animation: fadeIn 1.5s ease-in-out;
-        }
-
     </style>
 </head>
 <body>
 
-    <div class="glass-container">
+    <div class="container">
         <h1>Coming Soon...</h1>
-        <p>Something amazing is in the works. Stay tuned!</p>
+        <p>We are working on something amazing. Stay tuned!</p>
 
         <!-- Social Media Links -->
-        <div class="social-icons">
+        <div class="social-icons mt-6">
             <a href="#"><i class="fab fa-github"></i></a>
             <a href="#"><i class="fab fa-twitter"></i></a>
             <a href="#"><i class="fab fa-linkedin"></i></a>
-            <a href="#"><i class="fab fa-dribbble"></i></a>
+            <a href="#"><i class="fab fa-instagram"></i></a>
         </div>
     </div>
 
