@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Coming Soon</title>
-    
+    <title>Rohith Varma Vegesna | Software Engineer</title>
+
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
     
@@ -15,40 +15,66 @@
     <script src="https://cdn.tailwindcss.com"></script>
 
     <style>
-        body {
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { 
             font-family: 'Poppins', sans-serif;
             background: linear-gradient(135deg, #1e3c72, #2a5298);
             color: white;
             text-align: center;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
         }
-
         .container {
-            max-width: 600px;
-            padding: 20px;
+            max-width: 800px;
+            margin: auto;
+            padding: 40px;
         }
-
+        .profile-pic {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            margin: 20px auto;
+            border: 5px solid white;
+        }
         h1 {
             font-size: 2.5rem;
-            font-weight: 600;
+            font-weight: bold;
+            text-transform: uppercase;
         }
-
         p {
             font-size: 1.2rem;
             margin-top: 10px;
         }
-
+        .section {
+            margin-top: 40px;
+            padding: 20px;
+            border-radius: 15px;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 0 15px rgba(255, 255, 255, 0.2);
+        }
+        .skills {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        .skills div {
+            margin: 10px;
+            padding: 10px 20px;
+            border-radius: 5px;
+            background: rgba(255, 255, 255, 0.2);
+        }
+        .experience {
+            text-align: left;
+            margin-top: 20px;
+        }
+        .experience h3 {
+            margin-top: 10px;
+        }
         .social-icons a {
             margin: 10px;
             color: white;
             font-size: 1.5rem;
             transition: transform 0.3s ease;
         }
-
         .social-icons a:hover {
             transform: scale(1.2);
             color: #00ffcc;
@@ -58,15 +84,60 @@
 <body>
 
     <div class="container">
-        <h1>Coming Soon...</h1>
-        <p>We are working on something amazing. Stay tuned!</p>
+        <!-- Profile -->
+        <img src="https://via.placeholder.com/150" alt="Profile Picture" class="profile-pic">
+        <h1>Rohith Varma Vegesna</h1>
+        <p>Software Engineer | Full Stack Developer | Java, React, AWS</p>
 
-        <!-- Social Media Links -->
-        <div class="social-icons mt-6">
+        <!-- Skills -->
+        <div class="section">
+            <h2>Technical Skills</h2>
+            <div class="skills">
+                <div>Java</div>
+                <div>Spring</div>
+                <div>Node.js</div>
+                <div>React.js</div>
+                <div>MongoDB</div>
+                <div>MySQL</div>
+                <div>AWS Lambda</div>
+                <div>Docker</div>
+                <div>Jenkins</div>
+                <div>Kafka</div>
+            </div>
+        </div>
+
+        <!-- Experience -->
+        <div class="section experience">
+            <h2>Experience</h2>
+            
+            <h3>7-Eleven, Texas (Nov 2021 - Present)</h3>
+            <p>- Designed and developed transactional state machines using Java Spring.</p>
+            <p>- Developed a React web portal for fuel controller settings.</p>
+            <p>- Implemented AWS Lambda functions for NoSQL database transactions.</p>
+            
+            <h3>IntelliSoft Technologies, Texas (June 2020 - Nov 2021)</h3>
+            <p>- Developed EMV transaction system for fuel dispensers.</p>
+            <p>- Built a fuel simulator using Python for dispenser testing.</p>
+            
+            <h3>Matrix Resources, Texas (Oct 2019 - May 2020)</h3>
+            <p>- Designed carwash sale integration for fuel transactions.</p>
+            
+            <h3>Revaalo, Bangalore, India (May 2017 - Mar 2018)</h3>
+            <p>- Developed Smart Factory automation software for ABB.</p>
+        </div>
+
+        <!-- Contact -->
+        <div class="section">
+            <h2>Contact</h2>
+            <p>Email: <a href="mailto:rohithvegesna@gmail.com" style="color: #00ffcc;">rohithvegesna@gmail.com</a></p>
+            <p>Phone: <a href="tel:+15154416429" style="color: #00ffcc;">+1 515-441-6429</a></p>
+        </div>
+
+        <!-- Social Media -->
+        <div class="social-icons">
             <a href="#"><i class="fab fa-github"></i></a>
-            <a href="#"><i class="fab fa-twitter"></i></a>
             <a href="#"><i class="fab fa-linkedin"></i></a>
-            <a href="#"><i class="fab fa-instagram"></i></a>
+            <a href="#"><i class="fab fa-twitter"></i></a>
         </div>
     </div>
 
