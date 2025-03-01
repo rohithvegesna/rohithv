@@ -37,7 +37,7 @@
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
     />
-    <!-- Google Fonts: Poppins (matches rohithv.me) -->
+    <!-- Google Fonts: Poppins -->
     <link
       href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap"
       rel="stylesheet"
@@ -47,7 +47,7 @@
       rel="stylesheet"
       href="https://unpkg.com/locomotive-scroll@4.1.4/dist/locomotive-scroll.min.css"
     />
-    <!-- Google Analytics with Your ID -->
+    <!-- Google Analytics -->
     <script
       async
       src="https://www.googletagmanager.com/gtag/js?id=G-FET9JB3RQT"
@@ -313,100 +313,7 @@
     <section id="publications" class="section" data-scroll>
       <div class="max-w-4xl mx-auto px-4">
         <h2 class="section-title">Publications</h2>
-        <div class="grid-container">
-          <div class="card">
-            <h3 class="text-xl font-semibold text-white mb-2">
-              "Creating Software for Real-Time Visualization of ATG Data"
-            </h3>
-            <p class="text-gray-300 mt-2">
-              Develops software for real-time ATG data visualization, improving
-              monitoring and decision-making.
-            </p>
-            <a
-              href="https://doi.org/10.5281/zenodo.14880968"
-              target="_blank"
-              class="cite-button"
-              >Cite</a
-            >
-          </div>
-          <div class="card">
-            <h3 class="text-xl font-semibold text-white mb-2">
-              "Developing a Microservices Architecture for Fuel Station
-              Monitoring Systems Using AWS Lambda"
-            </h3>
-            <p class="text-gray-300 mt-2">
-              Presents a microservices architecture using AWS Lambda for fuel
-              station monitoring.
-            </p>
-            <a
-              href="https://doi.org/10.5281/zenodo.14880923"
-              target="_blank"
-              class="cite-button"
-              >Cite</a
-            >
-          </div>
-          <div class="card">
-            <h3 class="text-xl font-semibold text-white mb-2">
-              "Scalable Cloud Solutions for Multi-Station Fuel Data Aggregation"
-            </h3>
-            <p class="text-gray-300 mt-2">
-              Explores scalable cloud-based architectures using ECS and load
-              balancers for fuel station data management.
-            </p>
-            <a
-              href="https://doi.org/10.5281/zenodo.14880890"
-              target="_blank"
-              class="cite-button"
-              >Cite</a
-            >
-          </div>
-          <div class="card">
-            <h3 class="text-xl font-semibold text-white mb-2">
-              "Reducing Latency in Cloud-Based Fuel Monitoring Systems"
-            </h3>
-            <p class="text-gray-300 mt-2">
-              Introduces an integrated approach to reduce latency in cloud-based
-              fuel monitoring using edge processing.
-            </p>
-            <a
-              href="https://doi.org/10.5281/zenodo.14905652"
-              target="_blank"
-              class="cite-button"
-              >Cite</a
-            >
-          </div>
-          <div class="card">
-            <h3 class="text-xl font-semibold text-white mb-2">
-              "Software-Driven Automated Leak Detection in Fuel Storage Tanks"
-            </h3>
-            <p class="text-gray-300 mt-2">
-              Presents a software solution using Redis and AWS Lambda for
-              real-time fuel tank leak detection.
-            </p>
-            <a
-              href="https://doi.org/10.5281/zenodo.14905636"
-              target="_blank"
-              class="cite-button"
-              >Cite</a
-            >
-          </div>
-          <div class="card">
-            <h3 class="text-xl font-semibold text-white mb-2">
-              "Using MongoDB Sync to Replace Kinesis for Real-Time Fuel Data
-              Update"
-            </h3>
-            <p class="text-gray-300 mt-2">
-              Explores MongoDB Sync as a low-latency alternative to AWS Kinesis
-              for fuel data synchronization.
-            </p>
-            <a
-              href="https://doi.org/10.5281/zenodo.14883171"
-              target="_blank"
-              class="cite-button"
-              >Cite</a
-            >
-          </div>
-        </div>
+        <div id="publications-container" class="grid-container"></div>
       </div>
     </section>
 
@@ -414,26 +321,7 @@
     <section id="press" class="section" data-scroll>
       <div class="max-w-4xl mx-auto px-4">
         <h2 class="section-title">Press Releases</h2>
-        <div class="grid-container">
-          <div class="card">
-            <h3 class="text-xl font-semibold text-white mb-2">
-              "The Future of Fueling Systems"
-            </h3>
-            <p class="text-gray-300 mt-2">
-              <strong>Date:</strong> Feb 24, 2025
-            </p>
-            <p class="text-gray-300 mt-2">
-              Free Press Journal highlights my role in advancing fuel system
-              automation with cloud and IoT, enhancing security and efficiency.
-            </p>
-            <a
-              href="https://www.freepressjournal.in/latest-news/the-future-of-fueling-systems-automating-operations-with-cloud-and-iot"
-              target="_blank"
-              class="cite-button"
-              >Read More</a
-            >
-          </div>
-        </div>
+        <div id="press-container" class="grid-container"></div>
       </div>
     </section>
 
@@ -509,20 +397,55 @@
         gsap.from(".hero p", { opacity: 0, y: 50, duration: 1, delay: 0.7 });
         gsap.from(".hero a", { opacity: 0, y: 50, duration: 1, delay: 0.9 });
 
-        // Card Animations
-        gsap.utils.toArray(".card").forEach((card) => {
-          gsap.from(card, {
-            scrollTrigger: {
-              trigger: card,
-              start: "top 90%",
-              scroller: "[data-scroll-container]",
-            },
-            opacity: 0,
-            y: 50,
-            duration: 1,
-            ease: "power2.out",
-          });
-        });
+        // Fetch and Render Publications and Press Releases
+        fetch("data.json")
+          .then((response) => response.json())
+          .then((data) => {
+            // Render Publications
+            const publicationsContainer = document.getElementById(
+              "publications-container"
+            );
+            data.publications.forEach((pub) => {
+              const card = document.createElement("div");
+              card.className = "card";
+              card.innerHTML = `
+                <h3 class="text-xl font-semibold text-white mb-2">${pub.title}</h3>
+                <p class="text-gray-300 mt-2">${pub.description}</p>
+                <a href="${pub.link}" target="_blank" class="cite-button">Cite</a>
+              `;
+              publicationsContainer.appendChild(card);
+            });
+
+            // Render Press Releases
+            const pressContainer = document.getElementById("press-container");
+            data.pressReleases.forEach((press) => {
+              const card = document.createElement("div");
+              card.className = "card";
+              card.innerHTML = `
+                <h3 class="text-xl font-semibold text-white mb-2">${press.title}</h3>
+                <p class="text-gray-300 mt-2"><strong>Date:</strong> ${press.date}</p>
+                <p class="text-gray-300 mt-2">${press.description}</p>
+                <a href="${press.link}" target="_blank" class="cite-button">Read More</a>
+              `;
+              pressContainer.appendChild(card);
+            });
+
+            // Card Animations (after dynamic content is added)
+            gsap.utils.toArray(".card").forEach((card) => {
+              gsap.from(card, {
+                scrollTrigger: {
+                  trigger: card,
+                  start: "top 90%",
+                  scroller: "[data-scroll-container]",
+                },
+                opacity: 0,
+                y: 50,
+                duration: 1,
+                ease: "power2.out",
+              });
+            });
+          })
+          .catch((error) => console.error("Error fetching data:", error));
       });
     </script>
   </body>
