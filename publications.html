@@ -136,6 +136,7 @@
 
             container.innerHTML = "";
 
+            // Process publications one by one and append immediately
             for (const work of works) {
               const workSummary = work["work-summary"][0];
               const title = workSummary.title.title.value || "Untitled";
@@ -151,47 +152,48 @@
               const doiUrl = doi ? `https://doi.org/${doi}` : "#";
               const workId = workSummary["put-code"];
 
-              // Fetch citation details
-              let citationText = "Citation not available";
-              try {
-                const citationResponse = await fetch(
-                  `https://pub.orcid.org/v3.0/0009-0004-7568-9188/work/${workId}`,
-                  {
-                    headers: { Accept: "application/json" },
-                  }
-                );
-
-                if (citationResponse.ok) {
-                  const citationData = await citationResponse.json();
-                  if (citationData.citation && citationData.citation.citation) {
-                    citationText = citationData.citation.citation;
-                  } else if (
-                    citationData.citation &&
-                    citationData.citation["citation-value"]
-                  ) {
-                    citationText = citationData.citation["citation-value"];
-                  }
-                }
-              } catch (citationError) {
-                console.warn("Error fetching citation for work:", workId);
-              }
-
-              const publicationCard = `
-                    <div class="card overflow-hidden shadow rounded-4 border-0 mb-5">
-                        <div class="card-body p-0">
-                            <div class="d-flex align-items-center">
-                                <div class="p-5">
-                                    <h2 class="fw-bolder">${title}</h2>
-                                    <p><strong>Publication Date:</strong> ${publicationDate}</p>
-                                    <p><strong>Citation:</strong> ${citationText}</p>
-                                    <a href="${doiUrl}" target="_blank" class="btn btn-primary">Read More</a>
-                                </div>
+              // Create placeholder card (while citation is loading)
+              const publicationCard = document.createElement("div");
+              publicationCard.className =
+                "card overflow-hidden shadow rounded-4 border-0 mb-5";
+              publicationCard.innerHTML = `
+                    <div class="card-body p-0">
+                        <div class="d-flex align-items-center">
+                            <div class="p-5">
+                                <h2 class="fw-bolder">${title}</h2>
+                                <p><strong>Publication Date:</strong> ${publicationDate}</p>
+                                <p id="citation-${workId}"><strong>Citation:</strong> Loading...</p>
+                                <a href="${doiUrl}" target="_blank" class="btn btn-primary">Read More</a>
                             </div>
                         </div>
                     </div>
                 `;
 
-              container.innerHTML += publicationCard;
+              // Append publication immediately (without waiting for citation)
+              container.appendChild(publicationCard);
+
+              // Fetch citation separately and update once available
+              fetch(
+                `https://pub.orcid.org/v3.0/0009-0004-7568-9188/work/${workId}`,
+                {
+                  headers: { Accept: "application/json" },
+                }
+              )
+                .then((res) => (res.ok ? res.json() : null))
+                .then((citationData) => {
+                  const citationText =
+                    citationData?.citation?.citation ||
+                    citationData?.citation?.["citation-value"] ||
+                    "Citation not available";
+                  document.getElementById(
+                    `citation-${workId}`
+                  ).innerHTML = `<strong>Citation:</strong> ${citationText}`;
+                })
+                .catch(() => {
+                  document.getElementById(
+                    `citation-${workId}`
+                  ).innerHTML = `<strong>Citation:</strong> Citation not available`;
+                });
             }
           } catch (error) {
             console.error("Error fetching ORCID publications:", error);
