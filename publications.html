@@ -116,46 +116,90 @@
       });
     </script>
     <script>
-      // Function to fetch and display publications from data.json
-      async function loadPublications() {
-        try {
-          // Fetch data from data.json
-          const response = await fetch("https://www.rohithv.com/data.json");
-          const data = await response.json();
+      document.addEventListener("DOMContentLoaded", async function () {
+        async function fetchPublications() {
+          try {
+            const response = await fetch(
+              "https://pub.orcid.org/v3.0/0009-0004-7568-9188/works",
+              {
+                headers: { Accept: "application/json" },
+              }
+            );
 
-          // Get the publications array
-          const publications = data.publications;
-          const container = document.getElementById("publications-section");
+            if (!response.ok) {
+              throw new Error("Failed to fetch publications");
+            }
 
-          // Clear existing content
-          container.innerHTML = "";
+            const data = await response.json();
+            const works = data.group || [];
+            const container = document.getElementById("publications-section");
 
-          // Loop through each publication and create HTML structure
-          publications.forEach((pub) => {
-            const publicationCard = `
-                        <div class="card overflow-hidden shadow rounded-4 border-0 mb-5">
-                            <div class="card-body p-0">
-                                <div class="d-flex align-items-center">
-                                    <div class="p-5">
-                                        <h2 class="fw-bolder">${pub.title}</h2>
-                                        <p>${pub.description}</p>
-                                        <a href="${pub.link}" target="_blank" class="btn btn-primary">Read More</a>
-                                    </div>
+            container.innerHTML = "";
+
+            for (const work of works) {
+              const workSummary = work["work-summary"][0];
+              const title = workSummary.title.title.value || "Untitled";
+              const publicationDate = workSummary["publication-date"]
+                ? `${workSummary["publication-date"].year.value}-${
+                    workSummary["publication-date"].month?.value || "01"
+                  }-${workSummary["publication-date"].day?.value || "01"}`
+                : "Unknown Date";
+              const doi =
+                workSummary["external-ids"]["external-id"].find(
+                  (id) => id["external-id-type"] === "doi"
+                )?.["external-id-value"] || null;
+              const doiUrl = doi ? `https://doi.org/${doi}` : "#";
+              const workId = workSummary["put-code"];
+
+              // Fetch citation details
+              let citationText = "Citation not available";
+              try {
+                const citationResponse = await fetch(
+                  `https://pub.orcid.org/v3.0/0009-0004-7568-9188/work/${workId}`,
+                  {
+                    headers: { Accept: "application/json" },
+                  }
+                );
+
+                if (citationResponse.ok) {
+                  const citationData = await citationResponse.json();
+                  if (citationData.citation && citationData.citation.citation) {
+                    citationText = citationData.citation.citation;
+                  } else if (
+                    citationData.citation &&
+                    citationData.citation["citation-value"]
+                  ) {
+                    citationText = citationData.citation["citation-value"];
+                  }
+                }
+              } catch (citationError) {
+                console.warn("Error fetching citation for work:", workId);
+              }
+
+              const publicationCard = `
+                    <div class="card overflow-hidden shadow rounded-4 border-0 mb-5">
+                        <div class="card-body p-0">
+                            <div class="d-flex align-items-center">
+                                <div class="p-5">
+                                    <h2 class="fw-bolder">${title}</h2>
+                                    <p><strong>Publication Date:</strong> ${publicationDate}</p>
+                                    <p><strong>Citation:</strong> ${citationText}</p>
+                                    <a href="${doiUrl}" target="_blank" class="btn btn-primary">Read More</a>
                                 </div>
                             </div>
                         </div>
-                    `;
+                    </div>
+                `;
 
-            // Append to container
-            container.innerHTML += publicationCard;
-          });
-        } catch (error) {
-          console.error("Error loading publications:", error);
+              container.innerHTML += publicationCard;
+            }
+          } catch (error) {
+            console.error("Error fetching ORCID publications:", error);
+          }
         }
-      }
 
-      // Call function to load publications
-      loadPublications();
+        fetchPublications();
+      });
     </script>
   </head>
   <body class="d-flex flex-column h-100 bg-light">
