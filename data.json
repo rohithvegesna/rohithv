@@ -39,6 +39,41 @@
       "title": "SOFTWARE FOR REAL-TIME RECONCILIATION BETWEEN ATG AND PUMP DATA",
       "description": "Introduces software for real-time reconciliation of ATG and pump data to enhance operational accuracy.",
       "link": "https://doi.org/10.5281/zenodo.14942136"
+    },
+    {
+      "title": "Proactive Maintenance Alerts for ATG and Dispensers Based on Usage Patterns",
+      "description": "Leverages AWS IoT and SNS to use anomaly detection and slow fuel dispensing to trigger maintenance alerts.",
+      "link": "https://doi.org/10.55041/isjem02261"
+    },
+    {
+      "title": "Designing an Archival System for Long-Term Fuel System Data Analysis",
+      "description": "Explores archiving strategies for fuel transactions to enable long-term analysis and compliance reporting.",
+      "link": "https://doi.org/10.55041/isjem02155"
+    },
+    {
+      "title": "Customizable Notification Systems for Critical Fuel System Events",
+      "description": "Introduces a software-driven approach to alerting for fuel station anomalies, leaks, and operational issues.",
+      "link": "https://doi.org/10.51219/jaimld/rohith-varma-vegesna/505"
+    },
+    {
+      "title": "Leveraging MongoDB Multi-Sharding to Decrease Latency to Store and Retrieve Fuel Transaction",
+      "description": "Explores MongoDB sharding strategies to optimize query performance and data storage efficiency in fuel systems.",
+      "link": "https://doi.org/10.51219/jaimld/rohith-varma-vegesna/503"
+    },
+    {
+      "title": "Standardizing Data Formats for Fuel Dispenser and ATG Integration",
+      "description": "Discusses the importance of standard data formats for seamless integration of fuel dispensers and ATGs.",
+      "link": "https://doi.org/10.51219/jaimld/rohith-varma-vegesna/512"
+    },
+    {
+      "title": "Enhancing Fuel Station Cybersecurity: Securing IoT Devices and Cloud Data",
+      "description": "Examines cybersecurity measures for fuel station IoT devices and cloud infrastructure.",
+      "link": "https://doi.org/10.51219/jaimld/rohith-varma-vegesna/504"
+    },
+    {
+      "title": "Developing Encrypted Communication Protocols for Fuel Controllers",
+      "description": "Focuses on encryption techniques for securing fuel controller communications and data transmission.",
+      "link": "https://doi.org/10.55041/isjem00100"
     }
   ],
   "pressReleases": [

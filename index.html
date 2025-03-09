@@ -1,53 +1,86 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
+    <!-- Basic SEO -->
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta
-      name="description"
-      content="Rohith Varma Vegesna, Software Engineer II at 7-Eleven, specializing in full-stack dev, IoT, and cloud solutions."
-    />
-    <meta
-      name="keywords"
-      content="Rohith Varma Vegesna, software engineer, full-stack developer, IoT, cloud computing, Java, Python, React, AWS, 7-Eleven"
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
     />
     <meta name="author" content="Rohith Varma Vegesna" />
     <meta
+      name="description"
+      content="Experienced software engineer specializing in full-stack development, cloud computing, and scalable architecture. Explore my projects, publications, and industry contributions."
+    />
+    <meta
+      name="keywords"
+      content="Rohith Varma Vegesna, Software Engineer, Full-Stack Developer, Cloud Computing, AWS, MongoDB, React, JavaScript, Java, Fuel Systems, Publications"
+    />
+    <meta name="robots" content="index, follow" />
+    <meta name="googlebot" content="index, follow" />
+    <meta name="bingbot" content="index, follow" />
+
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://www.rohithv.com/" />
+
+    <!-- Open Graph (Facebook, LinkedIn, etc.) -->
+    <meta property="og:type" content="website" />
+    <meta
       property="og:title"
-      content="Rohith Varma Vegesna | Software Engineer II"
+      content="Rohith Varma Vegesna - Software Engineer"
     />
     <meta
       property="og:description"
-      content="Explore the portfolio of Rohith Varma Vegesna, a full-stack innovator at 7-Eleven with expertise in IoT and cloud tech."
+      content="Explore my portfolio, projects, and research publications on software engineering, cloud computing, and more."
     />
-    <meta property="og:url" content="https://www.rohithv.com" />
-    <meta property="og:type" content="website" />
+    <meta property="og:image" content="https://www.rohithv.com/full.jpeg" />
     <meta
-      property="og:image"
-      content="https://www.rohithv.com/path/to/your-logo.png"
+      property="og:image:alt"
+      content="Rohith Varma Vegesna - Professional Profile Picture"
     />
+    <meta property="og:url" content="https://www.rohithv.com/" />
+    <meta property="og:site_name" content="Rohith Varma Vegesna" />
+
+    <!-- Twitter Card (For Twitter SEO) -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta
+      name="twitter:title"
+      content="Rohith Varma Vegesna - Software Engineer"
+    />
+    <meta
+      name="twitter:description"
+      content="Explore my portfolio, projects, and research publications on software engineering, cloud computing, and more."
+    />
+    <meta name="twitter:image" content="https://www.rohithv.com/square.jpeg" />
+    <meta
+      name="twitter:image:alt"
+      content="Rohith Varma Vegesna - Professional Profile Picture"
+    />
+    <meta name="twitter:site" content="@YourTwitterHandle" />
+    <meta name="twitter:creator" content="@YourTwitterHandle" />
+
+    <!-- Schema.org for Google SEO -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "Person",
+        "name": "Rohith Varma Vegesna",
+        "url": "https://www.rohithv.com/",
+        "image": "https://www.rohithv.com/full.jpeg",
+        "jobTitle": "Software Engineer",
+        "description": "Experienced software engineer specializing in full-stack development, cloud computing, and scalable architecture.",
+        "sameAs": [
+          "https://www.linkedin.com/in/rohith-varma-vegesna",
+          "https://github.com/rohithvegesna",
+          "https://twitter.com/YourTwitterHandle"
+        ]
+      }
+    </script>
+
     <title>Rohith Varma Vegesna</title>
-    <!-- Tailwind CSS CDN -->
-    <link
-      href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css"
-      rel="stylesheet"
-    />
-    <!-- Font Awesome CDN -->
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
-    />
-    <!-- Google Fonts: Poppins (matches rohithv.me) -->
-    <link
-      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap"
-      rel="stylesheet"
-    />
-    <!-- Locomotive Scroll CSS -->
-    <link
-      rel="stylesheet"
-      href="https://unpkg.com/locomotive-scroll@4.1.4/dist/locomotive-scroll.min.css"
-    />
-    <!-- Google Analytics with Your ID -->
+    <!-- Google Search Console Verification -->
+    <meta name="google-site-verification" content="G-FET9JB3RQT" />
+    <!-- Google Analytics -->
     <script
       async
       src="https://www.googletagmanager.com/gtag/js?id=G-FET9JB3RQT"
@@ -60,451 +93,503 @@
       gtag("js", new Date());
       gtag("config", "G-FET9JB3RQT");
     </script>
-    <!-- Custom CSS -->
-    <style>
-      body {
-        font-family: "Poppins", sans-serif;
-        background: #0a0a0a;
-        color: #ffffff;
-        overflow-x: hidden;
-      }
-      .hero {
-        min-height: 100vh;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        text-align: center;
-        padding: 2rem;
-        position: relative;
-      }
-      .section {
-        padding: 6rem 2rem;
-        position: relative;
-      }
-      .section-title {
-        font-size: 2.5rem;
-        font-weight: 600;
-        color: #00e6ff;
-        text-align: center;
-        margin-bottom: 3rem;
-      }
-      .card {
-        background: #1a1a1a;
-        padding: 2rem;
-        border-radius: 8px;
-        box-shadow: 0 4px 20px rgba(0, 230, 255, 0.1);
-        transition: transform 0.3s ease;
-      }
-      .card:hover {
-        transform: translateY(-10px);
-      }
-      .grid-container {
-        display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-        gap: 2rem;
-        max-width: 1200px;
-        margin: 0 auto;
-      }
-      footer {
-        padding: 4rem 2rem;
-        text-align: center;
-        background: #0a0a0a;
-      }
-      .social-icons a {
-        color: #00e6ff;
-        font-size: 2rem;
-        margin: 0 1rem;
-        transition: color 0.3s ease;
-      }
-      .social-icons a:hover {
-        color: #ffffff;
-      }
-      .highlight {
-        color: #00e6ff;
-      }
-      .cite-button {
-        background: transparent;
-        border: 2px solid #00e6ff;
-        color: #00e6ff;
-        padding: 0.5rem 1rem;
-        border-radius: 4px;
-        text-decoration: none;
-        margin-top: 1rem;
-        display: inline-block;
-        transition: all 0.3s ease;
-      }
-      .cite-button:hover {
-        background: #00e6ff;
-        color: #000;
-      }
-    </style>
-  </head>
-  <body data-scroll-container>
-    <!-- Hero Section -->
-    <section id="home" class="hero" data-scroll>
-      <div class="max-w-4xl mx-auto">
-        <h1
-          class="text-5xl md:text-7xl font-bold mb-6"
-          data-scroll
-          data-scroll-speed="2"
-        >
-          Rohith Varma Vegesna
-        </h1>
-        <p
-          class="text-xl md:text-2xl text-gray-400 mb-8"
-          data-scroll
-          data-scroll-speed="1"
-        >
-          Software Engineer II at <span class="highlight">7-Eleven</span> |
-          Full-Stack Innovator
-        </p>
-        <a
-          href="#about"
-          class="inline-block bg-transparent border-2 border-cyan-400 text-cyan-400 py-3 px-8 rounded-full text-lg hover:bg-cyan-400 hover:text-black transition"
-          >Learn More</a
-        >
-      </div>
-    </section>
 
-    <!-- About Section -->
-    <section id="about" class="section" data-scroll>
-      <div class="max-w-4xl mx-auto px-4">
-        <h2 class="section-title">About Me</h2>
-        <p class="text-lg text-gray-300 mb-6">
-          Hey there! I’m Rohith Varma Vegesna, a Software Engineer II with over
-          <span class="highlight">7 years</span> of experience shaping the
-          future of technology. Based at
-          <span class="highlight">7-Eleven</span>, I craft robust systems
-          blending full-stack development, IoT ecosystems, and real-time data
-          pipelines—delivering solutions that power modern infrastructure.
-        </p>
-        <p class="text-lg text-gray-300 mb-6">
-          My toolkit includes <span class="highlight">Java</span>,
-          <span class="highlight">Python</span>,
-          <span class="highlight">JavaScript (React, Node.js)</span>,
-          <span class="highlight">MongoDB</span>, and
-          <span class="highlight">AWS</span>. Using Spring, RESTful APIs, and
-          DevOps tools like Jenkins and Git, I’ve built secure fuel transaction
-          networks and smart factories managing
-          <span class="highlight">200+ IoT devices</span>.
-        </p>
-        <p class="text-lg text-gray-300">
-          I’m passionate about pushing tech boundaries—one innovative system at
-          a time.
-        </p>
-      </div>
-    </section>
-
-    <!-- Experience Section -->
-    <section id="experience" class="section" data-scroll>
-      <div class="max-w-4xl mx-auto px-4">
-        <h2 class="section-title">Experience</h2>
-        <div class="grid-container">
-          <div class="card">
-            <h3 class="text-2xl font-semibold text-white mb-2">
-              Software Engineer II
-            </h3>
-            <p class="text-lg text-cyan-400">
-              7-Eleven, Texas • Nov 2021 – Present
-            </p>
-            <p class="text-gray-300 mt-4">
-              Developed state machines with Java Spring, optimized payment
-              systems with REST APIs, and engineered a React portal for fuel
-              interfaces. Led AWS Lambda and Node.js enhancements, streamlining
-              MongoDB operations.
-            </p>
-            <p class="text-gray-400 mt-2">
-              <strong>Tech:</strong> Java 21, React, Node.js, AWS, MongoDB,
-              Spring
-            </p>
-          </div>
-          <div class="card">
-            <h3 class="text-2xl font-semibold text-white mb-2">
-              Java Software Developer
-            </h3>
-            <p class="text-lg text-cyan-400">
-              IntelliSoft Technologies, Texas • Jun 2020 – Nov 2021
-            </p>
-            <p class="text-gray-300 mt-4">
-              Built EMV transaction systems with Java 8 and Spring, and designed
-              a Python Fuel Simulator with PyQt5.
-            </p>
-            <p class="text-gray-400 mt-2">
-              <strong>Tech:</strong> Java 8, Python, Spring, AWS, MongoDB
-            </p>
-          </div>
-          <div class="card">
-            <h3 class="text-2xl font-semibold text-white mb-2">
-              Java Software Developer
-            </h3>
-            <p class="text-lg text-cyan-400">
-              Matrix Resources, Texas • Oct 2019 – May 2020
-            </p>
-            <p class="text-gray-300 mt-4">
-              Integrated carwash sales at pumps with Java Spring Microservices
-              and Node.js, enhancing POS frameworks.
-            </p>
-            <p class="text-gray-400 mt-2">
-              <strong>Tech:</strong> Java 8, Node.js, Spring, MongoDB
-            </p>
-          </div>
-          <div class="card">
-            <h3 class="text-2xl font-semibold text-white mb-2">
-              Software Developer
-            </h3>
-            <p class="text-lg text-cyan-400">
-              Revaalo, Bangalore, India • May 2017 – Mar 2018
-            </p>
-            <p class="text-gray-300 mt-4">
-              Pioneered IoT automation for a Smart Factory, managing 200+ IoT
-              devices with Java 8 and Python.
-            </p>
-            <p class="text-gray-400 mt-2">
-              <strong>Tech:</strong> Java 8, Python, IoT
-            </p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Projects Section -->
-    <section id="projects" class="section" data-scroll>
-      <div class="max-w-4xl mx-auto px-4">
-        <h2 class="section-title">Projects</h2>
-        <div class="grid-container">
-          <div class="card">
-            <h3 class="text-2xl font-semibold text-white mb-2">
-              EMV Transactions
-            </h3>
-            <p class="text-gray-300 mt-4">
-              Developed secure EMV systems for fuel dispensers with Java Spring.
-            </p>
-            <p class="text-gray-400 mt-2">
-              <strong>Tech:</strong> Java, Spring, MongoDB
-            </p>
-          </div>
-          <div class="card">
-            <h3 class="text-2xl font-semibold text-white mb-2">
-              Carwash Sales at Pump
-            </h3>
-            <p class="text-gray-300 mt-4">
-              Enabled advanced carwash transactions with REST APIs.
-            </p>
-            <p class="text-gray-400 mt-2">
-              <strong>Tech:</strong> Java, Node.js, React
-            </p>
-          </div>
-          <div class="card">
-            <h3 class="text-2xl font-semibold text-white mb-2">
-              Smart Factory Automation
-            </h3>
-            <p class="text-gray-300 mt-4">
-              Automated 200+ IoT devices for ABB’s advanced factory systems.
-            </p>
-            <p class="text-gray-400 mt-2">
-              <strong>Tech:</strong> Java, Python, IoT
-            </p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Publications Section -->
-    <section id="publications" class="section" data-scroll>
-      <div class="max-w-4xl mx-auto px-4">
-        <h2 class="section-title">Publications</h2>
-        <div id="publications-container" class="grid-container"></div>
-        <div class="text-center mt-8">
-          <a
-            href="/authorship"
-            class="inline-block bg-transparent border-2 border-cyan-400 text-cyan-400 py-3 px-8 rounded-full text-lg hover:bg-cyan-400 hover:text-black transition"
-            >View All Publications</a
-          >
-        </div>
-      </div>
-    </section>
-
-    <!-- Press Releases Section -->
-    <section id="press" class="section" data-scroll>
-      <div class="max-w-4xl mx-auto px-4">
-        <h2 class="section-title">Press Releases</h2>
-        <div id="press-container" class="grid-container"></div>
-      </div>
-    </section>
-
-    <!-- Footer -->
-    <footer data-scroll>
-      <div class="max-w-4xl mx-auto px-4">
-        <p class="text-lg text-gray-400 mb-6">
-          Get in touch:
-          <a
-            href="mailto:rohithvegesna@gmail.com"
-            class="text-cyan-400 hover:text-white"
-            >rohithvegesna@gmail.com</a
-          >
-        </p>
-        <div class="social-icons">
-          <a href="https://www.linkedin.com/in/rohithvegesna" target="_blank"
-            ><i class="fab fa-linkedin"></i
-          ></a>
-          <a href="https://github.com/rohithvegesna" target="_blank"
-            ><i class="fab fa-github"></i
-          ></a>
-        </div>
-        <p class="text-lg text-gray-400 mt-6">© 2025 Rohith Varma Vegesna</p>
-      </div>
-    </footer>
-
-    <!-- Scripts -->
-    <script src="https://unpkg.com/locomotive-scroll@4.1.4/dist/locomotive-scroll.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+    <!-- Favicon-->
+    <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
+    <!-- Custom Google font-->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@100;200;300;400;500;600;700;800;900&amp;display=swap"
+      rel="stylesheet"
+    />
+    <!-- Bootstrap icons-->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css"
+      rel="stylesheet"
+    />
+    <!-- Core theme CSS (includes Bootstrap)-->
+    <link href="css/styles.css" rel="stylesheet" />
     <script>
-      // DOMContentLoaded Event Listener
-      document.addEventListener("DOMContentLoaded", () => {
-        // Locomotive Scroll
-        const scroll = new LocomotiveScroll({
-          el: document.querySelector("[data-scroll-container]"),
-          smooth: true,
-          multiplier: 1,
-        });
-
-        // GSAP ScrollTrigger Integration
-        gsap.registerPlugin(ScrollTrigger);
-        scroll.on("scroll", ScrollTrigger.update);
-        ScrollTrigger.scrollerProxy("[data-scroll-container]", {
-          scrollTop(value) {
-            return arguments.length
-              ? scroll.scrollTo(value, 0, 0)
-              : scroll.scroll.instance.scroll.y;
-          },
-          getBoundingClientRect() {
-            return {
-              top: 0,
-              left: 0,
-              width: window.innerWidth,
-              height: window.innerHeight,
-            };
-          },
-        });
-        ScrollTrigger.addEventListener("refresh", () => scroll.update());
-        ScrollTrigger.refresh();
-
-        // Smooth Scrolling for Links
-        document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
-          anchor.addEventListener("click", function (e) {
-            e.preventDefault();
-            const target = document.querySelector(this.getAttribute("href"));
-            scroll.scrollTo(target);
-          });
-        });
-
-        // Hero Text Animation
-        gsap.from(".hero h1", { opacity: 0, y: 50, duration: 1, delay: 0.5 });
-        gsap.from(".hero p", { opacity: 0, y: 50, duration: 1, delay: 0.7 });
-        gsap.from(".hero a", { opacity: 0, y: 50, duration: 1, delay: 0.9 });
-
-        // Fetch and Render Publications and Press Releases
-        fetch("/data.json")
-          .then((response) => response.json())
-          .then((data) => {
-            // Render Publications (limit to 4, show 2 fully, fade 2)
-            const publicationsContainer = document.getElementById(
-              "publications-container"
-            );
-            data.publications.slice(0, 4).forEach((pub, index) => {
-              const card = document.createElement("div");
-              card.className = "card";
-              card.innerHTML = `
-                <h3 class="text-xl font-semibold text-white mb-2">${pub.title}</h3>
-                <p class="text-gray-300 mt-2">${pub.description}</p>
-                <a href="${pub.link}" target="_blank" class="cite-button">Cite</a>
-              `;
-              publicationsContainer.appendChild(card);
-
-              // Animate: Full visibility for first 2, fade for next 2
-              if (index < 2) {
-                gsap.from(card, {
-                  scrollTrigger: {
-                    trigger: card,
-                    start: "top 90%",
-                    scroller: "[data-scroll-container]",
-                  },
-                  opacity: 0,
-                  y: 50,
-                  duration: 1,
-                  ease: "power2.out",
-                });
-              } else {
-                gsap.from(card, {
-                  scrollTrigger: {
-                    trigger: card,
-                    start: "top 90%",
-                    scroller: "[data-scroll-container]",
-                  },
-                  opacity: 0,
-                  y: 50,
-                  duration: 1,
-                  ease: "power2.out",
-                });
-                gsap.to(card, {
-                  opacity: 0.3,
-                  duration: 2,
-                  delay: 1,
-                  ease: "power1.in",
-                  scrollTrigger: {
-                    trigger: card,
-                    start: "top 90%",
-                    scroller: "[data-scroll-container]",
-                  },
-                });
-              }
-            });
-
-            // Render Press Releases
-            const pressContainer = document.getElementById("press-container");
-            data.pressReleases.forEach((press) => {
-              const card = document.createElement("div");
-              card.className = "card";
-              card.innerHTML = `
-                <h3 class="text-xl font-semibold text-white mb-2">${press.title}</h3>
-                <p class="text-gray-300 mt-2"><strong>Date:</strong> ${press.date}</p>
-                <p class="text-gray-300 mt-2">${press.description}</p>
-                <a href="${press.link}" target="_blank" class="cite-button">Read More</a>
-              `;
-              pressContainer.appendChild(card);
-            });
-
-            // Card Animations for Press Releases
-            gsap.utils.toArray("#press-container .card").forEach((card) => {
-              gsap.from(card, {
-                scrollTrigger: {
-                  trigger: card,
-                  start: "top 90%",
-                  scroller: "[data-scroll-container]",
-                },
-                opacity: 0,
-                y: 50,
-                duration: 1,
-                ease: "power2.out",
-              });
-            });
-
-            // Button Animation
-            gsap.from(".text-center a", {
-              opacity: 0,
-              y: 50,
-              duration: 1,
-              delay: 1,
-              scrollTrigger: {
-                trigger: ".text-center a",
-                start: "top 90%",
-                scroller: "[data-scroll-container]",
-              },
-            });
-          })
-          .catch((error) => console.error("Error fetching data:", error));
+      document.addEventListener("DOMContentLoaded", function () {
+        var currentYear = new Date().getFullYear();
+        document.getElementById("year").textContent = currentYear;
       });
     </script>
+  </head>
+  <body class="d-flex flex-column h-100">
+    <main class="flex-shrink-0">
+      <!-- Navigation-->
+      <nav class="navbar navbar-expand-lg navbar-light bg-white py-3">
+        <div class="container px-5">
+          <a class="navbar-brand" href="index.html"
+            ><span class="fw-bolder text-primary">Rohith Varma Vegesna</span></a
+          >
+          <button
+            class="navbar-toggler"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent"
+            aria-expanded="false"
+            aria-label="Toggle navigation"
+          >
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav ms-auto mb-2 mb-lg-0 small fw-bolder">
+              <li class="nav-item">
+                <a class="nav-link" href="index.html">Home</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="resume.html">Resume</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="publications.html">Publications</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="press.html">Press</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="contact.html">Contact</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </nav>
+      <!-- Header-->
+      <header class="py-5">
+        <div class="container px-5 pb-5">
+          <div class="row gx-5 align-items-center">
+            <div class="col-xxl-5">
+              <!-- Header text content-->
+              <div class="text-center text-xxl-start">
+                <div
+                  class="badge bg-gradient-primary-to-secondary text-white mb-4"
+                >
+                  <div class="text-uppercase">
+                    Cloud &middot; IoT &middot; Secure Software
+                  </div>
+                </div>
+                <div class="fs-3 fw-light text-muted">
+                  Engineering scalable and secure solutions for the future
+                </div>
+                <h1 class="display-3 fw-bolder mb-5">
+                  <span class="text-gradient d-inline"
+                    >Innovate, Secure, Scale</span
+                  >
+                </h1>
+                <div
+                  class="d-grid gap-3 d-sm-flex justify-content-sm-center justify-content-xxl-start mb-3"
+                >
+                  <a
+                    class="btn btn-primary btn-lg px-5 py-3 me-sm-3 fs-6 fw-bolder"
+                    href="resume.html"
+                    >Resume</a
+                  >
+                  <a
+                    class="btn btn-outline-dark btn-lg px-5 py-3 fs-6 fw-bolder"
+                    href="publications.html"
+                    >Publications</a
+                  >
+                  <a
+                    class="btn btn-outline-dark btn-lg px-5 py-3 fs-6 fw-bolder"
+                    href="press.html"
+                    >Press</a
+                  >
+                </div>
+              </div>
+            </div>
+            <div class="col-xxl-7">
+              <!-- Header profile picture-->
+              <div class="d-flex justify-content-center mt-5 mt-xxl-0">
+                <div class="profile bg-gradient-primary-to-secondary">
+                  <!-- TIP: For best results, use a photo with a transparent background like the demo example below-->
+                  <!-- Watch a tutorial on how to do this on YouTube (link)-->
+                  <img class="profile-img" src="assets/profile.png" alt="..." />
+                  <div class="dots-1">
+                    <!-- SVG Dots-->
+                    <svg
+                      version="1.1"
+                      xmlns="http://www.w3.org/2000/svg"
+                      xmlns:xlink="http://www.w3.org/1999/xlink"
+                      x="0px"
+                      y="0px"
+                      viewBox="0 0 191.6 1215.4"
+                      style="enable-background: new 0 0 191.6 1215.4"
+                      xml:space="preserve"
+                    >
+                      <g
+                        transform="translate(0.000000,1280.000000) scale(0.100000,-0.100000)"
+                      >
+                        <path
+                          d="M227.7,12788.6c-105-35-200-141-222-248c-43-206,163-412,369-369c155,32,275,190,260,339c-11,105-90,213-190,262        C383.7,12801.6,289.7,12808.6,227.7,12788.6z"
+                        ></path>
+                        <path
+                          d="M1507.7,12788.6c-151-50-253-216-222-362c25-119,136-230,254-255c194-41,395,142,375,339c-11,105-90,213-190,262        C1663.7,12801.6,1569.7,12808.6,1507.7,12788.6z"
+                        ></path>
+                        <path
+                          d="M227.7,11508.6c-105-35-200-141-222-248c-43-206,163-412,369-369c155,32,275,190,260,339c-11,105-90,213-190,262        C383.7,11521.6,289.7,11528.6,227.7,11508.6z"
+                        ></path>
+                        <path
+                          d="M1507.7,11508.6c-151-50-253-216-222-362c25-119,136-230,254-255c194-41,395,142,375,339c-11,105-90,213-190,262        C1663.7,11521.6,1569.7,11528.6,1507.7,11508.6z"
+                        ></path>
+                        <path
+                          d="M227.7,10228.6c-105-35-200-141-222-248c-43-206,163-412,369-369c155,32,275,190,260,339c-11,105-90,213-190,262        C383.7,10241.6,289.7,10248.6,227.7,10228.6z"
+                        ></path>
+                        <path
+                          d="M1507.7,10228.6c-105-35-200-141-222-248c-43-206,163-412,369-369c155,32,275,190,260,339c-11,105-90,213-190,262        C1663.7,10241.6,1569.7,10248.6,1507.7,10228.6z"
+                        ></path>
+                        <path
+                          d="M227.7,8948.6c-105-35-200-141-222-248c-43-206,163-412,369-369c155,32,275,190,260,339c-11,105-90,213-190,262        C383.7,8961.6,289.7,8968.6,227.7,8948.6z"
+                        ></path>
+                        <path
+                          d="M1507.7,8948.6c-105-35-200-141-222-248c-43-206,163-412,369-369c155,32,275,190,260,339c-11,105-90,213-190,262        C1663.7,8961.6,1569.7,8968.6,1507.7,8948.6z"
+                        ></path>
+                        <path
+                          d="M227.7,7668.6c-105-35-200-141-222-248c-43-206,163-412,369-369c155,32,275,190,260,339c-11,105-90,213-190,262        C383.7,7681.6,289.7,7688.6,227.7,7668.6z"
+                        ></path>
+                        <path
+                          d="M1507.7,7668.6c-105-35-200-141-222-248c-43-206,163-412,369-369c155,32,275,190,260,339c-11,105-90,213-190,262        C1663.7,7681.6,1569.7,7688.6,1507.7,7668.6z"
+                        ></path>
+                        <path
+                          d="M227.7,6388.6c-105-35-200-141-222-248c-43-206,163-412,369-369c155,32,275,190,260,339c-11,105-90,213-190,262        C383.7,6401.6,289.7,6408.6,227.7,6388.6z"
+                        ></path>
+                        <path
+                          d="M1507.7,6388.6c-105-35-200-141-222-248c-43-206,163-412,369-369c155,32,275,190,260,339c-11,105-90,213-190,262        C1663.7,6401.6,1569.7,6408.6,1507.7,6388.6z"
+                        ></path>
+                        <path
+                          d="M227.7,5108.6c-105-35-200-141-222-248c-43-206,163-412,369-369c155,32,275,190,260,339c-11,105-90,213-190,262        C383.7,5121.6,289.7,5128.6,227.7,5108.6z"
+                        ></path>
+                        <path
+                          d="M1507.7,5108.6c-105-35-200-141-222-248c-43-206,163-412,369-369c155,32,275,190,260,339c-11,105-90,213-190,262        C1663.7,5121.6,1569.7,5128.6,1507.7,5108.6z"
+                        ></path>
+                        <path
+                          d="M227.7,3828.6c-105-35-200-141-222-248c-43-206,163-412,369-369c155,32,275,190,260,339c-11,105-90,213-190,262        C383.7,3841.6,289.7,3848.6,227.7,3828.6z"
+                        ></path>
+                        <path
+                          d="M1507.7,3828.6c-105-35-200-141-222-248c-43-206,163-412,369-369c155,32,275,190,260,339c-11,105-90,213-190,262        C1663.7,3841.6,1569.7,3848.6,1507.7,3828.6z"
+                        ></path>
+                        <path
+                          d="M227.7,2548.6c-105-35-200-141-222-248c-43-206,163-412,369-369c155,32,275,190,260,339c-11,105-90,213-190,262        C383.7,2561.6,289.7,2568.6,227.7,2548.6z"
+                        ></path>
+                        <path
+                          d="M1507.7,2548.6c-105-35-200-141-222-248c-43-206,163-412,369-369c155,32,275,190,260,339c-11,105-90,213-190,262        C1663.7,2561.6,1569.7,2568.6,1507.7,2548.6z"
+                        ></path>
+                        <path
+                          d="M227.7,1268.6c-105-35-200-141-222-248c-43-206,163-412,369-369c155,32,275,190,260,339c-11,105-90,213-190,262        C383.7,1281.6,289.7,1288.6,227.7,1268.6z"
+                        ></path>
+                        <path
+                          d="M1507.7,1268.6c-105-35-200-141-222-248c-43-206,163-412,369-369c155,32,275,190,260,339c-11,105-90,213-190,262        C1663.7,1281.6,1569.7,1288.6,1507.7,1268.6z"
+                        ></path>
+                      </g>
+                    </svg>
+                    <!-- END of SVG dots-->
+                  </div>
+                  <div class="dots-2">
+                    <!-- SVG Dots-->
+                    <svg
+                      version="1.1"
+                      xmlns="http://www.w3.org/2000/svg"
+                      xmlns:xlink="http://www.w3.org/1999/xlink"
+                      x="0px"
+                      y="0px"
+                      viewBox="0 0 191.6 1215.4"
+                      style="enable-background: new 0 0 191.6 1215.4"
+                      xml:space="preserve"
+                    >
+                      <g
+                        transform="translate(0.000000,1280.000000) scale(0.100000,-0.100000)"
+                      >
+                        <path
+                          d="M227.7,12788.6c-105-35-200-141-222-248c-43-206,163-412,369-369c155,32,275,190,260,339c-11,105-90,213-190,262        C383.7,12801.6,289.7,12808.6,227.7,12788.6z"
+                        ></path>
+                        <path
+                          d="M1507.7,12788.6c-151-50-253-216-222-362c25-119,136-230,254-255c194-41,395,142,375,339c-11,105-90,213-190,262        C1663.7,12801.6,1569.7,12808.6,1507.7,12788.6z"
+                        ></path>
+                        <path
+                          d="M227.7,11508.6c-105-35-200-141-222-248c-43-206,163-412,369-369c155,32,275,190,260,339c-11,105-90,213-190,262        C383.7,11521.6,289.7,11528.6,227.7,11508.6z"
+                        ></path>
+                        <path
+                          d="M1507.7,11508.6c-151-50-253-216-222-362c25-119,136-230,254-255c194-41,395,142,375,339c-11,105-90,213-190,262        C1663.7,11521.6,1569.7,11528.6,1507.7,11508.6z"
+                        ></path>
+                        <path
+                          d="M227.7,10228.6c-105-35-200-141-222-248c-43-206,163-412,369-369c155,32,275,190,260,339c-11,105-90,213-190,262        C383.7,10241.6,289.7,10248.6,227.7,10228.6z"
+                        ></path>
+                        <path
+                          d="M1507.7,10228.6c-105-35-200-141-222-248c-43-206,163-412,369-369c155,32,275,190,260,339c-11,105-90,213-190,262        C1663.7,10241.6,1569.7,10248.6,1507.7,10228.6z"
+                        ></path>
+                        <path
+                          d="M227.7,8948.6c-105-35-200-141-222-248c-43-206,163-412,369-369c155,32,275,190,260,339c-11,105-90,213-190,262        C383.7,8961.6,289.7,8968.6,227.7,8948.6z"
+                        ></path>
+                        <path
+                          d="M1507.7,8948.6c-105-35-200-141-222-248c-43-206,163-412,369-369c155,32,275,190,260,339c-11,105-90,213-190,262        C1663.7,8961.6,1569.7,8968.6,1507.7,8948.6z"
+                        ></path>
+                        <path
+                          d="M227.7,7668.6c-105-35-200-141-222-248c-43-206,163-412,369-369c155,32,275,190,260,339c-11,105-90,213-190,262        C383.7,7681.6,289.7,7688.6,227.7,7668.6z"
+                        ></path>
+                        <path
+                          d="M1507.7,7668.6c-105-35-200-141-222-248c-43-206,163-412,369-369c155,32,275,190,260,339c-11,105-90,213-190,262        C1663.7,7681.6,1569.7,7688.6,1507.7,7668.6z"
+                        ></path>
+                        <path
+                          d="M227.7,6388.6c-105-35-200-141-222-248c-43-206,163-412,369-369c155,32,275,190,260,339c-11,105-90,213-190,262        C383.7,6401.6,289.7,6408.6,227.7,6388.6z"
+                        ></path>
+                        <path
+                          d="M1507.7,6388.6c-105-35-200-141-222-248c-43-206,163-412,369-369c155,32,275,190,260,339c-11,105-90,213-190,262        C1663.7,6401.6,1569.7,6408.6,1507.7,6388.6z"
+                        ></path>
+                        <path
+                          d="M227.7,5108.6c-105-35-200-141-222-248c-43-206,163-412,369-369c155,32,275,190,260,339c-11,105-90,213-190,262        C383.7,5121.6,289.7,5128.6,227.7,5108.6z"
+                        ></path>
+                        <path
+                          d="M1507.7,5108.6c-105-35-200-141-222-248c-43-206,163-412,369-369c155,32,275,190,260,339c-11,105-90,213-190,262        C1663.7,5121.6,1569.7,5128.6,1507.7,5108.6z"
+                        ></path>
+                        <path
+                          d="M227.7,3828.6c-105-35-200-141-222-248c-43-206,163-412,369-369c155,32,275,190,260,339c-11,105-90,213-190,262        C383.7,3841.6,289.7,3848.6,227.7,3828.6z"
+                        ></path>
+                        <path
+                          d="M1507.7,3828.6c-105-35-200-141-222-248c-43-206,163-412,369-369c155,32,275,190,260,339c-11,105-90,213-190,262        C1663.7,3841.6,1569.7,3848.6,1507.7,3828.6z"
+                        ></path>
+                        <path
+                          d="M227.7,2548.6c-105-35-200-141-222-248c-43-206,163-412,369-369c155,32,275,190,260,339c-11,105-90,213-190,262        C383.7,2561.6,289.7,2568.6,227.7,2548.6z"
+                        ></path>
+                        <path
+                          d="M1507.7,2548.6c-105-35-200-141-222-248c-43-206,163-412,369-369c155,32,275,190,260,339c-11,105-90,213-190,262        C1663.7,2561.6,1569.7,2568.6,1507.7,2548.6z"
+                        ></path>
+                        <path
+                          d="M227.7,1268.6c-105-35-200-141-222-248c-43-206,163-412,369-369c155,32,275,190,260,339c-11,105-90,213-190,262        C383.7,1281.6,289.7,1288.6,227.7,1268.6z"
+                        ></path>
+                        <path
+                          d="M1507.7,1268.6c-105-35-200-141-222-248c-43-206,163-412,369-369c155,32,275,190,260,339c-11,105-90,213-190,262        C1663.7,1281.6,1569.7,1288.6,1507.7,1268.6z"
+                        ></path>
+                      </g>
+                    </svg>
+                    <!-- END of SVG dots-->
+                  </div>
+                  <div class="dots-3">
+                    <!-- SVG Dots-->
+                    <svg
+                      version="1.1"
+                      xmlns="http://www.w3.org/2000/svg"
+                      xmlns:xlink="http://www.w3.org/1999/xlink"
+                      x="0px"
+                      y="0px"
+                      viewBox="0 0 191.6 1215.4"
+                      style="enable-background: new 0 0 191.6 1215.4"
+                      xml:space="preserve"
+                    >
+                      <g
+                        transform="translate(0.000000,1280.000000) scale(0.100000,-0.100000)"
+                      >
+                        <path
+                          d="M227.7,12788.6c-105-35-200-141-222-248c-43-206,163-412,369-369c155,32,275,190,260,339c-11,105-90,213-190,262        C383.7,12801.6,289.7,12808.6,227.7,12788.6z"
+                        ></path>
+                        <path
+                          d="M1507.7,12788.6c-151-50-253-216-222-362c25-119,136-230,254-255c194-41,395,142,375,339c-11,105-90,213-190,262        C1663.7,12801.6,1569.7,12808.6,1507.7,12788.6z"
+                        ></path>
+                        <path
+                          d="M227.7,11508.6c-105-35-200-141-222-248c-43-206,163-412,369-369c155,32,275,190,260,339c-11,105-90,213-190,262        C383.7,11521.6,289.7,11528.6,227.7,11508.6z"
+                        ></path>
+                        <path
+                          d="M1507.7,11508.6c-151-50-253-216-222-362c25-119,136-230,254-255c194-41,395,142,375,339c-11,105-90,213-190,262        C1663.7,11521.6,1569.7,11528.6,1507.7,11508.6z"
+                        ></path>
+                        <path
+                          d="M227.7,10228.6c-105-35-200-141-222-248c-43-206,163-412,369-369c155,32,275,190,260,339c-11,105-90,213-190,262        C383.7,10241.6,289.7,10248.6,227.7,10228.6z"
+                        ></path>
+                        <path
+                          d="M1507.7,10228.6c-105-35-200-141-222-248c-43-206,163-412,369-369c155,32,275,190,260,339c-11,105-90,213-190,262        C1663.7,10241.6,1569.7,10248.6,1507.7,10228.6z"
+                        ></path>
+                        <path
+                          d="M227.7,8948.6c-105-35-200-141-222-248c-43-206,163-412,369-369c155,32,275,190,260,339c-11,105-90,213-190,262        C383.7,8961.6,289.7,8968.6,227.7,8948.6z"
+                        ></path>
+                        <path
+                          d="M1507.7,8948.6c-105-35-200-141-222-248c-43-206,163-412,369-369c155,32,275,190,260,339c-11,105-90,213-190,262        C1663.7,8961.6,1569.7,8968.6,1507.7,8948.6z"
+                        ></path>
+                        <path
+                          d="M227.7,7668.6c-105-35-200-141-222-248c-43-206,163-412,369-369c155,32,275,190,260,339c-11,105-90,213-190,262        C383.7,7681.6,289.7,7688.6,227.7,7668.6z"
+                        ></path>
+                        <path
+                          d="M1507.7,7668.6c-105-35-200-141-222-248c-43-206,163-412,369-369c155,32,275,190,260,339c-11,105-90,213-190,262        C1663.7,7681.6,1569.7,7688.6,1507.7,7668.6z"
+                        ></path>
+                        <path
+                          d="M227.7,6388.6c-105-35-200-141-222-248c-43-206,163-412,369-369c155,32,275,190,260,339c-11,105-90,213-190,262        C383.7,6401.6,289.7,6408.6,227.7,6388.6z"
+                        ></path>
+                        <path
+                          d="M1507.7,6388.6c-105-35-200-141-222-248c-43-206,163-412,369-369c155,32,275,190,260,339c-11,105-90,213-190,262        C1663.7,6401.6,1569.7,6408.6,1507.7,6388.6z"
+                        ></path>
+                        <path
+                          d="M227.7,5108.6c-105-35-200-141-222-248c-43-206,163-412,369-369c155,32,275,190,260,339c-11,105-90,213-190,262        C383.7,5121.6,289.7,5128.6,227.7,5108.6z"
+                        ></path>
+                        <path
+                          d="M1507.7,5108.6c-105-35-200-141-222-248c-43-206,163-412,369-369c155,32,275,190,260,339c-11,105-90,213-190,262        C1663.7,5121.6,1569.7,5128.6,1507.7,5108.6z"
+                        ></path>
+                        <path
+                          d="M227.7,3828.6c-105-35-200-141-222-248c-43-206,163-412,369-369c155,32,275,190,260,339c-11,105-90,213-190,262        C383.7,3841.6,289.7,3848.6,227.7,3828.6z"
+                        ></path>
+                        <path
+                          d="M1507.7,3828.6c-105-35-200-141-222-248c-43-206,163-412,369-369c155,32,275,190,260,339c-11,105-90,213-190,262        C1663.7,3841.6,1569.7,3848.6,1507.7,3828.6z"
+                        ></path>
+                        <path
+                          d="M227.7,2548.6c-105-35-200-141-222-248c-43-206,163-412,369-369c155,32,275,190,260,339c-11,105-90,213-190,262        C383.7,2561.6,289.7,2568.6,227.7,2548.6z"
+                        ></path>
+                        <path
+                          d="M1507.7,2548.6c-105-35-200-141-222-248c-43-206,163-412,369-369c155,32,275,190,260,339c-11,105-90,213-190,262        C1663.7,2561.6,1569.7,2568.6,1507.7,2548.6z"
+                        ></path>
+                        <path
+                          d="M227.7,1268.6c-105-35-200-141-222-248c-43-206,163-412,369-369c155,32,275,190,260,339c-11,105-90,213-190,262        C383.7,1281.6,289.7,1288.6,227.7,1268.6z"
+                        ></path>
+                        <path
+                          d="M1507.7,1268.6c-105-35-200-141-222-248c-43-206,163-412,369-369c155,32,275,190,260,339c-11,105-90,213-190,262        C1663.7,1281.6,1569.7,1288.6,1507.7,1268.6z"
+                        ></path>
+                      </g>
+                    </svg>
+                    <!-- END of SVG dots-->
+                  </div>
+                  <div class="dots-4">
+                    <!-- SVG Dots-->
+                    <svg
+                      version="1.1"
+                      xmlns="http://www.w3.org/2000/svg"
+                      xmlns:xlink="http://www.w3.org/1999/xlink"
+                      x="0px"
+                      y="0px"
+                      viewBox="0 0 191.6 1215.4"
+                      style="enable-background: new 0 0 191.6 1215.4"
+                      xml:space="preserve"
+                    >
+                      <g
+                        transform="translate(0.000000,1280.000000) scale(0.100000,-0.100000)"
+                      >
+                        <path
+                          d="M227.7,12788.6c-105-35-200-141-222-248c-43-206,163-412,369-369c155,32,275,190,260,339c-11,105-90,213-190,262        C383.7,12801.6,289.7,12808.6,227.7,12788.6z"
+                        ></path>
+                        <path
+                          d="M1507.7,12788.6c-151-50-253-216-222-362c25-119,136-230,254-255c194-41,395,142,375,339c-11,105-90,213-190,262        C1663.7,12801.6,1569.7,12808.6,1507.7,12788.6z"
+                        ></path>
+                        <path
+                          d="M227.7,11508.6c-105-35-200-141-222-248c-43-206,163-412,369-369c155,32,275,190,260,339c-11,105-90,213-190,262        C383.7,11521.6,289.7,11528.6,227.7,11508.6z"
+                        ></path>
+                        <path
+                          d="M1507.7,11508.6c-151-50-253-216-222-362c25-119,136-230,254-255c194-41,395,142,375,339c-11,105-90,213-190,262        C1663.7,11521.6,1569.7,11528.6,1507.7,11508.6z"
+                        ></path>
+                        <path
+                          d="M227.7,10228.6c-105-35-200-141-222-248c-43-206,163-412,369-369c155,32,275,190,260,339c-11,105-90,213-190,262        C383.7,10241.6,289.7,10248.6,227.7,10228.6z"
+                        ></path>
+                        <path
+                          d="M1507.7,10228.6c-105-35-200-141-222-248c-43-206,163-412,369-369c155,32,275,190,260,339c-11,105-90,213-190,262        C1663.7,10241.6,1569.7,10248.6,1507.7,10228.6z"
+                        ></path>
+                        <path
+                          d="M227.7,8948.6c-105-35-200-141-222-248c-43-206,163-412,369-369c155,32,275,190,260,339c-11,105-90,213-190,262        C383.7,8961.6,289.7,8968.6,227.7,8948.6z"
+                        ></path>
+                        <path
+                          d="M1507.7,8948.6c-105-35-200-141-222-248c-43-206,163-412,369-369c155,32,275,190,260,339c-11,105-90,213-190,262        C1663.7,8961.6,1569.7,8968.6,1507.7,8948.6z"
+                        ></path>
+                        <path
+                          d="M227.7,7668.6c-105-35-200-141-222-248c-43-206,163-412,369-369c155,32,275,190,260,339c-11,105-90,213-190,262        C383.7,7681.6,289.7,7688.6,227.7,7668.6z"
+                        ></path>
+                        <path
+                          d="M1507.7,7668.6c-105-35-200-141-222-248c-43-206,163-412,369-369c155,32,275,190,260,339c-11,105-90,213-190,262        C1663.7,7681.6,1569.7,7688.6,1507.7,7668.6z"
+                        ></path>
+                        <path
+                          d="M227.7,6388.6c-105-35-200-141-222-248c-43-206,163-412,369-369c155,32,275,190,260,339c-11,105-90,213-190,262        C383.7,6401.6,289.7,6408.6,227.7,6388.6z"
+                        ></path>
+                        <path
+                          d="M1507.7,6388.6c-105-35-200-141-222-248c-43-206,163-412,369-369c155,32,275,190,260,339c-11,105-90,213-190,262        C1663.7,6401.6,1569.7,6408.6,1507.7,6388.6z"
+                        ></path>
+                        <path
+                          d="M227.7,5108.6c-105-35-200-141-222-248c-43-206,163-412,369-369c155,32,275,190,260,339c-11,105-90,213-190,262        C383.7,5121.6,289.7,5128.6,227.7,5108.6z"
+                        ></path>
+                        <path
+                          d="M1507.7,5108.6c-105-35-200-141-222-248c-43-206,163-412,369-369c155,32,275,190,260,339c-11,105-90,213-190,262        C1663.7,5121.6,1569.7,5128.6,1507.7,5108.6z"
+                        ></path>
+                        <path
+                          d="M227.7,3828.6c-105-35-200-141-222-248c-43-206,163-412,369-369c155,32,275,190,260,339c-11,105-90,213-190,262        C383.7,3841.6,289.7,3848.6,227.7,3828.6z"
+                        ></path>
+                        <path
+                          d="M1507.7,3828.6c-105-35-200-141-222-248c-43-206,163-412,369-369c155,32,275,190,260,339c-11,105-90,213-190,262        C1663.7,3841.6,1569.7,3848.6,1507.7,3828.6z"
+                        ></path>
+                        <path
+                          d="M227.7,2548.6c-105-35-200-141-222-248c-43-206,163-412,369-369c155,32,275,190,260,339c-11,105-90,213-190,262        C383.7,2561.6,289.7,2568.6,227.7,2548.6z"
+                        ></path>
+                        <path
+                          d="M1507.7,2548.6c-105-35-200-141-222-248c-43-206,163-412,369-369c155,32,275,190,260,339c-11,105-90,213-190,262        C1663.7,2561.6,1569.7,2568.6,1507.7,2548.6z"
+                        ></path>
+                        <path
+                          d="M227.7,1268.6c-105-35-200-141-222-248c-43-206,163-412,369-369c155,32,275,190,260,339c-11,105-90,213-190,262        C383.7,1281.6,289.7,1288.6,227.7,1268.6z"
+                        ></path>
+                        <path
+                          d="M1507.7,1268.6c-105-35-200-141-222-248c-43-206,163-412,369-369c155,32,275,190,260,339c-11,105-90,213-190,262        C1663.7,1281.6,1569.7,1288.6,1507.7,1268.6z"
+                        ></path>
+                      </g>
+                    </svg>
+                    <!-- END of SVG dots-->
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </header>
+      <!-- About Section-->
+      <section class="bg-light py-5">
+        <div class="container px-5">
+          <div class="row gx-5 justify-content-center">
+            <div class="col-xxl-8">
+              <div class="text-center my-5">
+                <h2 class="display-5 fw-bolder">
+                  <span class="text-gradient d-inline">About Me</span>
+                </h2>
+                <p class="lead fw-light mb-4">
+                  My name is Rohith Varma Vegesna, and I specialize in building
+                  scalable, secure, and high-performance software solutions for
+                  cloud, IoT, and real-time data processing.
+                </p>
+                <p class="text-muted">
+                  With expertise in AWS, microservices, and distributed systems,
+                  I focus on optimizing data workflows, securing IoT
+                  infrastructures, and designing resilient cloud applications.
+                  My work ensures businesses can leverage cutting-edge
+                  technology to enhance efficiency, security, and scalability.
+                </p>
+                <div class="d-flex justify-content-center fs-2 gap-4">
+                  <a
+                    class="text-gradient"
+                    target="_blank"
+                    href="https://www.linkedin.com/in/rohithvegesna/"
+                    ><i class="bi bi-linkedin"></i
+                  ></a>
+                  <a
+                    class="text-gradient"
+                    target="_blank"
+                    href="https://github.com/rohithvegesna"
+                    ><i class="bi bi-github"></i
+                  ></a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+    <!-- Footer-->
+    <footer class="bg-white py-4 mt-auto">
+      <div class="container px-5">
+        <div
+          class="row align-items-center justify-content-between flex-column flex-sm-row"
+        >
+          <div class="col-auto">
+            <div class="small m-0">
+              <p>
+                Copyright © <span id="year"></span> Rohith Varma Vegesna. All
+                Rights Reserved.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </footer>
+    <!-- Bootstrap core JS-->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Core theme JS-->
+    <script src="js/scripts.js"></script>
   </body>
 </html>
