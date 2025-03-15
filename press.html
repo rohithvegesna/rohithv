@@ -116,42 +116,72 @@
       });
     </script>
     <script>
-      // Function to fetch and display publications from data.json
+      // Function to fetch Open Graph image
+      async function fetchOGImage(url) {
+        try {
+          const response = await fetch(
+            `https://api.allorigins.win/get?url=${encodeURIComponent(url)}`
+          );
+          const data = await response.json();
+          const parser = new DOMParser();
+          const doc = parser.parseFromString(data.contents, "text/html");
+          const metaTag = doc.querySelector('meta[property="og:image"]');
+          return metaTag ? metaTag.content : null;
+        } catch (error) {
+          console.error("Error fetching OG image:", error);
+          return null;
+        }
+      }
+
+      // Function to load publications and display them
       async function loadPublications() {
         try {
-          // Fetch data from data.json
+          // Fetch data.json
           const response = await fetch("https://www.rohithv.com/data.json");
           const data = await response.json();
-
-          // Get the publications array
           const pressReleases = data.pressReleases;
           const container = document.getElementById("publications-section");
 
           // Clear existing content
           container.innerHTML = "";
 
-          // Loop through each publication and create HTML structure
-          pressReleases.forEach((pub) => {
+          // Loop through each press release and create card structure
+          for (const pub of pressReleases) {
+            const ogImage = await fetchOGImage(pub.link);
+
             const pressReleasesCard = `
-                        <div class="card overflow-hidden shadow rounded-4 border-0 mb-5">
-                            <div class="card-body p-0">
-                                <div class="d-flex align-items-center">
-                                    <div class="p-5">
-                                        <h2 class="fw-bolder">${pub.title}</h2>
-                                        <p>${pub.date}</p>
-                                        <p>${pub.description}</p>
-                                        <a href="${pub.link}" target="_blank" class="btn btn-primary">Read More</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    `;
+              <div class="card overflow-hidden shadow rounded-4 border-0 mb-5">
+                <div class="card-body p-0">
+                  <div class="press-card">
+                    ${
+                      ogImage
+                        ? `<div class="press-image"><img src="${ogImage}" alt="${pub.title}" class="img-fluid"></div>`
+                        : ""
+                    }
+                    <div class="press-content">
+                      <h2 class="fw-bolder">${pub.title}</h2>
+                      <p>${pub.date}</p>
+                      <p>${pub.description}</p>
+                      <a href="${
+                        pub.link
+                      }" target="_blank" class="btn btn-primary">Read More</a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            `;
 
             // Append to container
             container.innerHTML += pressReleasesCard;
-          });
+          }
+
+          // Hide the loader and show content
+          document.getElementById("loader").style.display = "none";
+          container.style.display = "block";
         } catch (error) {
           console.error("Error loading publications:", error);
+          document.getElementById("loader").innerHTML =
+            "<p>Failed to load content. Please try again later.</p>";
         }
       }
 
@@ -208,6 +238,9 @@
             </h1>
           </div>
           <div class="row gx-5 justify-content-center">
+            <div id="loader" class="loading-container">
+              <div class="spinner"></div>
+            </div>
             <div
               class="col-lg-11 col-xl-9 col-xxl-8"
               id="publications-section"
