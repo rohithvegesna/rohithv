@@ -1,0 +1,57 @@
+// Press coverage carried over from the previous site (old/data.json).
+export const press = [
+  {
+    "title": "Beyond Traditional Fuel Inventory Tracking: The Case for Smart Fueling Systems",
+    "date": "Jun 3, 2025",
+    "description": "News Nation TV's brand story features my advocacy for smart fueling systems that go beyond conventional inventory tracking, leveraging data and cloud-based solutions to optimize fuel operations and security.",
+    "link": "https://english.newsnationtv.com/brand-stories/brand-stories-english/beyond-traditional-fuel-inventory-tracking-the-case-for-smart-fueling-systems-by-rohith-vegesna-9332895"
+  },
+  {
+    "title": "Solving the Biggest Challenges in Fueling Systems: Security, Efficiency, and Automation",
+    "date": "May 29, 2025",
+    "description": "OneIndia covers my comprehensive strategies to overcome the challenges of security, efficiency, and automation in modern fueling systems, with emphasis on real-time analytics and advanced cyber protection.",
+    "link": "https://www.oneindia.com/in-the-news/solving-the-biggest-challenges-in-fueling-systems-security-efficiency-and-automation-4167231.html"
+  },
+  {
+    "title": "Transforming Fuel Station Operations: The Impact of Automation and Real-Time Analytics",
+    "date": "Apr 3, 2025",
+    "description": "Analytics Insight discusses how my work in automation and real-time analytics has led to a 40% improvement in fuel station efficiency, reducing refueling delays and minimizing manual transaction processing.",
+    "link": "https://www.analyticsinsight.net/tech-news/transforming-fuel-station-operations-the-impact-of-automation-and-real-time-analytics"
+  },
+  {
+    "title": "Rohith Varma Vegesna Recognized as 22nd Certified Global Tech Hero",
+    "date": "Apr 2, 2025",
+    "description": "ThisDayLive features my recognition as the 22nd Certified Global Tech Hero for groundbreaking contributions in secure fuel technology and digital innovation.",
+    "link": "https://www.thisdaylive.com/index.php/2025/04/02/rohith-varma-vegesna-recognized-as-22nd-certified-global-tech-hero"
+  },
+  {
+    "title": "Cybersecurity in Fueling Systems: Protecting Transactions and Preventing Fraud",
+    "date": "Mar 11, 2025",
+    "description": "MSN covers my insights on securing fueling systems against fraud and cyber threats, ensuring transaction integrity and security.",
+    "link": "https://www.msn.com/en-us/money/other/cybersecurity-in-fueling-systems-protecting-transactions-and-preventing-fraud/ar-AA1AGFFE"
+  },
+  {
+    "title": "The Future of Fueling Systems",
+    "date": "Feb 24, 2025",
+    "description": "Free Press Journal highlights my role in advancing fuel system automation with cloud and IoT, enhancing security and efficiency.",
+    "link": "https://www.freepressjournal.in/latest-news/the-future-of-fueling-systems-automating-operations-with-cloud-and-iot"
+  },
+  {
+    "title": "Expert Take on Why Outdated Fueling Systems Are a Security Risk and How to Fix Them",
+    "date": "Dec 25, 2023",
+    "description": "India Hood explores my expert perspective on the vulnerabilities in legacy fuel systems and the modern solutions needed to secure them.",
+    "link": "https://indiahood.com/expert-take-on-why-outdated-fueling-systems-are-a-security-risk-and-how-to-fix-them/"
+  },
+  {
+    "title": "Decentralized Authentication: Securing Fuel Stations and Eliminating Unauthorized Transactions",
+    "date": "Jan 16, 2022",
+    "description": "The Hans India features my work on decentralized authentication, enhancing security at fuel stations by eliminating unauthorized access and transactions.",
+    "link": "https://www.thehansindia.com/news/international/decentralized-authentication-securing-fuel-stations-and-eliminating-unauthorized-transactions-957448"
+  },
+  {
+    "title": "Revolutionizing Fuel Security: How IoT & Cloud Integration Prevent Fuel Theft",
+    "date": "Dec 08, 2020",
+    "description": "India CSR discusses how my innovative approach using IoT and cloud integration is transforming fuel security and preventing fuel theft.",
+    "link": "https://indiacsr.in/revolutionizing-fuel-security-how-iot-cloud-integration-prevent-fuel-theft/"
+  }
+];
