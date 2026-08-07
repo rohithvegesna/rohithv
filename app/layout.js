@@ -44,6 +44,7 @@ export const metadata = {
     images: ["/og.png"],
   },
   robots: { index: true, follow: true },
+  verification: { google: "G-FET9JB3RQT" },
 };
 
 export default function RootLayout({ children }) {
