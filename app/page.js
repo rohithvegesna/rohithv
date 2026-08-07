@@ -11,6 +11,7 @@ export const metadata = {
     "Payment and IoT infrastructure for fuel retail at national scale: EMV at the dispenser, edge-to-cloud telemetry on AWS, and 27 peer-reviewed publications.",
   alternates: { canonical: "/" },
   openGraph: {
+    type: "website",
     title: "Rohith Varma Vegesna — Senior Software Engineer & Tech Lead",
     description:
       "Payment and IoT infrastructure for fuel retail at national scale.",
@@ -36,7 +37,7 @@ const jsonLd = {
       "@id": `${site.url}/#person`,
       name: site.name,
       url: site.url,
-      image: `${site.url}/profile.png`,
+      image: `${site.url}/profile.webp`,
       jobTitle: "Senior Software Engineer & Tech Lead",
       worksFor: { "@type": "Organization", name: site.company },
       address: {
@@ -119,7 +120,7 @@ export default function Home() {
           <div className="flex flex-col gap-10 md:flex-row md:items-start">
             <div className="w-40 shrink-0 overflow-hidden rounded-sm border border-line bg-surface-2 sm:w-48">
               <Image
-                src="/profile.png"
+                src="/profile.webp"
                 alt="Portrait of Rohith Varma Vegesna"
                 width={192}
                 height={192}

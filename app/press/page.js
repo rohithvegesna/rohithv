@@ -7,6 +7,7 @@ export const metadata = {
     "Press coverage of Rohith Varma Vegesna's work on smart fueling systems, fuel-station cybersecurity, and IoT-driven automation.",
   alternates: { canonical: "/press/" },
   openGraph: {
+    type: "website",
     title: "Press — Rohith Varma Vegesna",
     description:
       "Coverage of smart fueling systems, fuel-station cybersecurity, and IoT-driven automation.",

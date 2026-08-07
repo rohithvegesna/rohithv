@@ -7,6 +7,7 @@ export const metadata = {
     "Case studies: forecourt payment & IoT infrastructure, PXE fleet imaging, SevenlyTravel, and fleet observability at national retail scale.",
   alternates: { canonical: "/work/" },
   openGraph: {
+    type: "website",
     title: "Work — Rohith Varma Vegesna",
     description:
       "Case studies in payment and IoT infrastructure at national retail scale.",

@@ -7,6 +7,7 @@ export const metadata = {
     "27 peer-reviewed publications on federated learning, secure LLM deployment, and cloud-native fuel-system architecture, including IEEE papers.",
   alternates: { canonical: "/publications/" },
   openGraph: {
+    type: "website",
     title: "Publications — Rohith Varma Vegesna",
     description:
       "Peer-reviewed research on federated learning, LLM deployment, and cloud-native fuel systems.",

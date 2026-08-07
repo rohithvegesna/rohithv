@@ -13,7 +13,7 @@ export default function Header() {
       <div className="mx-auto flex max-w-5xl flex-wrap items-center justify-between gap-x-6 gap-y-1 px-5 py-3 sm:px-8">
         <Link
           href="/"
-          className="readout flex items-center gap-2 font-medium text-ink"
+          className="readout flex items-center gap-2 py-2 font-medium text-ink"
         >
           <span className="inline-block h-2 w-2 rounded-full bg-amber pulse-dot" aria-hidden="true" />
           Rohith&nbsp;Varma&nbsp;Vegesna
@@ -24,7 +24,7 @@ export default function Header() {
               <li key={item.href}>
                 <Link
                   href={item.href}
-                  className="text-muted transition-colors hover:text-ink"
+                  className="inline-block px-1 py-2 text-muted transition-colors hover:text-ink"
                 >
                   {item.label}
                 </Link>
