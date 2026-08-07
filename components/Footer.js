@@ -4,7 +4,7 @@ const links = [
   { href: `mailto:${site.email}`, label: "Email" },
   { href: site.github, label: "GitHub" },
   { href: site.linkedin, label: "LinkedIn" },
-  { href: site.orcid, label: "ORCID" },
+  { href: site.scholar, label: "Scholar" },
 ];
 
 export default function Footer() {

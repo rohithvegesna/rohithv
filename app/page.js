@@ -8,7 +8,7 @@ import { publications } from "@/data/publications";
 export const metadata = {
   title: "Rohith Varma Vegesna — Senior Software Engineer & Tech Lead",
   description:
-    "Payment and IoT infrastructure for fuel retail at national scale: EMV at the dispenser, edge-to-cloud telemetry on AWS, and 24 peer-reviewed publications.",
+    "Payment and IoT infrastructure for fuel retail at national scale: EMV at the dispenser, edge-to-cloud telemetry on AWS, and 27 peer-reviewed publications.",
   alternates: { canonical: "/" },
   openGraph: {
     title: "Rohith Varma Vegesna — Senior Software Engineer & Tech Lead",
@@ -46,7 +46,7 @@ const jsonLd = {
         addressCountry: "US",
       },
       email: `mailto:${site.email}`,
-      sameAs: [site.github, site.linkedin, site.orcid],
+      sameAs: [site.github, site.linkedin, site.scholar],
     },
     {
       "@type": "WebSite",
@@ -102,12 +102,6 @@ export default function Home() {
             className="rounded-sm border border-line px-5 py-2.5 text-sm font-semibold transition-colors hover:border-accent"
           >
             LinkedIn
-          </a>
-          <a
-            href="#experience"
-            className="rounded-sm border border-line px-5 py-2.5 text-sm font-semibold transition-colors hover:border-accent"
-          >
-            Resume
           </a>
         </div>
         <div className="mt-16">

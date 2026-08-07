@@ -8,7 +8,7 @@ export const site = {
   email: "rohithvegesna@gmail.com",
   github: "https://github.com/rohithvegesna",
   linkedin: "https://www.linkedin.com/in/rohithvegesna/",
-  orcid: "https://orcid.org/0009-0004-7568-9188",
+  scholar: "https://scholar.google.com/citations?user=tRuKSz4AAAAJ",
   description:
     "Senior Software Engineer & Tech Lead building secure payment and IoT infrastructure for fuel retail at national scale. 20+ IEEE publications.",
 };
@@ -16,7 +16,7 @@ export const site = {
 export const experience = [
   {
     period: "Nov 2021 — Present",
-    title: "Software Engineer II → Senior Software Engineer & Tech Lead",
+    title: "Senior Software Engineer",
     org: "7-Eleven",
     place: "Irving, TX",
     body: "Leads engineering on the DEX/FuelControl platform: secure IoT-driven fuel-station automation, EMV payment processing at the dispenser, and edge-to-cloud connectivity across major fuel retail brands. Java/Spring state machines at the edge, AWS backbone (IoT Core, Lambda, ECS, Kinesis, DynamoDB) in the cloud. Leads a team with hiring and delivery responsibilities.",

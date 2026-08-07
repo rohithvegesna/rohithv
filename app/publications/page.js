@@ -1,10 +1,10 @@
-import { publications, ORCID_ID } from "@/data/publications";
+import { publications, SCHOLAR_URL } from "@/data/publications";
 import { site } from "@/data/site";
 
 export const metadata = {
   title: "Publications",
   description:
-    "24 peer-reviewed publications on federated learning, secure LLM deployment, and cloud-native fuel-system architecture, including IEEE papers.",
+    "27 peer-reviewed publications on federated learning, secure LLM deployment, and cloud-native fuel-system architecture, including IEEE papers.",
   alternates: { canonical: "/publications/" },
   openGraph: {
     title: "Publications — Rohith Varma Vegesna",
@@ -16,6 +16,7 @@ export const metadata = {
 };
 
 const isIEEE = (pub) => pub.doi?.startsWith("10.1109");
+const soloAuthor = (pub) => pub.authors === "RV Vegesna";
 
 export default function Publications() {
   const years = [...new Set(publications.map((p) => p.year))].sort(
@@ -40,14 +41,14 @@ export default function Publications() {
       <p className="mt-4 leading-relaxed text-muted">
         {publications.length} peer-reviewed works — {ieeeCount} IEEE conference
         papers among them — on federated learning, secure LLM deployment, and
-        the cloud-native architecture behind fuel systems. Sourced from{" "}
+        the cloud-native architecture behind fuel systems. Full record on{" "}
         <a
-          href={site.orcid}
+          href={SCHOLAR_URL}
           target="_blank"
           rel="noopener noreferrer"
           className="underline decoration-line underline-offset-4 transition-colors hover:decoration-accent"
         >
-          ORCID {ORCID_ID}
+          Google Scholar
         </a>
         .
       </p>
@@ -62,7 +63,7 @@ export default function Publications() {
             {publications
               .filter((p) => p.year === year)
               .map((pub) => (
-                <li key={pub.doi ?? pub.title}>
+                <li key={pub.title}>
                   <div className="flex items-start gap-3">
                     {isIEEE(pub) && (
                       <span className="readout mt-1 shrink-0 rounded-sm border border-line px-1.5 py-0.5 text-amber">
@@ -71,21 +72,21 @@ export default function Publications() {
                     )}
                     <div>
                       <a
-                        href={pub.doi ? `https://doi.org/${pub.doi}` : site.orcid}
+                        href={pub.doi ? `https://doi.org/${pub.doi}` : SCHOLAR_URL}
                         target="_blank"
                         rel="noopener noreferrer"
                         className="font-medium leading-snug underline decoration-line underline-offset-4 transition-colors hover:decoration-accent"
                       >
                         {pub.title}
                       </a>
-                      {pub.venue ? (
-                        <p className="mt-1 text-sm text-muted">{pub.venue}</p>
-                      ) : null}
-                      {pub.doi ? (
-                        <p className="readout mt-1 text-muted">
-                          doi:{pub.doi.toLowerCase()}
-                        </p>
-                      ) : null}
+                      {!soloAuthor(pub) && (
+                        <p className="mt-1 text-sm text-muted">{pub.authors}</p>
+                      )}
+                      <p className="mt-1 text-sm text-muted">{pub.venue}</p>
+                      <p className="readout mt-1 text-muted">
+                        {pub.doi ? `doi:${pub.doi.toLowerCase()}` : "via google scholar"}
+                        {pub.citedBy > 0 ? ` · cited by ${pub.citedBy}` : ""}
+                      </p>
                     </div>
                   </div>
                 </li>
