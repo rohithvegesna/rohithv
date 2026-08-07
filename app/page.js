@@ -117,20 +117,15 @@ export default function Home() {
         <div className="mx-auto max-w-5xl px-5 py-16 sm:px-8">
           <SectionHeading id="about">About</SectionHeading>
           <div className="flex flex-col gap-10 md:flex-row md:items-start">
-            <figure className="shrink-0">
-              <div className="w-40 overflow-hidden rounded-sm border border-line bg-surface-2 sm:w-48">
-                <Image
-                  src="/profile.png"
-                  alt="Portrait of Rohith Varma Vegesna"
-                  width={192}
-                  height={192}
-                  priority={false}
-                />
-              </div>
-              <figcaption className="readout mt-2 text-muted">
-                Fig. 02 — DFW, TX
-              </figcaption>
-            </figure>
+            <div className="w-40 shrink-0 overflow-hidden rounded-sm border border-line bg-surface-2 sm:w-48">
+              <Image
+                src="/profile.png"
+                alt="Portrait of Rohith Varma Vegesna"
+                width={192}
+                height={192}
+                priority={false}
+              />
+            </div>
             <div className="max-w-2xl space-y-4 leading-relaxed">
               <p>
                 I lead engineering on 7-Eleven&apos;s DEX/FuelControl platform:
@@ -138,7 +133,7 @@ export default function Home() {
                 processing at the dispenser and edge-to-cloud connectivity
                 across major fuel retail brands. My team owns the path a fuel
                 transaction takes from pump hardware to AWS — and I own the
-                hiring, delivery, and architecture that keep it running.
+                delivery and architecture that keep it running.
               </p>
               <p>
                 Away from the forecourt I research and publish —{" "}
@@ -157,23 +152,26 @@ export default function Home() {
       <section aria-labelledby="experience" className="border-t border-line">
         <div className="mx-auto max-w-5xl px-5 py-16 sm:px-8">
           <SectionHeading id="experience">Experience</SectionHeading>
-          <ol className="space-y-10 border-l border-line pl-6 sm:pl-8">
-            {experience.map((job) => (
-              <li key={job.period} className="relative">
-                <span
-                  className="absolute -left-[29px] top-1.5 h-2 w-2 rounded-full border border-accent bg-bg sm:-left-[37px]"
-                  aria-hidden="true"
-                />
-                <p className="readout text-amber">{job.period}</p>
-                <h3 className="display mt-1 text-lg font-semibold">
-                  {job.title}
-                </h3>
-                <p className="readout mt-1 text-muted">
-                  {job.org} · {job.place}
-                </p>
-                <p className="mt-3 max-w-2xl leading-relaxed text-muted">
-                  {job.body}
-                </p>
+          <ol className="space-y-14">
+            {experience.map((company) => (
+              <li key={company.org}>
+                <h3 className="display text-xl font-semibold">{company.org}</h3>
+                <p className="readout mt-1 text-muted">{company.place}</p>
+                <ol className="mt-6 space-y-9 border-l border-line pl-6 sm:pl-8">
+                  {company.roles.map((role) => (
+                    <li key={role.period} className="relative">
+                      <span
+                        className="absolute -left-[29px] top-1.5 h-2 w-2 rounded-full border border-accent bg-bg sm:-left-[37px]"
+                        aria-hidden="true"
+                      />
+                      <p className="readout text-amber">{role.period}</p>
+                      <h4 className="mt-1 font-semibold">{role.title}</h4>
+                      <p className="mt-2 max-w-2xl leading-relaxed text-muted">
+                        {role.body}
+                      </p>
+                    </li>
+                  ))}
+                </ol>
               </li>
             ))}
           </ol>

@@ -15,47 +15,78 @@ export const site = {
 
 export const experience = [
   {
-    period: "Nov 2021 — Present",
-    title: "Senior Software Engineer",
     org: "7-Eleven",
     place: "Irving, TX",
-    body: "Leads engineering on the DEX/FuelControl platform: secure IoT-driven fuel-station automation, EMV payment processing at the dispenser, and edge-to-cloud connectivity across major fuel retail brands. Java/Spring state machines at the edge, AWS backbone (IoT Core, Lambda, ECS, Kinesis, DynamoDB) in the cloud. Leads a team with hiring and delivery responsibilities.",
+    roles: [
+      {
+        period: "May 2026 — Present",
+        title: "Senior Software Engineer",
+        body: "Tech Lead on the FuelControl platform behind 7-Eleven's retail fuel network — Speedway, 7-Eleven, Exxon, Phillips 66, and Stripes. Leads the team, owns cloud and AWS architecture across the Gilbarco and Wayne dispenser ecosystem, and designed the multi-signal observability platform that tells on-call whether a store is offline, idle, or has a broken cloud path.",
+      },
+      {
+        period: "Nov 2021 — May 2026",
+        title: "Software Engineer II",
+        body: "Designed the fleet-wide CloudWatch observability architecture — EMF metrics, baseline store registries, silent-store detection — that gave the on-call team its first per-store reachability signal. Delivered the Unitec WSII carwash integration chain-wide, contributed to the EMV state machine and BER-TLV messaging behind payments at the pump, and built the incident-response tooling that lets junior engineers diagnose store issues without senior backup.",
+      },
+      {
+        period: "May 2020 — Nov 2021",
+        title: "Full-Stack Developer",
+        body: "Designed the FID (Forecourt Integration Device) messaging layer connecting POS systems to the fuel controller — the foundation for carwash-at-pump sales and dynamic pricing across the chain. Built the first integration letting customers start a fuel transaction from the mobile app, and a JUnit 5 framework that simulated full transaction flows without dispenser hardware.",
+      },
+      {
+        period: "Oct 2019 — May 2020",
+        title: "Java Software Developer",
+        body: "Wrote the foundational EMV transaction code for fuel dispensers — Spring State Machine and a byte-level communication layer — that the payments stack still runs on today. Built a Python/PyQt5 dispenser simulator for end-to-end testing without physical hardware.",
+      },
+    ],
   },
   {
-    period: "Jun 2020 — Nov 2021",
-    title: "Java Software Developer",
-    org: "IntelliSoft Technologies",
-    place: "Irving, TX",
-    body: "Built EMV transaction systems with Java 8 and Spring, and designed a Python fuel-dispenser simulator with PyQt5 for integration testing without forecourt hardware.",
+    org: "TCompliance",
+    place: "Dallas–Fort Worth, TX",
+    roles: [
+      {
+        period: "Jun 2018 — Jun 2019",
+        title: "Software Developer Intern",
+        body: "Built and deployed GPS tracking devices and REST APIs (Java, Spark Framework) connecting the platform to LabCorp's lab systems for live specimen tracking and compliance reporting.",
+      },
+    ],
   },
   {
-    period: "Oct 2019 — May 2020",
-    title: "Java Software Developer",
-    org: "Matrix Resources",
-    place: "Irving, TX",
-    body: "Integrated carwash sales at the pump with Java Spring microservices and Node.js, extending point-of-sale frameworks.",
+    org: "revaalo",
+    place: "Bengaluru, India",
+    roles: [
+      {
+        period: "Apr 2017 — Apr 2018",
+        title: "Software Developer",
+        body: "Built factory-automation software for the IoT device fleet powering ABB's Smart Factory initiative — server-side device control, automated reboot orchestration, and a Smart Factory database schema and IoT network topology designed from scratch.",
+      },
+    ],
   },
   {
-    period: "May 2017 — Mar 2018",
-    title: "Software Developer",
-    org: "Revaalo",
-    place: "Bangalore, India",
-    body: "Pioneered IoT automation for a smart-factory deployment, managing 200+ IoT devices with Java 8 and Python.",
+    org: "NGCN Infosolutions",
+    place: "Bengaluru, India",
+    roles: [
+      {
+        period: "Apr 2015 — Mar 2017",
+        title: "Software Developer",
+        body: "Built inventory-and-billing software, an HRM platform with automated monthly payroll, and a job board with online applicant exams and resume management.",
+      },
+    ],
   },
 ];
 
 export const education = [
   {
-    period: "2019",
-    title: "M.S. Computer Information Sciences",
+    period: "2018 — 2019",
+    title: "M.S. Computer and Information Sciences",
     org: "Southern Arkansas University",
     place: "Magnolia, AR",
   },
   {
-    period: "2017",
-    title: "B.E. Mechanical Engineering",
-    org: "Gandhi Institute of Management and Technology",
-    place: "Andhra Pradesh, India",
+    period: "2013 — 2017",
+    title: "B.Tech. Mechanical Engineering",
+    org: "GITAM University",
+    place: "Visakhapatnam, India",
   },
 ];
 
@@ -99,6 +130,6 @@ export const skills = [
   },
   {
     domain: "Leadership",
-    items: ["Team lead", "Hiring", "Mentoring", "Architecture review"],
+    items: ["Team lead", "Mentoring", "Architecture review"],
   },
 ];
