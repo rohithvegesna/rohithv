@@ -22,10 +22,10 @@ function bodyProfile() {
   s.lineTo(0.55, 0.84);        // belt line
   s.quadraticCurveTo(1.4, 0.8, 2.0, 0.66); // hood slope
   s.quadraticCurveTo(2.32, 0.58, 2.3, 0.42);
-  s.lineTo(2.28, 0.26);
-  s.lineTo(1.9, 0.18);
-  s.lineTo(-1.95, 0.18);
-  s.lineTo(-2.3, 0.3);
+  s.lineTo(2.28, 0.30);
+  s.lineTo(1.9, 0.30);
+  s.lineTo(-1.95, 0.30);
+  s.lineTo(-2.3, 0.34);
   return s;
 }
 
@@ -40,7 +40,10 @@ function glassProfile() {
 }
 
 export function buildCar(paintColor = 0x9a2f26) {
-  const car = new THREE.Group();
+  const car = new THREE.Group();      // mirrors the rigid body 1:1
+  const visual = new THREE.Group();   // body shell, offset so floor sits right
+  visual.position.y = -0.42;
+  car.add(visual);
 
   const paint = new THREE.MeshPhysicalMaterial({
     color: paintColor,
@@ -51,7 +54,7 @@ export function buildCar(paintColor = 0x9a2f26) {
   });
   const body = new THREE.Mesh(
     new THREE.ExtrudeGeometry(bodyProfile(), {
-      depth: CAR.width - 0.24,
+      depth: 1.26,
       bevelEnabled: true,
       bevelThickness: 0.1,
       bevelSize: 0.11,
@@ -62,13 +65,13 @@ export function buildCar(paintColor = 0x9a2f26) {
   );
   body.rotation.y = -Math.PI / 2; // extrude depth → width across z? keep along z
   body.rotation.y = 0;
-  body.position.z = -(CAR.width - 0.24) / 2;
+  body.position.z = -1.26 / 2 - 0.11;
   body.castShadow = true;
-  car.add(body);
+  visual.add(body);
 
   const glass = new THREE.Mesh(
     new THREE.ExtrudeGeometry(glassProfile(), {
-      depth: CAR.width - 0.62,
+      depth: 1.02,
       bevelEnabled: true,
       bevelThickness: 0.05,
       bevelSize: 0.05,
@@ -82,32 +85,32 @@ export function buildCar(paintColor = 0x9a2f26) {
       opacity: 0.92,
     })
   );
-  glass.position.z = -(CAR.width - 0.62) / 2;
+  glass.position.z = -1.02 / 2 - 0.05;
   glass.castShadow = true;
-  car.add(glass);
+  visual.add(glass);
 
   // rocker/skirt shadow mass grounds the body visually
   const skirt = new THREE.Mesh(
-    new RoundedBoxGeometry(CAR.length - 0.7, 0.16, CAR.width - 0.34, 2, 0.05),
+    new RoundedBoxGeometry(CAR.length - 0.9, 0.2, 1.3, 2, 0.05),
     new THREE.MeshStandardMaterial({ color: 0x0c0b0a, roughness: 0.7 })
   );
-  skirt.position.y = 0.17;
-  car.add(skirt);
+  skirt.position.y = -0.1;
+  visual.add(skirt);
 
   // chrome trim: belt line strips
   const chrome = new THREE.MeshStandardMaterial({ color: 0xd8dadd, metalness: 1, roughness: 0.15 });
   for (const side of [-1, 1]) {
     const strip = new THREE.Mesh(new THREE.BoxGeometry(2.9, 0.03, 0.02), chrome);
-    strip.position.set(-0.15, 0.85, side * (CAR.width / 2 - 0.1));
-    car.add(strip);
+    strip.position.set(-0.15, 0.85, side * 0.72);
+    visual.add(strip);
   }
   // bumpers
   const bumperMat = new THREE.MeshStandardMaterial({ color: 0x17181a, roughness: 0.5 });
-  const bF = new THREE.Mesh(new RoundedBoxGeometry(0.32, 0.3, CAR.width - 0.2, 3, 0.1), bumperMat);
-  bF.position.set(CAR.length / 2 - 0.2, 0.4, 0);
+  const bF = new THREE.Mesh(new RoundedBoxGeometry(0.34, 0.28, 1.5, 3, 0.1), bumperMat);
+  bF.position.set(CAR.length / 2 - 0.2, 0.46, 0);
   const bR = bF.clone();
   bR.position.x = -(CAR.length / 2 - 0.2);
-  car.add(bF, bR);
+  visual.add(bF, bR);
 
   // headlights + taillights
   const headMat = new THREE.MeshStandardMaterial({
@@ -121,14 +124,22 @@ export function buildCar(paintColor = 0x9a2f26) {
     emissiveIntensity: 2.6,
   });
   const lights = [];
+  const revMat = new THREE.MeshStandardMaterial({
+    color: 0x2a2a28,
+    emissive: 0xfff8ea,
+    emissiveIntensity: 0,
+  });
   for (const side of [-1, 1]) {
+    const rv = new THREE.Mesh(new RoundedBoxGeometry(0.06, 0.08, 0.14, 2, 0.02), revMat);
+    rv.position.set(-(CAR.length / 2 - 0.09), 0.72, side * 0.32);
+    visual.add(rv);
     const h = new THREE.Mesh(new RoundedBoxGeometry(0.1, 0.12, 0.34, 2, 0.04), headMat);
     h.position.set(CAR.length / 2 - 0.12, 0.62, side * 0.58);
-    car.add(h);
+    visual.add(h);
     lights.push(h);
     const t = new THREE.Mesh(new RoundedBoxGeometry(0.08, 0.12, 0.4, 2, 0.03), tailMat);
     t.position.set(-(CAR.length / 2 - 0.1), 0.72, side * 0.55);
-    car.add(t);
+    visual.add(t);
     lights.push(t);
   }
   // headlight cones
@@ -137,7 +148,7 @@ export function buildCar(paintColor = 0x9a2f26) {
     const sp = new THREE.SpotLight(0xffedc2, 120, 30, Math.PI / 5.5, 0.55, 1.7);
     sp.position.set(CAR.length / 2 - 0.1, 0.62, side * 0.58);
     sp.target.position.set(CAR.length / 2 + 8, 0.2, side * 0.7);
-    car.add(sp, sp.target);
+    visual.add(sp, sp.target);
     spots.push(sp);
   }
 
@@ -154,7 +165,7 @@ export function buildCar(paintColor = 0x9a2f26) {
   );
   plate.position.set(-(CAR.length / 2 + 0.005), 0.5, 0);
   plate.rotation.y = -Math.PI / 2;
-  car.add(plate);
+  visual.add(plate);
 
   // wheels
   const wheelGroup = [];
@@ -172,6 +183,7 @@ export function buildCar(paintColor = 0x9a2f26) {
     tire.castShadow = true;
     const rim = new THREE.Mesh(rimGeo, rimMat);
     const disc = new THREE.Mesh(new THREE.CylinderGeometry(0.13, 0.13, 0.28, 14).rotateX(Math.PI / 2), discMat);
+    disc.position.z = 0.02 * (i % 2 === 0 ? 1 : -1);
     w.add(tire, rim, disc);
     for (let sIdx = 0; sIdx < 5; sIdx++) {
       const spoke = new THREE.Mesh(spokeGeo, rimMat);
@@ -183,7 +195,7 @@ export function buildCar(paintColor = 0x9a2f26) {
     car.add(w);
   }
 
-  return { car, wheels: wheelGroup, spots, paint };
+  return { car, visual, wheels: wheelGroup, spots, paint, tailMat, revMat };
 }
 
 /* Rapier vehicle wiring. */
@@ -195,15 +207,15 @@ export function attachVehicle(RAPIER, world, car) {
     .setAngularDamping(1.4)
     .setCcdEnabled(true);
   const chassis = world.createRigidBody(bodyDesc);
-  world.createCollider(
-    RAPIER.ColliderDesc.cuboid(CAR.length / 2 - 0.25, 0.42, CAR.width / 2 - 0.14)
-      .setTranslation(0, 0.55, 0)
+  const chassisCol = world.createCollider(
+    RAPIER.ColliderDesc.cuboid(CAR.length / 2 - 0.25, 0.32, CAR.width / 2 - 0.14)
+      .setTranslation(0, 0.64, 0)
       .setMass(140),
     chassis
   );
 
   const vehicle = makeVehicle(world, chassis);
-  return { chassis, vehicle };
+  return { chassis, chassisCol, vehicle };
 }
 
 export function makeVehicle(world, chassis) {
@@ -220,16 +232,16 @@ export function makeVehicle(world, chassis) {
       { x: px, y: py, z: pz },
       { x: 0, y: -1, z: 0 },
       { x: 0, y: 0, z: 1 },
-      0.32,
+      0.36,
       CAR.wheelRadius
     );
   });
   for (let i = 0; i < 4; i++) {
-    vehicle.setWheelSuspensionStiffness(i, 32);
-    vehicle.setWheelMaxSuspensionForce(i, 12000);
-    vehicle.setWheelMaxSuspensionTravel(i, 0.28);
-    vehicle.setWheelSuspensionCompression(i, 2.6);
-    vehicle.setWheelSuspensionRelaxation(i, 3.4);
+    vehicle.setWheelSuspensionStiffness(i, 4800);
+    vehicle.setWheelMaxSuspensionForce(i, 1500);
+    vehicle.setWheelMaxSuspensionTravel(i, 0.34);
+    vehicle.setWheelSuspensionCompression(i, 750);
+    vehicle.setWheelSuspensionRelaxation(i, 950);
     vehicle.setWheelFrictionSlip(i, 3.4);
     vehicle.setWheelSideFrictionStiffness(i, 1.0);
   }

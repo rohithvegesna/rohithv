@@ -12,7 +12,7 @@ const URL = arg("url", "http://localhost:3000");
 const ITER = arg("iter", "000");
 const POSES = arg(
   "poses",
-  "spawn,approach,at_pump,fueling,on_foot_lot,store_aisle,checkout,receipt"
+  "spawn,approach,at_pump,fueling,on_foot_lot,store_aisle,checkout,receipt,side_profile,three_quarter"
 ).split(",");
 const DIR = `loop/artifacts/iter-${ITER}`;
 mkdirSync(DIR, { recursive: true });
@@ -52,6 +52,38 @@ async function runViewport(tag, viewport, mobile) {
     await page.screenshot({ path: `${DIR}/${tag}-${pose}.png` });
     states[pose] = await page.evaluate("window.__game.state()");
   }
+  // V2 wheel assertions (desktop only)
+  if (!mobile && POSES.includes("side_profile")) {
+    await page.evaluate("window.__game.teleport('side_profile')");
+    await page.waitForTimeout(400);
+    const ws = await page.evaluate("window.__game.wheelState()");
+    const fails = [];
+    ws.wheels.forEach((w, i) => {
+      if (w.worldY == null || Math.abs(w.worldY - ws.wheelRadius) > ws.wheelRadius * 0.15)
+        fails.push(`w${i} worldY=${w.worldY} (want ~${ws.wheelRadius})`);
+      if (w.lateral == null || w.lateral < ws.halfTrack * 0.9)
+        fails.push(`w${i} lateral=${w.lateral} (want >=${(ws.halfTrack * 0.9).toFixed(2)})`);
+      if (w.suspension != null && (w.suspension < 0 || w.suspension > 0.48))
+        fails.push(`w${i} suspension=${w.suspension}`);
+    });
+    // steering assertion
+    await page.evaluate("window.__game.input([{down:'KeyA'}])");
+    await page.waitForTimeout(1000);
+    const ws2 = await page.evaluate("window.__game.wheelState()");
+    await page.evaluate("window.__game.input([{up:'KeyA'}])");
+    if (Math.abs(ws2.wheels[0].steering) < 0.1) fails.push(`steering front=${ws2.wheels[0].steering}`);
+    if (Math.abs(ws2.wheels[2].steering) > 0.01) fails.push(`steering rear=${ws2.wheels[2].steering}`);
+    // spin assertion
+    const r0 = ws2.wheels[0].rotation;
+    await page.evaluate("window.__game.input([{down:'KeyW'}])");
+    await page.waitForTimeout(2500);
+    const ws3 = await page.evaluate("window.__game.wheelState()");
+    await page.evaluate("window.__game.input([{up:'KeyW'}])");
+    if (Math.abs(ws3.wheels[0].rotation - r0) < 1) fails.push(`no spin: ${r0} -> ${ws3.wheels[0].rotation}`);
+    states.wheelAssertions = { fails, rest: ws, steer: ws2.wheels.map((w) => w.steering), spun: ws3.wheels[0].rotation };
+    console.log(fails.length ? `V2 ASSERTIONS FAIL:\n  ${fails.join("\n  ")}` : "V2 ASSERTIONS PASS");
+  }
+
   // 10s driven run for fps (desktop only)
   if (!mobile) {
     await page.evaluate("window.__game.teleport('spawn')");

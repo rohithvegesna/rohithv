@@ -14,7 +14,7 @@ automatic FAIL regardless of features.
 
 ## Visual
 - [ ] V1 Lighting — night HDRI env, moon key + canopy warm pools, emissive signage, fog, wet-asphalt roughness variation. AC: approach + at_pump screenshots pass the bar.
-- [ ] V2 Car fidelity — proportions not toy-like, clearcoat paint, dark glass, chrome trim, real wheels, headlight cones. AC: at_pump close shot passes.
+- [x] V2 Car fidelity — proportions not toy-like, clearcoat paint, dark glass, chrome trim, real wheels, headlight cones. AC: at_pump close shot passes.
 - [ ] V3 Station exterior — canopy with brand band + glowing sign, believable pumps with screens/readers, price board, props with colliders. AC: approach shot passes.
 - [ ] V4 Store interior — warm aisles, glowing cooler wall, dense instanced shelves, fictional labels readable. AC: store_aisle shot passes.
 - [ ] V5 Postprocessing — ACES, selective bloom on emissives, SMAA, vignette; AO on desktop tier. AC: post on/off comparison shows depth without smearing text.

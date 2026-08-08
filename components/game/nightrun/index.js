@@ -17,12 +17,21 @@ import {
 } from "postprocessing";
 import { useEffect, useRef, useState } from "react";
 import { buildWorld, BLOOM_LAYER } from "./world";
-import { buildCar, attachVehicle, makeVehicle, CAR } from "./car";
+import { buildCar, attachVehicle, CAR } from "./car";
 import { createAudio } from "./audio";
 import { pumpScreenTexture, brand } from "./texgen";
 
 const FIXED = 1 / 60;
 const FUEL_TARGET = 10.0;
+
+/* Rapier wasm must initialize exactly once per page — StrictMode double-
+   mounts would otherwise race two init() calls on the shared singleton. */
+let rapierPromise = null;
+const getRapier = () =>
+  (rapierPromise ??= import("@dimforge/rapier3d-compat").then(async (R) => {
+    await R.init();
+    return R;
+  }));
 
 const POSES = {
   spawn: { mode: "drive", car: [0, 1.1, 62, -Math.PI / 2] },
@@ -33,6 +42,8 @@ const POSES = {
   store_aisle: { mode: "foot", car: [-1.9, 1.1, -2, Math.PI], foot: [-5.5, -19.5] },
   checkout: { mode: "foot", car: [-1.9, 1.1, -2, Math.PI], foot: [9, -17.2], carry: true },
   receipt: { mode: "receipt", car: [-1.9, 1.1, -2, Math.PI], foot: [9, -17.2] },
+  side_profile: { mode: "drive", car: [0, 1.1, 40, -Math.PI / 2], cam: [0, 1.15, 46.5, 0, 0.8, 40] },
+  three_quarter: { mode: "drive", car: [0, 1.1, 40, -Math.PI / 2], cam: [4.6, 1.7, 45.2, 0, 0.75, 40] },
 };
 
 export default function NightRun({ onClassic, onProgress, started }) {
@@ -91,10 +102,7 @@ export default function NightRun({ onClassic, onProgress, started }) {
     const boot = (async () => {
       const [hdr, rapier] = await Promise.all([
         new HDRLoader(manager).loadAsync("/assets/night_1k.hdr"),
-        import("@dimforge/rapier3d-compat").then(async (R) => {
-          await R.init();
-          return R;
-        }),
+        getRapier(),
       ]);
       if (disposed) return;
       onProgress?.(70);
@@ -361,6 +369,38 @@ export default function NightRun({ onClassic, onProgress, started }) {
         (joy.active ? -joy.x : 0);
       const handbrake = keys.has("Space") || G.touch.action;
 
+      if (G.pendingCarPose) {
+        const [px2, py2, pz2, pry] = G.pendingCarPose;
+        G.pendingCarPose = null;
+        carRig.chassis.setTranslation({ x: px2, y: py2, z: pz2 }, true);
+        carRig.chassis.setRotation(
+          { x: 0, y: Math.sin(pry / 2), z: 0, w: Math.cos(pry / 2) },
+          true
+        );
+        carRig.chassis.setLinvel({ x: 0, y: 0, z: 0 }, true);
+        carRig.chassis.setAngvel({ x: 0, y: 0, z: 0 }, true);
+        if (G.pendingFootPose) {
+          G.footBody.setNextKinematicTranslation({ x: G.pendingFootPose[0], y: 0.9, z: G.pendingFootPose[1] });
+          G.footBody.setTranslation({ x: G.pendingFootPose[0], y: 0.9, z: G.pendingFootPose[1] }, true);
+          G.pendingFootPose = null;
+        }
+        const settle = G.pendingSettle || 30;
+        G.pendingSettle = 0;
+        for (let i = 0; i < settle; i++) {
+          try {
+            carRig.vehicle.updateVehicle(
+              FIXED,
+              undefined,
+              undefined,
+              (c) => c.handle !== carRig.chassisCol.handle
+            );
+          } catch {
+            G.physErrors = (G.physErrors || 0) + 1;
+          }
+          world.step();
+        }
+        acc = 0;
+      }
       acc += dt;
       while (acc >= FIXED) {
         acc -= FIXED;
@@ -375,10 +415,14 @@ export default function NightRun({ onClassic, onProgress, started }) {
           const brake = handbrake ? 10 : throttleKey || reverseKey ? 0 : 1.6;
           for (let i = 0; i < 4; i++) carRig.vehicle.setWheelBrake(i, i > 1 && handbrake ? 14 : brake);
           try {
-            carRig.vehicle.updateVehicle(FIXED);
+            carRig.vehicle.updateVehicle(
+              FIXED,
+              undefined,
+              undefined,
+              (c) => c.handle !== carRig.chassisCol.handle
+            );
           } catch {
             G.physErrors = (G.physErrors || 0) + 1;
-            carRig.vehicle = makeVehicle(world, carRig.chassis);
           }
           audio.engine(speed, throttleKey);
         } else if (G.mode === "foot") {
@@ -404,25 +448,37 @@ export default function NightRun({ onClassic, onProgress, started }) {
         world.step();
       }
 
-      /* visuals from physics */
+      /* visuals from physics — chassis group mirrors the body exactly;
+         wheels are body-space children driven from the controller. */
       const { t, r } = carPose();
-      carRig.car.position.set(t.x, t.y - 0.42, t.z);
+      carRig.car.position.set(t.x, t.y, t.z);
       carRig.car.quaternion.set(r.x, r.y, r.z, r.w);
       const speed = carSpeed();
       steerVis = THREE.MathUtils.lerp(steerVis, THREE.MathUtils.clamp(steerKey, -1, 1) * 0.42, 0.2);
-      const wp = [
-        [CAR.wheelBase / 2, CAR.track / 2, true],
-        [CAR.wheelBase / 2, -CAR.track / 2, true],
-        [-CAR.wheelBase / 2, CAR.track / 2, false],
-        [-CAR.wheelBase / 2, -CAR.track / 2, false],
-      ];
-      G.wheelSpin = (G.wheelSpin || 0) + (speed / CAR.wheelRadius) * dt * Math.sign(throttleKey - reverseKey || 1);
+      const _steerQ = new THREE.Quaternion();
+      const _spinQ = new THREE.Quaternion();
+      const _axis = new THREE.Vector3();
       carRig.wheels.forEach((w, i) => {
-        const [wx, wz, front] = wp[i];
-        w.position.set(wx, CAR.wheelRadius, wz);
-        w.rotation.set(0, front ? steerVis : 0, 0);
-        w.rotateZ(-G.wheelSpin);
+        const v = carRig.vehicle;
+        const conn = v.wheelChassisConnectionPointCs?.(i);
+        const dir = v.wheelDirectionCs?.(i) ?? { x: 0, y: -1, z: 0 };
+        const sLen = v.wheelSuspensionLength?.(i);
+        const rest = v.wheelSuspensionRestLength?.(i) ?? 0.36;
+        const sUse = sLen == null || Number.isNaN(sLen) ? rest : sLen;
+        if (conn) {
+          w.position.set(conn.x + dir.x * sUse, conn.y + dir.y * sUse, conn.z + dir.z * sUse);
+        }
+        const steer = v.wheelSteering?.(i) ?? 0;
+        const spin = v.wheelRotation?.(i) ?? 0;
+        _steerQ.setFromAxisAngle(_axis.set(0, 1, 0), steer);
+        const ax = v.wheelAxleCs?.(i) ?? { x: 0, y: 0, z: 1 };
+        _spinQ.setFromAxisAngle(_axis.set(ax.x, ax.y, ax.z).normalize(), -spin);
+        w.quaternion.copy(_steerQ).multiply(_spinQ);
       });
+      /* brake / reverse light logic */
+      const braking = handbrake || (reverseKey > 0 && speed > 0.6);
+      carRig.tailMat.emissiveIntensity = braking ? 7 : 2.6;
+      carRig.revMat.emissiveIntensity = reverseKey > 0 && speed < 4 ? 4 : 0;
 
       /* crates sync */
       for (const cr of refs.crates) {
@@ -525,7 +581,12 @@ export default function NightRun({ onClassic, onProgress, started }) {
       route.visible = routeMat.opacity > 0.02;
 
       /* camera */
-      if (G.mode === "drive" || G.mode === "receipt") {
+      if (G.debugCam) {
+        camera.position.set(...G.debugCam.pos);
+        camera.lookAt(...G.debugCam.look);
+        camera.fov = 46;
+        camera.updateProjectionMatrix();
+      } else if (G.mode === "drive" || G.mode === "receipt") {
         const q = new THREE.Quaternion(r.x, r.y, r.z, r.w);
         const back = new THREE.Vector3(-8.2, 3.3, 0).applyQuaternion(q);
         camPos.lerp(new THREE.Vector3(t.x + back.x, t.y + back.y, t.z + back.z), Math.min(1, 4.5 * dt));
@@ -534,7 +595,7 @@ export default function NightRun({ onClassic, onProgress, started }) {
         camera.lookAt(camLook);
         camera.fov = THREE.MathUtils.lerp(camera.fov, 55 + Math.min(14, speed * 1.1), 0.08);
         camera.updateProjectionMatrix();
-      } else if (G.mode === "fueling") {
+      } else if (!G.debugCam && G.mode === "fueling") {
         const b = refs.pumpBays[0];
         camPos.lerp(new THREE.Vector3(b.x + 1.6, 1.75, b.z + 2.4), Math.min(1, 3 * dt));
         camera.position.copy(camPos);
@@ -543,6 +604,7 @@ export default function NightRun({ onClassic, onProgress, started }) {
       } else if (G.mode === "foot") {
         const fp = G.footBody.translation();
         camera.position.set(fp.x, 1.62, fp.z);
+        // (debugCam handled above)
         camera.rotation.set(pitch, yaw, 0, "YXZ");
         camera.fov = THREE.MathUtils.lerp(camera.fov, 62, 0.1);
         camera.updateProjectionMatrix();
@@ -595,17 +657,8 @@ export default function NightRun({ onClassic, onProgress, started }) {
         teleport: (name) => {
           const p = POSES[name];
           if (!p || !G.ready) return false;
-          const [x, y, z, ry] = p.car;
-          try { carRig.vehicle.free(); } catch {}
-          carRig.chassis.setTranslation({ x, y, z }, true);
-          carRig.chassis.setRotation({ x: 0, y: Math.sin(ry / 2), z: 0, w: Math.cos(ry / 2) }, true);
-          carRig.chassis.setLinvel({ x: 0, y: 0, z: 0 }, true);
-          carRig.chassis.setAngvel({ x: 0, y: 0, z: 0 }, true);
-          carRig.vehicle = makeVehicle(world, carRig.chassis);
-          if (p.foot) {
-            G.footBody.setNextKinematicTranslation({ x: p.foot[0], y: 0.9, z: p.foot[1] });
-            G.footBody.setTranslation({ x: p.foot[0], y: 0.9, z: p.foot[1] }, true);
-          }
+          G.pendingCarPose = p.car;
+          G.pendingFootPose = p.foot || null;
           if (p.carry && !G.carried) {
             const it = refs.shelfItems[0];
             it.mesh.visible = false;
@@ -613,6 +666,10 @@ export default function NightRun({ onClassic, onProgress, started }) {
             G.objectives.snack = true;
             setHud((h) => ({ ...h, carried: it.product.name, carriedPrice: it.product.price, objectives: { ...G.objectives } }));
           }
+          G.debugCam = p.cam
+            ? { pos: p.cam.slice(0, 3), look: p.cam.slice(3, 6) }
+            : null;
+          G.pendingSettle = p.cam ? 240 : 30;
           if (name === "fueling") { G.fuelPhase = "pay"; G.payT = 0; }
           if (name === "receipt") {
             G.objectives = { fuel: true, snack: true, paid: true };
@@ -627,6 +684,30 @@ export default function NightRun({ onClassic, onProgress, started }) {
             if (step.down) keys.add(step.down);
             if (step.up) keys.delete(step.up);
           }
+        },
+        wheelState: () => {
+          const out = [];
+          const t = carRig.chassis.translation();
+          const r = carRig.chassis.rotation();
+          const q = new THREE.Quaternion(r.x, r.y, r.z, r.w);
+          for (let i = 0; i < 4; i++) {
+            const v = carRig.vehicle;
+            const conn = v.wheelChassisConnectionPointCs?.(i) ?? null;
+            const sus = v.wheelSuspensionLength?.(i);
+            const axle = v.wheelAxleCs?.(i) ?? { x: 0, y: 0, z: 1 };
+            const world_ = carRig.wheels[i]?.getWorldPosition(new THREE.Vector3());
+            const axleWorld = new THREE.Vector3(axle.x, axle.y, axle.z).applyQuaternion(q);
+            const rel = world_ ? world_.clone().sub(new THREE.Vector3(t.x, t.y, t.z)) : null;
+            out.push({
+              worldY: world_ ? +world_.y.toFixed(3) : null,
+              lateral: rel ? +Math.abs(rel.dot(axleWorld)).toFixed(3) : null,
+              suspension: sus != null ? +sus.toFixed(3) : null,
+              rotation: +(v.wheelRotation?.(i) ?? 0).toFixed(3),
+              steering: +(v.wheelSteering?.(i) ?? 0).toFixed(3),
+              conn: conn ? [+conn.x.toFixed(2), +conn.y.toFixed(2), +conn.z.toFixed(2)] : null,
+            });
+          }
+          return { wheels: out, chassisY: +t.y.toFixed(3), wheelRadius: CAR.wheelRadius, halfTrack: CAR.track / 2 };
         },
         setQuality: (t2) => localStorage.setItem("nr-quality", t2),
         screenshotReady: async () => {

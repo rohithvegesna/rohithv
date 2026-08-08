@@ -24,3 +24,17 @@ render inside the body (V2 automatic fail), island slabs float, lighting needs
 its relentless pass. Next actions: wheel transform fix (world-space from
 controller, not group-local y), draw-call merge pass (product instancing per
 gondola), V1 lighting iteration, X1 ×3 stability reruns.
+
+## Iter 005 — V2 wheels red→green
+Added side_profile/three_quarter poses + wheelState() + rest/steer/spin
+assertions (red: worldY −0.21, buried; suspension 0.02 bottomed). Root causes,
+in order of discovery: (1) wheel meshes not driven from controller state;
+(2) pose-settle stepped the world without updateVehicle → chassis bottomed on
+its own collider and wheel rays started embedded; (3) suspension constants
+were Bullet-style — Rapier wants real N/m (4800 N/m, 1500 N max force,
+750/950 damping); (4) nondeterministic WASM OOB traced to StrictMode double-
+mounting racing two RAPIER.init() calls — module-level singleton fixed it;
+teleports now queue into the tick, one controller for life. Visual: body
+narrowed (1.48 m over 1.5 m track) so wheels sit proud; rocker raised; brake/
+reverse emissives wired. Evidence: iter-005 + iter-005-static (3×3 assertion
+passes, console clean). VERDICT: PASS.
