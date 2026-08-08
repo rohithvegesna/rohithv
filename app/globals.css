@@ -1,15 +1,15 @@
 @import "tailwindcss";
 
 /*
-  REV C — the site as a fabricated circuit board.
-  Materials, not colors: FR-4 substrate, copper traces, ENIG gold pads,
-  silkscreen ink, and small status LEDs. One committed theme.
+  v3 — "Copper, quiet". The circuit-board identity survives as finish, not
+  navigation: FR-4 warm black, copper, ENIG gold, silkscreen ink. Familiar
+  structure; craft in type, spacing, and micro-interaction.
 */
 :root {
   color-scheme: dark;
   --substrate: #161210;
-  --substrate-2: #1d1815; /* raised module fill */
-  --substrate-3: #0f0c0a; /* recessed / keepout   */
+  --substrate-2: #1d1815;
+  --substrate-3: #0f0c0a;
   --copper: #c9834a;
   --copper-dim: #8a5a34;
   --gold: #e2b96b;
@@ -21,8 +21,8 @@
   --led-off: #3a4438;
   --drc-red: #e0705a;
 
-  --frame: 14px; /* board-edge inset */
-  --energy: 0;   /* scroll-energized bus, set by JS */
+  --frame: 12px;
+  --energy: 0;
 }
 
 @theme inline {
@@ -50,85 +50,95 @@
 
 html {
   scroll-behavior: smooth;
-  scroll-padding-top: 6rem;
+  scroll-padding-top: 5.5rem;
 }
 
 body {
   background: var(--substrate);
   color: var(--silk);
   font-family: var(--font-overpass-sans), ui-sans-serif, system-ui, sans-serif;
-  /* faint fiber weave of the laminate */
   background-image: radial-gradient(
       circle at 1px 1px,
-      rgba(242, 234, 217, 0.025) 1px,
+      rgba(242, 234, 217, 0.02) 1px,
       transparent 0
     );
-  background-size: 22px 22px;
+  background-size: 24px 24px;
 }
 
 :focus-visible {
   outline: 2px solid var(--gold);
   outline-offset: 3px;
-  border-radius: 1px;
+  border-radius: 2px;
 }
 
 /* ---------- type roles ---------- */
 
-/* silkscreen display — condensed industrial, always tracked wide */
+/* Display: Big Shoulders — reserved for the name, page titles, and the
+   contact close. Sentence case except the name. */
 .display {
   font-family: var(--font-big-shoulders), ui-sans-serif, sans-serif;
-  font-weight: 750;
-  text-transform: uppercase;
-  letter-spacing: 0.015em;
-  line-height: 0.94;
+  font-weight: 780;
+  line-height: 0.95;
+  letter-spacing: 0.005em;
 }
 
-/* net label / instrument readout */
+/* Small instrument label — eyebrows, dates, metadata. */
 .silk-label {
   font-family: var(--font-overpass-mono), ui-monospace, monospace;
   font-size: 0.72rem;
   font-weight: 600;
-  letter-spacing: 0.16em;
+  letter-spacing: 0.14em;
   text-transform: uppercase;
 }
 
-/* ---------- board edge (fixed drawing frame) ---------- */
+/* Section heading: calm, unmistakably a heading. */
+.section-h {
+  font-size: 1.7rem;
+  line-height: 1.15;
+  font-weight: 700;
+  color: var(--silk);
+}
+.section-h::after {
+  content: "";
+  display: block;
+  width: 2.5rem;
+  height: 3px;
+  margin-top: 0.6rem;
+  background: var(--copper);
+  border-radius: 1px;
+}
+
+/* ---------- board edge (quiet identity frame) ---------- */
 
 .board-edge {
   position: fixed;
-  inset: calc(var(--frame) - 8px);
-  border: 1px solid color-mix(in srgb, var(--silk) 22%, transparent);
+  inset: calc(var(--frame) - 7px);
+  border: 1px solid color-mix(in srgb, var(--silk) 14%, transparent);
   pointer-events: none;
   z-index: 60;
 }
-
 .board-edge i {
   position: absolute;
-  width: 14px;
-  height: 14px;
-  border: 2px solid var(--copper);
+  width: 12px;
+  height: 12px;
+  border: 2px solid color-mix(in srgb, var(--copper) 75%, transparent);
   border-radius: 50%;
 }
-/* fiducial rings sit just inside each corner */
-.board-edge i:nth-child(1) { top: 6px; left: 6px; }
-.board-edge i:nth-child(2) { top: 6px; right: 6px; }
-.board-edge i:nth-child(3) { bottom: 6px; left: 6px; }
-.board-edge i:nth-child(4) { bottom: 6px; right: 6px; }
-.board-edge i::after {
-  content: "";
-  position: absolute;
-  inset: 3px;
-  border-radius: 50%;
-  background: var(--gold);
-}
+.board-edge i:nth-child(1) { top: 5px; left: 5px; }
+.board-edge i:nth-child(2) { top: 5px; right: 5px; }
+.board-edge i:nth-child(3) { bottom: 5px; left: 5px; }
+.board-edge i:nth-child(4) { bottom: 5px; right: 5px; }
 
 @media (max-width: 640px) {
-  :root { --frame: 10px; }
-  .board-edge i { width: 10px; height: 10px; border-width: 1.5px; }
-  .board-edge i::after { inset: 2px; }
+  :root { --frame: 8px; }
+  .board-edge i { width: 9px; height: 9px; border-width: 1.5px; }
+  .rail::before,
+  .rail::after {
+    left: 10px;
+  }
 }
 
-/* ---------- the bus rail (scroll-energized spine) ---------- */
+/* ---------- the bus rail (quiet spine, energized by scroll) ---------- */
 
 .rail {
   position: relative;
@@ -140,7 +150,7 @@ body {
   bottom: 0;
   left: 0;
   width: 2px;
-  background: var(--copper-dim);
+  background: color-mix(in srgb, var(--copper-dim) 45%, transparent);
 }
 .rail::after {
   content: "";
@@ -153,35 +163,6 @@ body {
   transform-origin: top;
   transform: scaleY(var(--energy));
   will-change: transform;
-}
-
-/* ---------- component footprint (section shell) ---------- */
-
-.footprint {
-  position: relative;
-  border: 1px solid color-mix(in srgb, var(--silk) 16%, transparent);
-  background: color-mix(in srgb, var(--substrate-2) 55%, transparent);
-}
-/* pin-1 marker */
-.footprint::before {
-  content: "";
-  position: absolute;
-  top: 10px;
-  left: 10px;
-  width: 7px;
-  height: 7px;
-  border-radius: 50%;
-  background: var(--copper);
-}
-/* ghost REF designator is an element (aria-hidden) so it can be text */
-.designator {
-  font-family: var(--font-big-shoulders), sans-serif;
-  font-weight: 800;
-  font-size: clamp(2.6rem, 6vw, 4.4rem);
-  line-height: 1;
-  color: color-mix(in srgb, var(--silk) 12%, transparent);
-  user-select: none;
-  pointer-events: none;
 }
 
 /* ---------- vias as list markers ---------- */
@@ -197,15 +178,15 @@ body {
   content: "";
   position: absolute;
   left: 0;
-  top: 0.42em;
-  width: 12px;
-  height: 12px;
+  top: 0.44em;
+  width: 11px;
+  height: 11px;
   border-radius: 50%;
   border: 3px solid var(--copper);
   background: var(--substrate-3);
 }
 
-/* ---------- pads (buttons) ---------- */
+/* ---------- buttons (gold pads) ---------- */
 
 .pad,
 .pad-nc {
@@ -213,11 +194,15 @@ body {
   font-family: var(--font-overpass-mono), monospace;
   font-size: 0.8rem;
   font-weight: 700;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  padding: 0.72rem 1.3rem;
-  border-radius: 1px;
-  transition: background-color 140ms, color 140ms, border-color 140ms;
+  letter-spacing: 0.08em;
+  padding: 0.72rem 1.25rem;
+  border-radius: 2px;
+  transition: background-color 140ms ease, color 140ms ease,
+    border-color 140ms ease, transform 140ms ease;
+}
+.pad:active,
+.pad-nc:active {
+  transform: translateY(1px);
 }
 .pad {
   background: var(--gold);
@@ -234,10 +219,10 @@ body {
 }
 .pad-nc:hover {
   border-color: var(--gold);
-  background: color-mix(in srgb, var(--gold) 12%, transparent);
+  background: color-mix(in srgb, var(--gold) 10%, transparent);
 }
 
-/* ---------- prose links: copper trace underline ---------- */
+/* ---------- prose links ---------- */
 
 .trace-link {
   color: var(--silk);
@@ -245,44 +230,38 @@ body {
   text-decoration-color: var(--copper);
   text-decoration-thickness: 2px;
   text-underline-offset: 4px;
-  transition: text-decoration-color 140ms, color 140ms;
+  transition: text-decoration-color 140ms ease, color 140ms ease;
 }
 .trace-link:hover {
   color: var(--gold-bright);
   text-decoration-color: var(--gold);
 }
 
-/* ---------- module card (work) ---------- */
+/* ---------- cards (work) ---------- */
 
-.module {
+.card {
   position: relative;
-  border: 1px solid color-mix(in srgb, var(--silk) 18%, transparent);
+  border: 1px solid color-mix(in srgb, var(--silk) 16%, transparent);
   background: var(--substrate-2);
-  /* castellated left edge */
-  background-image: radial-gradient(
-    circle at 0 8px,
-    var(--substrate-3) 3px,
-    color-mix(in srgb, var(--copper) 60%, transparent) 3.5px,
-    transparent 5px
-  );
-  background-size: 12px 26px;
-  background-repeat: repeat-y;
-  transition: border-color 160ms;
+  border-radius: 3px;
+  transition: border-color 160ms ease, transform 160ms ease,
+    box-shadow 160ms ease;
 }
-.module:hover,
-.module:focus-within {
+.card:hover,
+.card:focus-within {
   border-color: var(--gold);
+  transform: translateY(-2px);
+  box-shadow: 0 10px 28px -18px rgba(0, 0, 0, 0.9);
 }
-.module .led {
-  transition: background-color 160ms, box-shadow 160ms;
+.card .led {
+  transition: background-color 160ms ease, box-shadow 160ms ease;
 }
-.module:hover .led,
-.module:focus-within .led {
+.card:hover .led,
+.card:focus-within .led {
   background: var(--led);
   box-shadow: 0 0 6px var(--led);
 }
 
-/* status LED dot */
 .led {
   display: inline-block;
   width: 8px;
@@ -295,99 +274,32 @@ body {
   box-shadow: 0 0 6px var(--led);
 }
 
-/* ---------- edge-connector nav fingers ---------- */
+/* ---------- nav ---------- */
 
-.finger {
+.nav-link {
   position: relative;
   display: inline-block;
-  padding-top: 0.65rem;
-  padding-bottom: 0.65rem;
+  padding: 0.7rem 0.15rem;
+  transition: color 140ms ease;
 }
-.finger::before {
+.nav-link::after {
   content: "";
   position: absolute;
-  top: 0;
   left: 0;
   right: 0;
-  height: 4px;
-  background: var(--copper-dim);
-  border-radius: 0 0 1px 1px;
-  transition: background-color 140ms;
-}
-.finger[aria-current="page"]::before,
-.finger:hover::before {
+  bottom: 0.35rem;
+  height: 2px;
   background: var(--gold);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 160ms ease;
 }
-
-/* ---------- title block (footer) ---------- */
-
-.titleblock {
-  border: 1px solid color-mix(in srgb, var(--silk) 25%, transparent);
+.nav-link:hover::after,
+.nav-link[aria-current="page"]::after {
+  transform: scaleX(1);
 }
-.titleblock > div {
-  border-color: color-mix(in srgb, var(--silk) 25%, transparent);
-}
-.tb-label {
-  font-family: var(--font-overpass-mono), monospace;
-  font-size: 0.58rem;
-  font-weight: 600;
-  letter-spacing: 0.18em;
-  color: var(--silk-muted);
-}
-.tb-value {
-  font-family: var(--font-overpass-mono), monospace;
-  font-size: 0.8rem;
-  font-weight: 700;
-  letter-spacing: 0.06em;
+.nav-link[aria-current="page"] {
   color: var(--silk);
-}
-
-/* ---------- schematic sheet (case studies) ---------- */
-
-.sheet {
-  position: relative;
-  border: 1px solid color-mix(in srgb, var(--silk) 30%, transparent);
-}
-.sheet::before,
-.sheet::after {
-  content: "";
-  position: absolute;
-  pointer-events: none;
-}
-/* coordinate ticks: top/bottom */
-.sheet::before {
-  inset: 0;
-  background-image: repeating-linear-gradient(
-      to right,
-      color-mix(in srgb, var(--silk) 30%, transparent) 0 1px,
-      transparent 1px 25%
-    ),
-    repeating-linear-gradient(
-      to bottom,
-      color-mix(in srgb, var(--silk) 30%, transparent) 0 1px,
-      transparent 1px 25%
-    );
-  background-size: 100% 7px, 7px 100%;
-  background-position: 0 -1px, -1px 0;
-  background-repeat: repeat-x, repeat-y;
-}
-.sheet-coords {
-  position: absolute;
-  display: flex;
-  justify-content: space-around;
-  font-family: var(--font-overpass-mono), monospace;
-  font-size: 0.6rem;
-  letter-spacing: 0.1em;
-  color: var(--silk-faint);
-  user-select: none;
-}
-.sheet-coords.top { top: 8px; left: 0; right: 0; }
-.sheet-coords.side {
-  flex-direction: column;
-  align-items: flex-start;
-  top: 0;
-  bottom: 0;
-  left: 8px;
 }
 
 /* ---------- 404 ratsnest ---------- */
@@ -399,22 +311,17 @@ body {
   fill: none;
 }
 
-/* ---------- schematic (signature) ---------- */
+/* ---------- ambient schematic ---------- */
 
 .sch-node rect {
   fill: var(--substrate-2);
   stroke: var(--silk-muted);
-  transition: stroke 140ms;
+  transition: stroke 140ms ease;
 }
-.sch-node:hover rect,
-.sch-node:focus-visible rect,
-.sch-node[data-active="true"] rect {
+.sch-node:hover rect {
   stroke: var(--gold);
 }
-.sch-node:focus-visible {
-  outline: none; /* ring drawn on rect via stroke */
-}
-.sch-node[data-active="true"] .sch-led {
+.sch-node:hover .sch-led {
   fill: var(--led);
 }
 .sch-trace {
@@ -427,10 +334,10 @@ body {
   stroke-width: 2;
   fill: none;
   opacity: 0;
+  transition: opacity 600ms ease;
 }
 .energized .sch-trace-hot {
   opacity: 1;
-  transition: opacity 400ms;
 }
 .sch-packet {
   fill: var(--gold-bright);
@@ -445,13 +352,13 @@ body {
   to { offset-distance: 100%; }
 }
 
-/* ---------- probe palette (dialog) ---------- */
+/* ---------- search palette ---------- */
 
 dialog.probe {
   background: var(--substrate-2);
   color: var(--silk);
   border: 1px solid var(--gold);
-  border-radius: 2px;
+  border-radius: 3px;
   padding: 0;
   width: min(560px, calc(100vw - 2rem));
   margin: 12vh auto auto;
@@ -473,18 +380,17 @@ dialog.probe::backdrop {
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
   }
-  /* bus reads fully energized rather than dead */
   .rail::after {
     transform: scaleY(1);
   }
   .sch-packet {
     display: none;
   }
-  /* net renders hot — a live board, held still */
   .sch-trace-hot {
     opacity: 1;
   }
-  .sch-led-always {
-    fill: var(--led);
+  .card:hover,
+  .card:focus-within {
+    transform: none;
   }
 }

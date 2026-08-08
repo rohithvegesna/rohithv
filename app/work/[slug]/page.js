@@ -25,18 +25,11 @@ export async function generateMetadata({ params }) {
   };
 }
 
-/* Sheet zone: a labeled region of the schematic sheet. */
 function Zone({ label, children }) {
   return (
-    <section className="mt-12">
-      <h2 className="silk-label mb-5 flex items-center gap-3 text-gold">
-        <span
-          aria-hidden="true"
-          className="inline-block h-0.5 w-8 bg-copper"
-        />
-        {label}
-      </h2>
-      {children}
+    <section className="mt-14">
+      <h2 className="section-h !text-2xl">{label}</h2>
+      <div className="mt-6">{children}</div>
     </section>
   );
 }
@@ -46,7 +39,6 @@ export default async function CaseStudy({ params }) {
   const cs = caseStudies.find((c) => c.slug === slug);
   if (!cs) notFound();
 
-  const idx = caseStudies.indexOf(cs);
   const others = caseStudies.filter((c) => c.slug !== slug);
   const jsonLd = {
     "@context": "https://schema.org",
@@ -63,7 +55,7 @@ export default async function CaseStudy({ params }) {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
-      <nav aria-label="Breadcrumb" className="silk-label mb-8">
+      <nav aria-label="Breadcrumb" className="silk-label mb-10">
         <Link
           href="/work/"
           className="text-silk-muted transition-colors hover:text-silk"
@@ -72,36 +64,15 @@ export default async function CaseStudy({ params }) {
         </Link>
       </nav>
 
-      {/* the schematic sheet */}
-      <article className="sheet relative px-5 py-10 sm:px-12 sm:py-12">
-        <div className="sheet-coords top" aria-hidden="true">
-          <span>1</span>
-          <span>2</span>
-          <span>3</span>
-          <span>4</span>
-        </div>
-        <div className="sheet-coords side" aria-hidden="true">
-          <span className="flex-1 pt-2">A</span>
-          <span className="flex-1">B</span>
-          <span className="flex-1">C</span>
-          <span className="flex-1">D</span>
-        </div>
-
-        <header className="flex items-start justify-between gap-4">
-          <div>
-            <p className="silk-label text-copper">{cs.eyebrow}</p>
-            <h1 className="display mt-4 text-4xl text-silk sm:text-6xl">
-              {cs.title}
-            </h1>
-          </div>
-          <span className="designator mt-1" aria-hidden="true">
-            SH{idx + 1}
-          </span>
-        </header>
+      <article>
+        <p className="silk-label text-copper">{cs.eyebrow}</p>
+        <h1 className="display mt-4 text-4xl text-silk sm:text-6xl">
+          {cs.title}
+        </h1>
         <p className="mt-6 max-w-2xl text-lg leading-relaxed text-silk-muted">
           {cs.summary}
         </p>
-        <p className="silk-label mt-6 border-y border-silk/15 py-3 text-silk-muted">
+        <p className="silk-label mt-7 border-y border-silk/12 py-3 text-silk-muted">
           {cs.stack.join(" · ")}
         </p>
 
@@ -147,8 +118,11 @@ export default async function CaseStudy({ params }) {
         </Zone>
       </article>
 
-      <nav aria-label="More case studies" className="mt-12">
-        <h2 className="silk-label mb-5 text-gold">More work</h2>
+      <nav
+        aria-label="More case studies"
+        className="mt-16 border-t border-silk/12 pt-10"
+      >
+        <h2 className="mb-5 text-xl font-bold text-silk">More work</h2>
         <ul className="space-y-3">
           {others.map((o) => (
             <li key={o.slug}>

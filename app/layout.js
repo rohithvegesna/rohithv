@@ -53,7 +53,7 @@ const CONSOLE_EGG = `console.log(
   "  │  drawn by R.V. Vegesna      │\\n" +
   "  ●───────────────────────────●\\n" +
   "  You read source. Good instinct.\\n" +
-  "  Probe the board: Cmd/Ctrl+K\\n" +
+  "  Search: Cmd/Ctrl+K\\n" +
   "  Data sheet: /resume.json",
   "color:#c9834a;font-family:monospace"
 );`;

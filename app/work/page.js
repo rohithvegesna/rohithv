@@ -25,35 +25,31 @@ export default function WorkIndex() {
         problem, constraints, architecture, outcome.
       </p>
       <div className="mt-12 grid gap-5 sm:grid-cols-2">
-        {caseStudies.map((cs, i) => (
+        {caseStudies.map((cs) => (
           <Link
             key={cs.slug}
             href={`/work/${cs.slug}/`}
-            className="module group relative flex flex-col p-6 pl-7"
+            className="card group flex flex-col p-6 sm:p-7"
           >
             <div className="flex items-start justify-between gap-3">
               <p className="silk-label text-silk-muted">{cs.eyebrow}</p>
               <span className="led mt-0.5 shrink-0" aria-hidden="true" />
             </div>
-            <h2 className="display mt-4 text-2xl text-silk">{cs.title}</h2>
+            <h2 className="mt-4 text-xl font-bold leading-snug text-silk">
+              {cs.title}
+            </h2>
             <p className="mt-3 flex-1 text-sm leading-relaxed text-silk-muted">
               {cs.summary}
             </p>
-            <p className="silk-label mt-6 flex items-center justify-between text-gold">
+            <p className="silk-label mt-6 flex items-center gap-2 text-gold">
               Read case study
               <span
                 aria-hidden="true"
-                className="font-mono transition-transform group-hover:translate-x-1"
+                className="font-mono transition-transform duration-150 group-hover:translate-x-1"
               >
                 →
               </span>
             </p>
-            <span
-              aria-hidden="true"
-              className="silk-label absolute bottom-2 right-3 text-silk-faint"
-            >
-              U10{i + 1}
-            </span>
           </Link>
         ))}
       </div>

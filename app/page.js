@@ -50,27 +50,16 @@ const jsonLd = {
   ],
 };
 
-/* Section = component footprint on the board, branched off the bus rail. */
-function Footprint({ id, refDes, heading, children }) {
+function Section({ id, heading, children, className = "" }) {
   return (
-    <section aria-labelledby={id} className="relative mt-14 sm:mt-20">
-      {/* net stub from the rail into the footprint */}
-      <span
-        aria-hidden="true"
-        className="absolute -left-5 top-9 h-0.5 w-5 bg-copper sm:-left-8 sm:w-8"
-      />
-      <div className="footprint px-5 py-8 sm:px-9 sm:py-10">
-        <div className="flex items-start justify-between gap-4">
-          <h2 id={id} className="silk-label flex items-center gap-3 text-gold">
-            <span className="led led-on" aria-hidden="true" />
-            {heading}
-          </h2>
-          <span className="designator -mt-2" aria-hidden="true">
-            {refDes}
-          </span>
-        </div>
-        <div className="mt-6">{children}</div>
-      </div>
+    <section
+      aria-labelledby={id}
+      className={`mx-auto max-w-6xl px-5 py-16 sm:px-10 sm:py-24 ${className}`}
+    >
+      <h2 id={id} className="section-h">
+        {heading}
+      </h2>
+      <div className="mt-9">{children}</div>
     </section>
   );
 }
@@ -78,28 +67,31 @@ function Footprint({ id, refDes, heading, children }) {
 export default function Home() {
   const recentPubs = publications.slice(0, 3);
   return (
-    <main className="mx-auto max-w-6xl px-5 pb-8 sm:px-10">
+    <main>
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
 
-      {/* Hero — silkscreen poster + the probeable net */}
-      <section className="pt-14 sm:pt-24">
+      {/* Hero — who, what level, proof, where to click. Then the art. */}
+      <section className="mx-auto max-w-6xl px-5 pt-16 sm:px-10 sm:pt-24">
         <p className="silk-label flex flex-wrap items-center gap-x-3 gap-y-1 text-copper">
           <span className="led led-on" aria-hidden="true" />
           {site.role} · {site.company} · {site.location}
         </p>
-        <h1 className="display mt-7 max-w-5xl text-[clamp(2.6rem,8.5vw,7rem)] text-silk">
+        <h1 className="display mt-5 text-[clamp(3.2rem,10vw,7.5rem)] uppercase leading-[0.92] text-silk">
+          Rohith Varma <span className="text-gold">Vegesna</span>
+        </h1>
+        <p className="mt-7 max-w-3xl text-2xl font-bold leading-snug text-silk sm:text-3xl">
           I build the systems that let a fuel dispenser{" "}
           <span className="text-gold">take a payment.</span>
-        </h1>
-        <p className="mt-8 max-w-2xl text-lg leading-relaxed text-silk-muted">
+        </p>
+        <p className="mt-5 max-w-2xl text-lg leading-relaxed text-silk-muted">
           EMV at the pump, edge devices in the field, and the AWS backbone
           behind fuel-station automation for major U.S. retail brands — with{" "}
           {publications.length} peer-reviewed publications along the way.
         </p>
-        <div className="mt-9 flex flex-wrap items-center gap-3">
+        <div className="mt-8 flex flex-wrap items-center gap-3">
           <a href={`mailto:${site.email}`} className="pad">
             Email me
           </a>
@@ -120,26 +112,20 @@ export default function Home() {
             LinkedIn
           </a>
         </div>
-      </section>
-
-      {/* the bus rail begins under the hero and runs the page */}
-      <div className="rail mt-16 pl-5 sm:mt-24 sm:pl-8">
-        <div className="pt-2 sm:pt-4">
+        <div className="mt-16 sm:mt-20">
           <Schematic />
         </div>
+      </section>
 
-        <Footprint id="about" refDes="U1" heading="About">
+      <div className="rail mx-auto mt-6 max-w-6xl sm:mt-10">
+        <Section id="about" heading="About">
           <div className="flex flex-col gap-10 md:flex-row md:items-start">
-            <div className="relative w-40 shrink-0 border border-silk/20 bg-substrate-3 sm:w-48">
+            <div className="relative w-40 shrink-0 overflow-hidden rounded-[3px] border border-silk/20 bg-substrate-3 sm:w-48">
               <Image
                 src="/profile.webp"
                 alt="Portrait of Rohith Varma Vegesna"
                 width={192}
                 height={192}
-              />
-              <span
-                aria-hidden="true"
-                className="absolute -bottom-1.5 -right-1.5 h-3 w-3 rounded-full border-[3px] border-copper bg-substrate-3"
               />
             </div>
             <div className="max-w-2xl space-y-4 leading-relaxed text-silk">
@@ -161,24 +147,24 @@ export default function Home() {
               </p>
             </div>
           </div>
-        </Footprint>
+        </Section>
 
-        <Footprint id="experience" refDes="U2" heading="Experience">
+        <Section id="experience" heading="Experience">
           <ol className="space-y-14">
             {experience.map((company) => (
               <li key={company.org}>
-                <h3 className="display text-2xl text-silk sm:text-3xl">
-                  {company.org}
-                </h3>
-                <p className="silk-label mt-1.5 text-silk-muted">
-                  {company.place}
-                </p>
-                <ol className="mt-7 space-y-10 border-l-2 border-copper-dim pl-7 sm:pl-9">
+                <div className="flex flex-wrap items-baseline gap-x-4 gap-y-1">
+                  <h3 className="text-2xl font-bold text-silk">
+                    {company.org}
+                  </h3>
+                  <p className="silk-label text-silk-muted">{company.place}</p>
+                </div>
+                <ol className="mt-6 space-y-10 border-l-2 border-copper-dim/50 pl-7 sm:pl-9">
                   {company.roles.map((role) => (
                     <li key={role.period} className="relative">
                       <span
                         aria-hidden="true"
-                        className="absolute -left-[35px] top-1 h-3 w-3 rounded-full border-[3px] border-copper bg-substrate-3 sm:-left-[43px]"
+                        className="absolute -left-[34px] top-1 h-3 w-3 rounded-full border-[3px] border-copper bg-substrate-3 sm:-left-[42px]"
                       />
                       <p className="silk-label text-gold">{role.period}</p>
                       <h4 className="mt-1.5 text-lg font-bold text-silk">
@@ -193,7 +179,7 @@ export default function Home() {
               </li>
             ))}
           </ol>
-          <h3 className="silk-label mb-6 mt-14 text-gold">Education</h3>
+          <h3 className="mb-6 mt-16 text-xl font-bold text-silk">Education</h3>
           <ul className="space-y-3">
             {education.map((ed) => (
               <li
@@ -208,45 +194,41 @@ export default function Home() {
               </li>
             ))}
           </ul>
-        </Footprint>
+        </Section>
 
-        <Footprint id="work" refDes="U3" heading="Selected work">
+        <Section id="work" heading="Selected work">
           <div className="grid gap-5 sm:grid-cols-2">
-            {caseStudies.map((cs, i) => (
+            {caseStudies.map((cs) => (
               <Link
                 key={cs.slug}
                 href={`/work/${cs.slug}/`}
-                className="module group flex flex-col p-6 pl-7"
+                className="card group flex flex-col p-6 sm:p-7"
               >
                 <div className="flex items-start justify-between gap-3">
                   <p className="silk-label text-silk-muted">{cs.eyebrow}</p>
                   <span className="led mt-0.5 shrink-0" aria-hidden="true" />
                 </div>
-                <h3 className="display mt-4 text-2xl text-silk">{cs.title}</h3>
+                <h3 className="mt-4 text-xl font-bold leading-snug text-silk">
+                  {cs.title}
+                </h3>
                 <p className="mt-3 flex-1 text-sm leading-relaxed text-silk-muted">
                   {cs.summary}
                 </p>
-                <p className="silk-label mt-6 flex items-center justify-between text-gold">
+                <p className="silk-label mt-6 flex items-center gap-2 text-gold">
                   Read case study
                   <span
                     aria-hidden="true"
-                    className="font-mono transition-transform group-hover:translate-x-1"
+                    className="font-mono transition-transform duration-150 group-hover:translate-x-1"
                   >
                     →
                   </span>
                 </p>
-                <span
-                  aria-hidden="true"
-                  className="silk-label absolute bottom-2 right-3 text-silk-faint"
-                >
-                  U10{i + 1}
-                </span>
               </Link>
             ))}
           </div>
-        </Footprint>
+        </Section>
 
-        <Footprint id="publications" refDes="U4" heading="Publications">
+        <Section id="publications" heading="Publications">
           <p className="max-w-2xl leading-relaxed text-silk-muted">
             {publications.length} peer-reviewed works — IEEE conference papers
             and journal articles — on federated learning, secure LLM
@@ -274,34 +256,28 @@ export default function Home() {
               All {publications.length} publications →
             </Link>
           </p>
-        </Footprint>
+        </Section>
 
-        <Footprint id="skills" refDes="U5" heading="Skills">
+        <Section id="skills" heading="Skills">
           <dl className="grid gap-x-10 gap-y-9 sm:grid-cols-2 lg:grid-cols-3">
             {skills.map((group) => (
               <div key={group.domain}>
-                <dt className="silk-label mb-3 flex items-center gap-2.5 text-gold">
-                  <span
-                    aria-hidden="true"
-                    className="inline-block h-2.5 w-2.5 rounded-full border-2 border-copper bg-substrate-3"
-                  />
-                  {group.domain}
-                </dt>
+                <dt className="silk-label mb-3 text-gold">{group.domain}</dt>
                 <dd className="text-sm leading-7 text-silk-muted">
                   {group.items.join(" · ")}
                 </dd>
               </div>
             ))}
           </dl>
-        </Footprint>
+        </Section>
 
-        <Footprint id="contact" refDes="U6" heading="Contact">
-          <p className="display max-w-3xl text-3xl text-silk sm:text-5xl">
+        <Section id="contact" heading="Contact">
+          <p className="display max-w-3xl text-4xl text-silk sm:text-5xl">
             Building something with hard edges — payments, devices, telemetry?
             Let&apos;s talk.
           </p>
           <div className="mt-9 flex flex-wrap items-center gap-3">
-            <a href={`mailto:${site.email}`} className="pad normal-case">
+            <a href={`mailto:${site.email}`} className="pad">
               {site.email}
             </a>
             <a
@@ -316,7 +292,7 @@ export default function Home() {
           <p className="silk-label mt-10 text-silk-muted">
             {site.location} · UTC−6
           </p>
-        </Footprint>
+        </Section>
       </div>
     </main>
   );

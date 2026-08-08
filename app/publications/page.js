@@ -41,12 +41,7 @@ export default function Publications() {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
-      <div className="flex items-end justify-between gap-4">
-        <h1 className="display text-5xl text-silk sm:text-7xl">Publications</h1>
-        <span className="designator" aria-hidden="true">
-          BOM
-        </span>
-      </div>
+      <h1 className="display text-5xl text-silk sm:text-7xl">Publications</h1>
       <p className="mt-6 max-w-2xl leading-relaxed text-silk-muted">
         {publications.length} peer-reviewed works — {ieeeCount} IEEE conference
         papers among them — on federated learning, secure LLM deployment, and

@@ -16,9 +16,7 @@ export default function NotFound() {
       >
         <path className="airwire" d="M-20 80 L340 300" />
         <path className="airwire" d="M820 40 L360 310" />
-        <path className="airwire" d="M-40 560 L330 330" />
         <path className="airwire" d="M840 620 L370 340" />
-        <path className="airwire" d="M400 -30 L350 290" />
         <circle
           cx="352"
           cy="315"

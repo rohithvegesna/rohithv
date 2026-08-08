@@ -5,28 +5,28 @@ import { caseStudies } from "@/data/work";
 import { site } from "@/data/site";
 
 /*
-  NET PROBE — hand-rolled command palette on <dialog> (native focus trap,
+  Search — hand-rolled command palette on <dialog> (native focus trap,
   Esc close, backdrop). Cmd/Ctrl+K or the header pad opens it.
 */
 
 const NETS = [
-  { group: "Routes", label: "Home", href: "/" },
-  { group: "Routes", label: "Work", href: "/work/" },
-  { group: "Routes", label: "Publications", href: "/publications/" },
-  { group: "Routes", label: "Press", href: "/press/" },
-  { group: "Routes", label: "About", href: "/#about" },
-  { group: "Routes", label: "Experience", href: "/#experience" },
-  { group: "Routes", label: "Skills", href: "/#skills" },
-  { group: "Routes", label: "Contact", href: "/#contact" },
+  { group: "Pages", label: "Home", href: "/" },
+  { group: "Pages", label: "Work", href: "/work/" },
+  { group: "Pages", label: "Publications", href: "/publications/" },
+  { group: "Pages", label: "Press", href: "/press/" },
+  { group: "Pages", label: "About", href: "/#about" },
+  { group: "Pages", label: "Experience", href: "/#experience" },
+  { group: "Pages", label: "Skills", href: "/#skills" },
+  { group: "Pages", label: "Contact", href: "/#contact" },
   ...caseStudies.map((cs) => ({
     group: "Case studies",
     label: cs.title,
     href: `/work/${cs.slug}/`,
   })),
-  { group: "External", label: "GitHub", href: site.github, external: true },
-  { group: "External", label: "LinkedIn", href: site.linkedin, external: true },
-  { group: "External", label: "Scholar", href: site.scholar, external: true },
-  { group: "External", label: "Copy email address", action: "copy-email" },
+  { group: "Links", label: "GitHub", href: site.github, external: true },
+  { group: "Links", label: "LinkedIn", href: site.linkedin, external: true },
+  { group: "Links", label: "Scholar", href: site.scholar, external: true },
+  { group: "Links", label: "Copy email address", action: "copy-email" },
 ];
 
 function matches(query, label) {
@@ -106,7 +106,7 @@ export default function Palette() {
         onClick={open}
         className="silk-label my-1.5 flex items-center gap-2 border border-silk/25 px-2.5 py-1.5 text-silk-muted transition-colors hover:border-gold hover:text-silk"
       >
-        Probe
+        Search
         <kbd className="hidden rounded-[1px] border border-silk/25 px-1 py-0.5 text-[0.6rem] sm:inline-block">
           ⌘K
         </kbd>
@@ -114,7 +114,7 @@ export default function Palette() {
       <dialog
         ref={dialogRef}
         className="probe"
-        aria-label="Net probe"
+        aria-label="Search"
         onClick={(e) => {
           if (e.target === dialogRef.current) dialogRef.current.close();
         }}
@@ -133,15 +133,15 @@ export default function Palette() {
             aria-expanded="true"
             aria-controls="probe-list"
             aria-activedescendant={active ? `net-${NETS.indexOf(active)}` : undefined}
-            aria-label="Search nets"
-            placeholder="Search nets…"
+            aria-label="Search pages"
+            placeholder="Search pages…"
             className="w-full bg-transparent font-mono text-sm tracking-wide text-silk placeholder:text-silk-muted focus:outline-none"
           />
         </div>
         <ul
           id="probe-list"
           role="listbox"
-          aria-label="Nets"
+          aria-label="Pages"
           className="max-h-[46vh] overflow-y-auto p-2"
         >
           {rows.map(({ net: n, showHeader }) => {
@@ -152,7 +152,7 @@ export default function Palette() {
                 <li
                   key={`g-${n.group}`}
                   role="presentation"
-                  className="tb-label px-2 pb-1 pt-3 first:pt-1"
+                  className="silk-label px-2 pb-1 pt-3 text-[0.6rem] text-silk-muted first:pt-1"
                 >
                   {n.group}
                 </li>
@@ -181,11 +181,11 @@ export default function Palette() {
           })}
           {hits.length === 0 ? (
             <li role="presentation" className="px-2 py-3 font-mono text-sm text-silk-muted">
-              No net found
+              No results
             </li>
           ) : null}
         </ul>
-        <p className="tb-label border-t border-silk/15 px-3 py-2">
+        <p className="silk-label border-t border-silk/15 px-3 py-2 text-[0.6rem] text-silk-muted">
           ↑↓ move · ↵ jump · esc close
         </p>
       </dialog>
