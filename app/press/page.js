@@ -1,4 +1,4 @@
-import { press } from "@/data/press";
+import PressList from "@/components/sections/PressList";
 import { site } from "@/data/site";
 
 export const metadata = {
@@ -36,29 +36,9 @@ export default function Press() {
         Coverage of my work on smart fueling systems, fuel-station
         cybersecurity, and IoT-driven automation.
       </p>
-      <ul className="mt-12 space-y-0">
-        {press.map((item) => (
-          <li
-            key={item.link}
-            className="border-t border-silk/12 py-8 last:border-b"
-          >
-            <p className="silk-label text-copper">{item.date}</p>
-            <h2 className="mt-3 text-xl font-bold leading-snug">
-              <a
-                href={item.link}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="trace-link"
-              >
-                {item.title}
-              </a>
-            </h2>
-            <p className="mt-3 max-w-2xl text-sm leading-relaxed text-silk-muted">
-              {item.description}
-            </p>
-          </li>
-        ))}
-      </ul>
+      <div className="mt-12">
+        <PressList />
+      </div>
     </main>
   );
 }
