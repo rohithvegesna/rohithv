@@ -829,8 +829,8 @@ export default function Game({ active, onClassic }) {
 
       {/* HUD — top */}
       <div className="pointer-events-none absolute inset-x-0 top-0 flex items-start justify-between gap-3 p-3 sm:p-4">
-        <div className="max-w-[60vw]">
-          <p className="silk-label bg-substrate/80 px-2.5 py-1.5 text-silk">
+        <div className="max-w-[52vw] sm:max-w-[60vw]">
+          <p className="silk-label whitespace-nowrap bg-substrate/80 px-2.5 py-1.5 text-[0.58rem] text-silk sm:text-[0.72rem]">
             {site.name}
           </p>
           <p className="silk-label mt-1 hidden bg-substrate/80 px-2.5 py-1.5 text-[0.6rem] text-silk-muted sm:block">
