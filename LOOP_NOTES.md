@@ -38,3 +38,50 @@ teleports now queue into the tick, one controller for life. Visual: body
 narrowed (1.48 m over 1.5 m track) so wheels sit proud; rocker raised; brake/
 reverse emissives wired. Evidence: iter-005 + iter-005-static (3×3 assertion
 passes, console clean). VERDICT: PASS.
+
+## Iter 006 — grounding (V3 partial)
+Islands: beveled curb on dark base; column plinths; price-board plinth;
+bollard base discs; oil-stain + tire-mark contact decals. First pass washed
+the mood out — contrast restored with exposure 1.1→0.98, ambient 1.4→1.05,
+canopy spots 260→190, fog pulled to 24..105. Evidence: iter-006-static.
+VERDICT: PASS (nothing floats; night mood back).
+
+## Iter 007 — bloom discipline (V5)
+Threshold 0.1→0.32, intensity 0.75; togglePost() debug API; paired shots
+post-all-on/off, ao-off, bloom-off in iter-007-static. Text never smears;
+asphalt/paint never bloom (selective layer + threshold). VERDICT: PASS.
+
+## Iter 008 — store interior (V4) + pose cameras
+Foot poses gained yaw; store_aisle/checkout reframed; interior +150/+70
+warm points. Aisle shot: dense shelves, readable fictional labels, cooler
+glow. Nit: items sit ~2cm above shelf lips — logged, not shipped-blocking.
+VERDICT: PASS.
+
+## Iter 009 — P1 draw calls
+Breakdown (at_pump): base 178 + bloom ~30 + AO ~23 = 231. Merges: canopy
+cols/plinths/lights, cooler cabinets+glass, gondola shelving, island curbs
+(each → 1 draw per material); interior group streams (hidden >24 m from the
+door, incl. its lights). Result: at_pump 189, spawn 120, store_aisle 110 —
+all <200 with full post. aim-150 not reached at the pump; budget met.
+VERDICT: PASS.
+
+## Iter 010 — G1 feel (provisional)
+Tuning panel behind ?debug=1&tune=1 (all vehicle/camera constants live,
+"dump config" → console JSON). Scripted metrics after retune (engineForce
+2100, governor at 19 m/s, handbrake 22): 0→12.8 m/s in 4 s (top ~13),
+full-lock at speed stable (no spin-out), handbrake scrubs to 4.15 m/s.
+VERDICT: provisional PASS — needs a human hand on the wheel.
+
+## Iter 011 — Chanel + exit
+Removed the duplicate tire-mark strip. Static build: 3× full harness green
+(fps 120 avg, 189 draws, console clean ×3). Freeze diff: exactly the 10
+enumerated overlay strings. VERDICT: exit criteria met (G1 human pass
+outstanding).
+
+### G1 human test-drive instructions (for the owner)
+1. `npm run dev` → http://localhost:3000/?debug=1&tune=1
+2. Drive A: lot laps — full throttle spawn→canopy, brake into the bay.
+3. Drive B: slalom the bollards at half throttle, then full-lock circles.
+4. Drive C: approach road top-speed run, handbrake turn at the apron.
+Report each as: floaty / grippy / twitchy / heavy (+ camera: laggy/tight).
+Then hit "dump config" and paste the JSON; next session bakes it in.

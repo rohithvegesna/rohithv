@@ -3,7 +3,10 @@
    scene refs + collider descriptors for physics. */
 import * as THREE from "three";
 import { RoundedBoxGeometry } from "three/addons/geometries/RoundedBoxGeometry.js";
+import { mergeGeometries } from "three/addons/utils/BufferGeometryUtils.js";
 import {
+  stainTexture,
+  tireMarkTexture,
   signTexture,
   stripeTexture,
   priceBoardTexture,
@@ -36,6 +39,18 @@ const M = {
       emissiveIntensity: intensity,
     }),
 };
+
+function rgeo(w, h, d, r, x, y, z) {
+  const g = new RoundedBoxGeometry(w, h, d, 3, r);
+  g.translate(x, y, z);
+  return g;
+}
+
+function merged(geos, mat, { shadow = true } = {}) {
+  const m = new THREE.Mesh(mergeGeometries(geos, false), mat);
+  m.castShadow = m.receiveShadow = shadow;
+  return m;
+}
 
 function rbox(w, h, d, r, mat, x, y, z, ry = 0) {
   const m = new THREE.Mesh(new RoundedBoxGeometry(w, h, d, 3, r), mat);
@@ -114,12 +129,17 @@ export function buildWorld(scene, quality) {
   /* ---------- canopy ---------- */
   const canopy = new THREE.Group();
   const colMat = M.paint(0xd8d2c6, { roughness: 0.4, metalness: 0.3 });
+  const colGeos = [];
+  const plinthGeos = [];
   for (const cx of [-8, 8]) {
     for (const cz of [-6, 2]) {
-      canopy.add(rbox(0.55, 6.4, 0.55, 0.06, colMat, cx, 3.2, cz));
+      colGeos.push(rgeo(0.55, 6.4, 0.55, 0.06, cx, 3.2, cz));
+      plinthGeos.push(rgeo(0.95, 0.3, 0.95, 0.05, cx, 0.15, cz));
       addCol(cx, 3.2, cz, 0.35, 3.2, 0.35);
     }
   }
+  canopy.add(merged(colGeos, colMat));
+  canopy.add(merged(plinthGeos, M.plastic(0x2b2620, 0.85)));
   const slab = rbox(24, 1.1, 13, 0.1, M.paint(0x2a2622, { roughness: 0.5 }), 0, 6.9, -2);
   canopy.add(slab);
   // brand stripe band around the fascia
@@ -131,11 +151,13 @@ export function buildWorld(scene, quality) {
   canopy.add(band);
   // under-canopy light housings
   const lightMat = M.emissive(0xffe9c4, 3.0);
+  const lightGeos = [];
   for (const lx of [-5.5, 0, 5.5]) {
     for (const lz of [-5.5, 1.5]) {
-      canopy.add(glow(rbox(1.6, 0.12, 0.8, 0.03, lightMat, lx, 6.32, lz)));
+      lightGeos.push(rgeo(1.6, 0.12, 0.8, 0.03, lx, 6.32, lz));
     }
   }
+  canopy.add(glow(merged(lightGeos, lightMat, { shadow: false })));
   scene.add(canopy);
 
   /* ---------- pumps (two islands, four bays) ---------- */
@@ -150,10 +172,12 @@ export function buildWorld(scene, quality) {
   });
   const readerMat = M.emissive(0x4aa3ff, 1.6, 0x101418);
   const pumpBays = [];
+  const islandGeos = [];
+  const islandBaseGeos = [];
   for (const px of [-4.5, 4.5]) {
-    // island curb
-    const island = rbox(2.6, 0.24, 9.5, 0.05, M.plastic(0x3a352f, 0.85), px, 0.12, -2);
-    pumpGroup.add(island);
+    // island curb: beveled body on a wider dark base — grounded, not floating
+    islandGeos.push(rgeo(2.2, 0.32, 9.6, 0.08, px, 0.17, -2));
+    islandBaseGeos.push(rgeo(2.95, 0.08, 9.85, 0.02, px, 0.04, -2));
     addCol(px, 0.35, -2, 1.3, 0.35, 4.75);
     // dispenser
     const disp = new THREE.Group();
@@ -210,13 +234,16 @@ export function buildWorld(scene, quality) {
       });
     }
   }
+  pumpGroup.add(merged(islandGeos, M.plastic(0x27221e, 0.92)));
+  pumpGroup.add(merged(islandBaseGeos, M.plastic(0x14110e, 0.95)));
   scene.add(pumpGroup);
 
   /* ---------- price board ---------- */
   const board = new THREE.Group();
   board.position.set(-16, 0, 16);
   const pole = rbox(0.5, 7.5, 0.5, 0.05, M.metal(0x3c3835, 0.5), 0, 3.75, 0);
-  board.add(pole);
+  const plinth = rbox(1.1, 0.42, 1.1, 0.06, M.plastic(0x2b2620, 0.85), 0, 0.21, 0);
+  board.add(pole, plinth);
   const face = new THREE.Mesh(
     new THREE.PlaneGeometry(4.4, 5.5),
     new THREE.MeshStandardMaterial({
@@ -293,32 +320,38 @@ export function buildWorld(scene, quality) {
   floor.position.set(0, 0.02, SZ);
   floor.receiveShadow = true;
   store.add(floor);
-  // interior ceiling light boxes
+  // interior group — streamed: hidden until the player nears the door
+  const interior = new THREE.Group();
+  store.add(interior);
+  const ceilGeos = [];
   for (const lx of [-8, 0, 8]) {
-    store.add(glow(rbox(3.2, 0.1, 1.2, 0.02, M.emissive(0xfff2da, 2.6), lx, SH - 0.1, SZ)));
+    ceilGeos.push(rgeo(3.2, 0.1, 1.2, 0.02, lx, SH - 0.1, SZ));
   }
+  interior.add(glow(merged(ceilGeos, M.emissive(0xfff2da, 2.6), { shadow: false })));
 
   /* cooler wall along the back */
   const cooler = new THREE.Group();
   const coolerMat = M.metal(0x2e2b28, 0.4);
+  const coolerGeos = [];
+  const coolerGlassGeos = [];
   for (let i = 0; i < 6; i++) {
     const cx = -10 + i * 4;
-    cooler.add(rbox(3.8, 3.2, 0.7, 0.05, coolerMat, cx, 1.6, SZ - SD / 2 + 0.75));
-    const glass = new THREE.Mesh(
-      new THREE.PlaneGeometry(3.3, 2.5),
-      new THREE.MeshPhysicalMaterial({
-        color: 0xbfe4ff,
-        emissive: 0x9fd0ff,
-        emissiveIntensity: 0.75,
-        transparent: true,
-        opacity: 0.85,
-        roughness: 0.1,
-      })
-    );
-    glass.position.set(cx, 1.7, SZ - SD / 2 + 1.12);
-    cooler.add(glow(glass));
+    coolerGeos.push(rgeo(3.8, 3.2, 0.7, 0.05, cx, 1.6, SZ - SD / 2 + 0.75));
+    const gg = new THREE.PlaneGeometry(3.3, 2.5);
+    gg.translate(cx, 1.7, SZ - SD / 2 + 1.12);
+    coolerGlassGeos.push(gg);
   }
-  store.add(cooler);
+  cooler.add(merged(coolerGeos, coolerMat));
+  const coolerGlassMat = new THREE.MeshPhysicalMaterial({
+    color: 0xbfe4ff,
+    emissive: 0x9fd0ff,
+    emissiveIntensity: 0.75,
+    transparent: true,
+    opacity: 0.85,
+    roughness: 0.1,
+  });
+  cooler.add(glow(merged(coolerGlassGeos, coolerGlassMat, { shadow: false })));
+  interior.add(cooler);
   addCol(0, 1.6, SZ - SD / 2 + 0.75, 12, 1.6, 0.5);
 
   /* aisles: two shelf gondolas, instanced products */
@@ -335,12 +368,13 @@ export function buildWorld(scene, quality) {
   for (const ax of [-5.5, 5.5]) {
     const gondola = new THREE.Group();
     gondola.position.set(ax, 0, aisleZ);
-    gondola.add(rbox(1.1, 0.18, 7.6, 0.03, shelfMat, 0, 0.09, 0));
+    const shelfGeos = [rgeo(1.1, 0.18, 7.6, 0.03, 0, 0.09, 0)];
     for (const sy of [0.65, 1.15, 1.65]) {
-      gondola.add(rbox(1.0, 0.06, 7.4, 0.02, shelfMat, 0, sy, 0));
+      shelfGeos.push(rgeo(1.0, 0.06, 7.4, 0.02, 0, sy, 0));
     }
-    gondola.add(rbox(1.06, 2.0, 0.1, 0.02, shelfMat, 0, 1.0, -3.78));
-    gondola.add(rbox(1.06, 2.0, 0.1, 0.02, shelfMat, 0, 1.0, 3.78));
+    shelfGeos.push(rgeo(1.06, 2.0, 0.1, 0.02, 0, 1.0, -3.78));
+    shelfGeos.push(rgeo(1.06, 2.0, 0.1, 0.02, 0, 1.0, 3.78));
+    gondola.add(merged(shelfGeos, shelfMat));
     // product rows (instanced boxes per product type)
     products.forEach((p, pi) => {
       const kindGeo =
@@ -359,7 +393,7 @@ export function buildWorld(scene, quality) {
       }
       gondola.add(inst);
     });
-    store.add(gondola);
+    interior.add(gondola);
     addCol(ax, 1.0, aisleZ, 0.6, 1.0, 3.8);
     // one pickable item per gondola end
     const pick = products[ax < 0 ? 0 : 2];
@@ -371,7 +405,7 @@ export function buildWorld(scene, quality) {
     );
     pickMesh.position.set(ax, 1.32, aisleZ + 3.3);
     pickMesh.castShadow = true;
-    store.add(pickMesh);
+    interior.add(pickMesh);
     shelfItems.push({ mesh: pickMesh, product: pick, x: ax, z: aisleZ + 3.3 });
   }
 
@@ -396,7 +430,7 @@ export function buildWorld(scene, quality) {
   regReader.rotation.x = -0.5;
   counter.add(glow(regReader));
   counter.add(rbox(0.6, 0.5, 0.4, 0.04, M.plastic(0x24211d), 0.2, 1.0, 0.2));
-  store.add(counter);
+  interior.add(counter);
   addCol(9, 0.55, SZ + 3.6, 1.7, 0.55, 0.6);
   scene.add(store);
 
@@ -415,7 +449,13 @@ export function buildWorld(scene, quality) {
   scene.add(iceBox);
   addCol(8.4, 0.95, -15.4, 0.8, 0.95, 0.5);
   const bolMat = M.paint(0xc9834a, { roughness: 0.45 });
-  const bolGeo = new THREE.CylinderGeometry(0.14, 0.16, 1.0, 10);
+  const bolGeo = mergeGeometries(
+    [
+      new THREE.CylinderGeometry(0.14, 0.16, 1.0, 10),
+      new THREE.CylinderGeometry(0.26, 0.3, 0.1, 10).translate(0, -0.46, 0),
+    ],
+    false
+  );
   const bols = new THREE.InstancedMesh(bolGeo, bolMat, 6);
   const bolPos = [[-7.5, -15.2], [7.5, -15.2], [-12, 3], [12, 3], [-2, -15.2], [2, -15.2]];
   bolPos.forEach(([bx, bz], i) => {
@@ -426,6 +466,39 @@ export function buildWorld(scene, quality) {
   });
   bols.castShadow = true;
   scene.add(bols);
+
+  /* ---------- contact decals: oil stains + tire marks ---------- */
+  const stainMat = new THREE.MeshBasicMaterial({
+    map: stainTexture(),
+    transparent: true,
+    depthWrite: false,
+    polygonOffset: true,
+    polygonOffsetFactor: -2,
+  });
+  const stainGeo = new THREE.PlaneGeometry(2.6, 2.6);
+  const stains = new THREE.InstancedMesh(stainGeo, stainMat, 6);
+  const stainSpots = [[-1.9, -2], [-7.1, -1.2], [1.9, -2.6], [7.1, -1.6], [4.3, -12.8], [-9, 6.5]];
+  const sm4 = new THREE.Matrix4();
+  stainSpots.forEach(([sx, sz], i) => {
+    sm4.makeRotationX(-Math.PI / 2);
+    sm4.setPosition(sx, 0.06 + i * 0.002, sz);
+    stains.setMatrixAt(i, sm4);
+  });
+  scene.add(stains);
+  const markMat = new THREE.MeshBasicMaterial({
+    map: tireMarkTexture(),
+    transparent: true,
+    depthWrite: false,
+    polygonOffset: true,
+    polygonOffsetFactor: -2,
+  });
+  for (const [mx, mz, rot] of [[0.9, 26, 0]]) {
+    const mark = new THREE.Mesh(new THREE.PlaneGeometry(2.4, 16), markMat);
+    mark.rotation.x = -Math.PI / 2;
+    mark.rotation.z = rot;
+    mark.position.set(mx, 0.03, mz);
+    scene.add(mark);
+  }
 
   /* ---------- lights ---------- */
   const moon = new THREE.DirectionalLight(0x8fa8c8, 0.55);
@@ -438,19 +511,22 @@ export function buildWorld(scene, quality) {
   moon.shadow.camera.bottom = -40;
   moon.shadow.bias = -0.0004;
   scene.add(moon);
-  scene.add(new THREE.AmbientLight(0x1c2026, 1.4));
+  scene.add(new THREE.AmbientLight(0x1c2026, 1.05));
 
   const canopySpots = [];
   for (const lx of [-5.5, 5.5]) {
-    const s = new THREE.SpotLight(0xffdfae, 260, 22, Math.PI / 3.2, 0.5, 1.9);
+    const s = new THREE.SpotLight(0xffdfae, 190, 22, Math.PI / 3.4, 0.55, 1.9);
     s.position.set(lx, 6.2, -2);
     s.target.position.set(lx, 0, -2);
     scene.add(s, s.target);
     canopySpots.push(s);
   }
-  const storeLight = new THREE.PointLight(0xffe3b8, 90, 26, 1.9);
+  const storeLight = new THREE.PointLight(0xffe3b8, 150, 30, 1.9);
   storeLight.position.set(0, 3.6, SZ);
-  scene.add(storeLight);
+  interior.add(storeLight);
+  const aisleLight = new THREE.PointLight(0xffdcae, 70, 18, 1.9);
+  aisleLight.position.set(-4, 3.4, SZ + 2);
+  interior.add(aisleLight);
   const doorGlow = new THREE.PointLight(0xffd9a0, 40, 12, 1.9);
   doorGlow.position.set(0, 2.6, front + 1.6);
   scene.add(doorGlow);
@@ -463,6 +539,7 @@ export function buildWorld(scene, quality) {
     doors: { left: doorL, right: doorR, x: 0, z: front },
     register: { x: 9, z: SZ + 3.6, screen: regScreen, reader: regReader },
     store: { front, SZ, SW, SD },
+    interior,
     screenMat,
   };
 }

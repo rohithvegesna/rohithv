@@ -38,10 +38,10 @@ const POSES = {
   approach: { mode: "drive", car: [0, 1.1, 26, -Math.PI / 2] },
   at_pump: { mode: "drive", car: [-1.9, 1.1, -2, Math.PI] },
   fueling: { mode: "fueling", car: [-1.9, 1.1, -2, Math.PI] },
-  on_foot_lot: { mode: "foot", car: [-1.9, 1.1, -2, Math.PI], foot: [0, -8] },
-  store_aisle: { mode: "foot", car: [-1.9, 1.1, -2, Math.PI], foot: [-5.5, -19.5] },
-  checkout: { mode: "foot", car: [-1.9, 1.1, -2, Math.PI], foot: [9, -17.2], carry: true },
-  receipt: { mode: "receipt", car: [-1.9, 1.1, -2, Math.PI], foot: [9, -17.2] },
+  on_foot_lot: { mode: "foot", car: [-1.9, 1.1, -2, Math.PI], foot: [0, -8, 0] },
+  store_aisle: { mode: "foot", car: [-1.9, 1.1, -2, Math.PI], foot: [-2.9, -17.6, 1.05] },
+  checkout: { mode: "foot", car: [-1.9, 1.1, -2, Math.PI], foot: [7.2, -16.9, -0.75], carry: true },
+  receipt: { mode: "receipt", car: [-1.9, 1.1, -2, Math.PI], foot: [7.2, -16.9, -0.75] },
   side_profile: { mode: "drive", car: [0, 1.1, 40, -Math.PI / 2], cam: [0, 1.15, 46.5, 0, 0.8, 40] },
   three_quarter: { mode: "drive", car: [0, 1.1, 40, -Math.PI / 2], cam: [4.6, 1.7, 45.2, 0, 0.75, 40] },
 };
@@ -80,14 +80,14 @@ export default function NightRun({ onClassic, onProgress, started }) {
     renderer.shadowMap.enabled = true;
     renderer.shadowMap.type = THREE.PCFShadowMap;
     renderer.toneMapping = THREE.ACESFilmicToneMapping;
-    renderer.toneMappingExposure = 1.1;
+    renderer.toneMappingExposure = 0.98;
     renderer.info.autoReset = false;
     host.appendChild(renderer.domElement);
     renderer.domElement.setAttribute("aria-hidden", "true");
 
     const scene = new THREE.Scene();
     scene.background = new THREE.Color(0x07090d);
-    scene.fog = new THREE.Fog(0x0a0c10, 30, 130);
+    scene.fog = new THREE.Fog(0x090b0e, 24, 105);
     const camera = new THREE.PerspectiveCamera(55, innerWidth / innerHeight, 0.3, 300);
 
     const audio = createAudio();
@@ -167,15 +167,16 @@ export default function NightRun({ onClassic, onProgress, started }) {
       }
       bloom = new SelectiveBloomEffect(scene, camera, {
         blendFunction: BlendFunction.ADD,
-        luminanceThreshold: 0.1,
-        intensity: 0.85,
-        radius: 0.7,
+        luminanceThreshold: 0.32,
+        intensity: 0.75,
+        radius: 0.62,
         mipmapBlur: true,
       });
       bloom.selection.layer = BLOOM_LAYER;
-      composer.addPass(
-        new EffectPass(camera, bloom, new SMAAEffect(), new VignetteEffect({ darkness: 0.42, offset: 0.28 }))
-      );
+      G.bloom = bloom;
+      const vignette = new VignetteEffect({ darkness: 0.38, offset: 0.3 });
+      G.effectPass = new EffectPass(camera, bloom, new SMAAEffect(), vignette);
+      composer.addPass(G.effectPass);
       onProgress?.(90);
       await renderer.compileAsync(scene, camera);
       onProgress?.(100);
@@ -202,6 +203,7 @@ export default function NightRun({ onClassic, onProgress, started }) {
 
     /* pointer-lock look (on foot) */
     let yaw = Math.PI, pitch = 0;
+    G.setYaw = (v) => { yaw = v; pitch = 0; };
     const onMove = (e) => {
       if (document.pointerLockElement === renderer.domElement && G.mode === "foot") {
         yaw -= e.movementX * 0.0024;
@@ -217,6 +219,30 @@ export default function NightRun({ onClassic, onProgress, started }) {
 
     /* ---------- game state ---------- */
     G.mode = "drive";
+    G.tune = {
+      engineForce: 2100,
+      reverseFactor: 0.7,
+      brakeIdle: 1.6,
+      handbrake: 22,
+      steerMax: 0.42,
+      steerFade: 0.01,
+      suspStiffness: 4800,
+      suspCompression: 750,
+      suspRelaxation: 950,
+      maxSuspForce: 1500,
+      frictionSlip: 3.4,
+      camLag: 5.2,
+      fovKick: 1.1,
+    };
+    G.applyTune = () => {
+      for (let i = 0; i < 4; i++) {
+        carRig.vehicle.setWheelSuspensionStiffness(i, G.tune.suspStiffness);
+        carRig.vehicle.setWheelSuspensionCompression(i, G.tune.suspCompression);
+        carRig.vehicle.setWheelSuspensionRelaxation(i, G.tune.suspRelaxation);
+        carRig.vehicle.setWheelMaxSuspensionForce(i, G.tune.maxSuspForce);
+        carRig.vehicle.setWheelFrictionSlip(i, G.tune.frictionSlip);
+      }
+    };
     G.objectives = { fuel: false, snack: false, paid: false };
     G.carried = null;
     G.gallons = 0;
@@ -382,6 +408,7 @@ export default function NightRun({ onClassic, onProgress, started }) {
         if (G.pendingFootPose) {
           G.footBody.setNextKinematicTranslation({ x: G.pendingFootPose[0], y: 0.9, z: G.pendingFootPose[1] });
           G.footBody.setTranslation({ x: G.pendingFootPose[0], y: 0.9, z: G.pendingFootPose[1] }, true);
+          if (G.pendingFootPose[2] !== undefined) G.setYaw?.(G.pendingFootPose[2]);
           G.pendingFootPose = null;
         }
         const settle = G.pendingSettle || 30;
@@ -406,14 +433,22 @@ export default function NightRun({ onClassic, onProgress, started }) {
         acc -= FIXED;
         if (G.mode === "drive" || G.mode === "fueling") {
           const speed = carSpeed();
-          const steer = THREE.MathUtils.clamp(steerKey, -1, 1) * (0.42 - Math.min(0.24, speed * 0.012));
+          const T = G.tune;
+          const steer =
+            THREE.MathUtils.clamp(steerKey, -1, 1) *
+            (T.steerMax - Math.min(T.steerMax * 0.58, speed * T.steerFade));
           carRig.vehicle.setWheelSteering(0, steer);
           carRig.vehicle.setWheelSteering(1, steer);
-          const drive = G.mode === "drive" ? (throttleKey - reverseKey * 0.7) * 620 : 0;
+          const governor = Math.max(0, 1 - speed / 19);
+          const drive =
+            G.mode === "drive"
+              ? (throttleKey * governor - reverseKey * T.reverseFactor * 0.6) * T.engineForce
+              : 0;
           carRig.vehicle.setWheelEngineForce(2, drive);
           carRig.vehicle.setWheelEngineForce(3, drive);
-          const brake = handbrake ? 10 : throttleKey || reverseKey ? 0 : 1.6;
-          for (let i = 0; i < 4; i++) carRig.vehicle.setWheelBrake(i, i > 1 && handbrake ? 14 : brake);
+          const brake = handbrake ? 10 : throttleKey || reverseKey ? 0 : T.brakeIdle;
+          for (let i = 0; i < 4; i++)
+            carRig.vehicle.setWheelBrake(i, i > 1 && handbrake ? T.handbrake : brake);
           try {
             carRig.vehicle.updateVehicle(
               FIXED,
@@ -567,6 +602,11 @@ export default function NightRun({ onClassic, onProgress, started }) {
         }
       }
 
+      /* interior streaming: only render the store's insides near the door */
+      const distRef = G.mode === "foot" ? G.footBody.translation() : t;
+      const doorDist = Math.hypot(distRef.x - refs.doors.x, distRef.z - refs.doors.z);
+      refs.interior.visible = G.mode === "foot" || G.mode === "receipt" || doorDist < 24;
+
       /* doors */
       const fp2 = G.mode === "foot" ? G.footBody.translation() : t;
       const nearDoor = Math.hypot(fp2.x - refs.doors.x, fp2.z - refs.doors.z) < 3.4;
@@ -589,11 +629,11 @@ export default function NightRun({ onClassic, onProgress, started }) {
       } else if (G.mode === "drive" || G.mode === "receipt") {
         const q = new THREE.Quaternion(r.x, r.y, r.z, r.w);
         const back = new THREE.Vector3(-8.2, 3.3, 0).applyQuaternion(q);
-        camPos.lerp(new THREE.Vector3(t.x + back.x, t.y + back.y, t.z + back.z), Math.min(1, 4.5 * dt));
+        camPos.lerp(new THREE.Vector3(t.x + back.x, t.y + back.y, t.z + back.z), Math.min(1, G.tune.camLag * dt));
         camera.position.copy(camPos);
         camLook.lerp(new THREE.Vector3(t.x, t.y + 1.1, t.z), Math.min(1, 8 * dt));
         camera.lookAt(camLook);
-        camera.fov = THREE.MathUtils.lerp(camera.fov, 55 + Math.min(14, speed * 1.1), 0.08);
+        camera.fov = THREE.MathUtils.lerp(camera.fov, 55 + Math.min(14, speed * G.tune.fovKick), 0.08);
         camera.updateProjectionMatrix();
       } else if (!G.debugCam && G.mode === "fueling") {
         const b = refs.pumpBays[0];
@@ -630,6 +670,32 @@ export default function NightRun({ onClassic, onProgress, started }) {
     };
     document.addEventListener("visibilitychange", onVis);
 
+    /* ---------- tuning panel (?debug=1&tune=1) ---------- */
+    if (debug && new URLSearchParams(location.search).has("tune")) {
+      const panel = document.createElement("div");
+      panel.style.cssText =
+        "position:fixed;right:8px;bottom:8px;z-index:99;background:#161210e6;border:1px solid #e2b96b;padding:10px;font:11px monospace;color:#f2ead9;width:230px";
+      const fields = Object.keys(G.tune);
+      panel.innerHTML =
+        fields
+          .map(
+            (k) =>
+              `<label style="display:flex;justify-content:space-between;gap:6px;margin:2px 0">${k}<input data-k="${k}" type="number" step="any" value="${G.tune[k]}" style="width:90px;background:#0f0c0a;color:#f2ead9;border:1px solid #6e635a"></label>`
+          )
+          .join("") +
+        `<button id="nr-dump" style="margin-top:6px;border:1px solid #e2b96b;color:#e2b96b;padding:3px 8px">dump config</button>`;
+      document.body.appendChild(panel);
+      panel.addEventListener("change", (e) => {
+        const k = e.target.dataset.k;
+        if (!k) return;
+        G.tune[k] = parseFloat(e.target.value);
+        G.applyTune();
+      });
+      panel.querySelector("#nr-dump").addEventListener("click", () => {
+        console.log("NR TUNE CONFIG", JSON.stringify(G.tune, null, 2));
+      });
+    }
+
     /* ---------- debug harness ---------- */
     if (debug) {
       const stats = () => {
@@ -645,6 +711,7 @@ export default function NightRun({ onClassic, onProgress, started }) {
         ready: boot,
         state: () => ({
           mode: G.mode,
+          speed: carRig ? +carSpeed().toFixed(2) : 0,
           objectives: { ...G.objectives },
           car: carRig ? carPose().t : null,
           foot: G.footBody?.translation(),
@@ -708,6 +775,13 @@ export default function NightRun({ onClassic, onProgress, started }) {
             });
           }
           return { wheels: out, chassisY: +t.y.toFixed(3), wheelRadius: CAR.wheelRadius, halfTrack: CAR.track / 2 };
+        },
+        togglePost: (name, on) => {
+          if (name === "all" && G.effectPass) G.effectPass.enabled = on;
+          if (name === "ao" && G.aoPass) G.aoPass.enabled = on;
+          if (name === "bloom" && G.bloom)
+            G.bloom.blendMode.setBlendFunction(on ? BlendFunction.ADD : BlendFunction.SKIP);
+          return true;
         },
         setQuality: (t2) => localStorage.setItem("nr-quality", t2),
         screenshotReady: async () => {

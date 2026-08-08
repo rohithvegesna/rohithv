@@ -137,4 +137,35 @@ export function asphaltRoughness() {
   return t;
 }
 
+export function stainTexture(seedBase = 7) {
+  const [cv, x] = canvas(128, 128);
+  let seed = seedBase;
+  const rnd = () => ((seed = (seed * 16807) % 2147483647) / 2147483647);
+  x.clearRect(0, 0, 128, 128);
+  for (let i = 0; i < 26; i++) {
+    const r = 12 + rnd() * 34;
+    const g = x.createRadialGradient(64, 64, 2, 64 + (rnd() - 0.5) * 40, 64 + (rnd() - 0.5) * 40, r);
+    g.addColorStop(0, `rgba(4,4,5,${0.16 + rnd() * 0.22})`);
+    g.addColorStop(1, "rgba(4,4,5,0)");
+    x.fillStyle = g;
+    x.fillRect(0, 0, 128, 128);
+  }
+  const t = new THREE.CanvasTexture(cv);
+  return t;
+}
+
+export function tireMarkTexture() {
+  const [cv, x] = canvas(64, 256);
+  x.clearRect(0, 0, 64, 256);
+  for (const lane of [18, 46]) {
+    for (let yq = 0; yq < 256; yq += 4) {
+      const a = 0.05 + 0.16 * Math.abs(Math.sin(yq * 0.021));
+      x.fillStyle = `rgba(6,6,7,${a})`;
+      x.fillRect(lane - 5, yq, 10, 3);
+    }
+  }
+  const t = new THREE.CanvasTexture(cv);
+  return t;
+}
+
 export { products, brand };
