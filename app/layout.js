@@ -58,13 +58,24 @@ const CONSOLE_EGG = `console.log(
   "color:#c9834a;font-family:monospace"
 );`;
 
+const BOOT_GATE = `(function(){try{
+  if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  if (navigator.connection && navigator.connection.saveData) return;
+  if (navigator.deviceMemory !== undefined && navigator.deviceMemory < 3) return;
+  var c = document.createElement('canvas');
+  if (!(c.getContext('webgl2') || c.getContext('webgl'))) return;
+  document.documentElement.classList.add('nr-boot');
+}catch(e){}})();`;
+
 export default function RootLayout({ children }) {
   return (
     <html
       lang="en"
+      suppressHydrationWarning
       className={`${bigShoulders.variable} ${overpass.variable} ${overpassMono.variable} h-full antialiased`}
     >
       <body className="flex min-h-full flex-col">
+        <script dangerouslySetInnerHTML={{ __html: BOOT_GATE }} />
         <a
           href="#main"
           className="silk-label absolute left-1/2 top-2 z-[70] -translate-x-1/2 -translate-y-16 bg-gold px-3 py-2 text-substrate transition-transform focus:translate-y-0"

@@ -394,3 +394,29 @@ dialog.probe::backdrop {
     transform: none;
   }
 }
+
+/* ---------- NIGHT RUN overlay gate ---------- */
+
+#nr-overlay {
+  display: none;
+}
+.nr-boot #nr-overlay {
+  display: block;
+}
+.nr-lock body,
+html.nr-lock {
+  overflow: hidden;
+}
+
+@keyframes receipt {
+  from {
+    transform: translateY(-24px) scaleY(0.1);
+    opacity: 0;
+  }
+  60% {
+    opacity: 1;
+  }
+  to {
+    transform: translateY(0) scaleY(1);
+  }
+}

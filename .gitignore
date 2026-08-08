@@ -48,3 +48,6 @@ next-env.d.ts
 
 # npm ci in CI requires the lockfile (overrides global gitignore)
 !package-lock.json
+
+# game loop artifacts
+/loop/

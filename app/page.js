@@ -1,5 +1,5 @@
 import Schematic from "@/components/Schematic";
-import GameGate from "@/components/game/GameGate";
+import Overlay from "@/components/game/Overlay";
 import AboutSection from "@/components/sections/AboutSection";
 import ExperienceSection from "@/components/sections/ExperienceSection";
 import WorkGrid from "@/components/sections/WorkGrid";
@@ -117,7 +117,7 @@ export default function Home() {
         </div>
       </section>
 
-      <GameGate />
+      <Overlay />
 
       <div id="classic-root">
         <div className="mx-auto max-w-6xl px-5 sm:px-10">
