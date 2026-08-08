@@ -26,31 +26,34 @@ export default function Press() {
   };
 
   return (
-    <main className="mx-auto max-w-3xl px-5 py-16 sm:px-8">
+    <main className="mx-auto max-w-4xl px-5 py-12 sm:px-10 sm:py-16">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
-      <h1 className="display text-3xl font-bold sm:text-4xl">Press</h1>
-      <p className="mt-4 leading-relaxed text-muted">
+      <h1 className="display text-5xl text-silk sm:text-7xl">Press</h1>
+      <p className="mt-6 max-w-2xl leading-relaxed text-silk-muted">
         Coverage of my work on smart fueling systems, fuel-station
         cybersecurity, and IoT-driven automation.
       </p>
-      <ul className="mt-12 space-y-10">
+      <ul className="mt-12 space-y-0">
         {press.map((item) => (
-          <li key={item.link}>
-            <p className="readout text-amber">{item.date}</p>
-            <h2 className="display mt-2 text-xl font-semibold leading-snug">
+          <li
+            key={item.link}
+            className="border-t border-silk/12 py-8 last:border-b"
+          >
+            <p className="silk-label text-copper">{item.date}</p>
+            <h2 className="mt-3 text-xl font-bold leading-snug">
               <a
                 href={item.link}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="underline decoration-line underline-offset-4 transition-colors hover:decoration-accent"
+                className="trace-link"
               >
                 {item.title}
               </a>
             </h2>
-            <p className="mt-2 max-w-2xl text-sm leading-relaxed text-muted">
+            <p className="mt-3 max-w-2xl text-sm leading-relaxed text-silk-muted">
               {item.description}
             </p>
           </li>

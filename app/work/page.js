@@ -18,33 +18,42 @@ export const metadata = {
 
 export default function WorkIndex() {
   return (
-    <main className="mx-auto max-w-5xl px-5 py-16 sm:px-8">
-      <h1 className="display text-3xl font-bold sm:text-4xl">Selected work</h1>
-      <p className="mt-4 max-w-2xl leading-relaxed text-muted">
+    <main className="mx-auto max-w-6xl px-5 py-12 sm:px-10 sm:py-16">
+      <h1 className="display text-5xl text-silk sm:text-7xl">Selected work</h1>
+      <p className="mt-6 max-w-2xl leading-relaxed text-silk-muted">
         Four systems, each written up the way engineering work actually goes:
         problem, constraints, architecture, outcome.
       </p>
-      <div className="mt-10 grid gap-5 sm:grid-cols-2">
-        {caseStudies.map((cs) => (
+      <div className="mt-12 grid gap-5 sm:grid-cols-2">
+        {caseStudies.map((cs, i) => (
           <Link
             key={cs.slug}
             href={`/work/${cs.slug}/`}
-            className="group flex flex-col rounded-sm border border-line bg-surface p-6 transition-colors hover:border-accent"
+            className="module group relative flex flex-col p-6 pl-7"
           >
-            <p className="readout text-muted">{cs.eyebrow}</p>
-            <h2 className="display mt-3 text-xl font-semibold">{cs.title}</h2>
-            <p className="mt-3 flex-1 text-sm leading-relaxed text-muted">
+            <div className="flex items-start justify-between gap-3">
+              <p className="silk-label text-silk-muted">{cs.eyebrow}</p>
+              <span className="led mt-0.5 shrink-0" aria-hidden="true" />
+            </div>
+            <h2 className="display mt-4 text-2xl text-silk">{cs.title}</h2>
+            <p className="mt-3 flex-1 text-sm leading-relaxed text-silk-muted">
               {cs.summary}
             </p>
-            <p className="readout mt-5 text-accent">
-              Read case study{" "}
+            <p className="silk-label mt-6 flex items-center justify-between text-gold">
+              Read case study
               <span
                 aria-hidden="true"
-                className="inline-block transition-transform group-hover:translate-x-1"
+                className="font-mono transition-transform group-hover:translate-x-1"
               >
                 →
               </span>
             </p>
+            <span
+              aria-hidden="true"
+              className="silk-label absolute bottom-2 right-3 text-silk-faint"
+            >
+              U10{i + 1}
+            </span>
           </Link>
         ))}
       </div>

@@ -1,28 +1,27 @@
 import Script from "next/script";
-import { Archivo, IBM_Plex_Sans, IBM_Plex_Mono } from "next/font/google";
+import { Big_Shoulders, Overpass, Overpass_Mono } from "next/font/google";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import Current from "@/components/Current";
 import { site } from "@/data/site";
 import "./globals.css";
 
-const archivo = Archivo({
-  variable: "--font-archivo",
+const bigShoulders = Big_Shoulders({
+  variable: "--font-big-shoulders",
   subsets: ["latin"],
-  axes: ["wdth"],
+  axes: ["opsz"],
   display: "swap",
 });
 
-const plexSans = IBM_Plex_Sans({
-  variable: "--font-plex-sans",
+const overpass = Overpass({
+  variable: "--font-overpass-sans",
   subsets: ["latin"],
-  weight: ["400", "500", "600"],
   display: "swap",
 });
 
-const plexMono = IBM_Plex_Mono({
-  variable: "--font-plex-mono",
+const overpassMono = Overpass_Mono({
+  variable: "--font-overpass-mono",
   subsets: ["latin"],
-  weight: ["400", "500"],
   display: "swap",
 });
 
@@ -47,16 +46,44 @@ export const metadata = {
   verification: { google: "G-FET9JB3RQT" },
 };
 
+const CONSOLE_EGG = `console.log(
+  "%c  ●───────────────────────────●\\n" +
+  "  │  ROHITHV.COM   REV C        │\\n" +
+  "  │  FR-4 · COPPER · SILKSCREEN │\\n" +
+  "  │  drawn by R.V. Vegesna      │\\n" +
+  "  ●───────────────────────────●\\n" +
+  "  You read source. Good instinct.\\n" +
+  "  Probe the board: Cmd/Ctrl+K\\n" +
+  "  Data sheet: /resume.json",
+  "color:#c9834a;font-family:monospace"
+);`;
+
 export default function RootLayout({ children }) {
   return (
     <html
       lang="en"
-      className={`${archivo.variable} ${plexSans.variable} ${plexMono.variable} h-full antialiased`}
+      className={`${bigShoulders.variable} ${overpass.variable} ${overpassMono.variable} h-full antialiased`}
     >
       <body className="flex min-h-full flex-col">
+        <a
+          href="#main"
+          className="silk-label absolute left-1/2 top-2 z-[70] -translate-x-1/2 -translate-y-16 bg-gold px-3 py-2 text-substrate transition-transform focus:translate-y-0"
+        >
+          Skip to content
+        </a>
+        <div className="board-edge" aria-hidden="true">
+          <i></i>
+          <i></i>
+          <i></i>
+          <i></i>
+        </div>
         <Header />
-        <div className="flex-1">{children}</div>
+        <div id="main" className="flex-1">
+          {children}
+        </div>
         <Footer />
+        <Current />
+        <script dangerouslySetInnerHTML={{ __html: CONSOLE_EGG }} />
         <Script
           src="https://www.googletagmanager.com/gtag/js?id=G-FET9JB3RQT"
           strategy="lazyOnload"

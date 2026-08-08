@@ -1,0 +1,21 @@
+/* TEAM */
+Engineer, author, and the guy on call: Rohith Varma Vegesna
+Site: https://www.rohithv.com
+Contact: rohithvegesna@gmail.com
+From: Dallas–Fort Worth, TX
+
+/* THANKS */
+Every dispenser that kept fueling through a dropped uplink.
+
+/* SITE */
+Rev: C — the board revision
+Stack: Next.js (App Router, JavaScript), Tailwind, static export
+Type: Big Shoulders, Overpass, Overpass Mono
+Materials: FR-4 substrate, copper, ENIG gold, silkscreen
+Hosting: GitHub Pages
+Probe the board: Cmd/Ctrl+K
+
+/* REVISION HISTORY */
+Rev A — hand-rolled HTML, Bootstrap era
+Rev B — Next.js rebuild, quiet documentation
+Rev C — the site became a circuit board

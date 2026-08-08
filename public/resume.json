@@ -1,0 +1,95 @@
+{
+  "$schema": "https://raw.githubusercontent.com/jsonresume/resume-schema/v1.0.0/schema.json",
+  "basics": {
+    "name": "Rohith Varma Vegesna",
+    "label": "Senior Software Engineer & Tech Lead",
+    "email": "rohithvegesna@gmail.com",
+    "url": "https://www.rohithv.com",
+    "location": { "city": "Dallas–Fort Worth", "region": "TX", "countryCode": "US" },
+    "profiles": [
+      { "network": "GitHub", "url": "https://github.com/rohithvegesna" },
+      { "network": "LinkedIn", "url": "https://www.linkedin.com/in/rohithvegesna/" },
+      { "network": "Google Scholar", "url": "https://scholar.google.com/citations?user=tRuKSz4AAAAJ" }
+    ]
+  },
+  "work": [
+    {
+      "name": "7-Eleven",
+      "location": "Irving, TX",
+      "position": "Senior Software Engineer",
+      "startDate": "2026-05",
+      "summary": "Tech Lead on the FuelControl platform behind 7-Eleven's retail fuel network — Speedway, 7-Eleven, Exxon, Phillips 66, and Stripes. Leads the team, owns cloud and AWS architecture across the Gilbarco and Wayne dispenser ecosystem, and designed the multi-signal observability platform that tells on-call whether a store is offline, idle, or has a broken cloud path."
+    },
+    {
+      "name": "7-Eleven",
+      "location": "Irving, TX",
+      "position": "Software Engineer II",
+      "startDate": "2021-11",
+      "endDate": "2026-05",
+      "summary": "Designed the fleet-wide CloudWatch observability architecture — EMF metrics, baseline store registries, silent-store detection — that gave the on-call team its first per-store reachability signal. Delivered the Unitec WSII carwash integration chain-wide, contributed to the EMV state machine and BER-TLV messaging behind payments at the pump, and built the incident-response tooling that lets junior engineers diagnose store issues without senior backup."
+    },
+    {
+      "name": "7-Eleven",
+      "location": "Irving, TX",
+      "position": "Full-Stack Developer",
+      "startDate": "2020-05",
+      "endDate": "2021-11",
+      "summary": "Designed the FID (Forecourt Integration Device) messaging layer connecting POS systems to the fuel controller — the foundation for carwash-at-pump sales and dynamic pricing across the chain. Built the first integration letting customers start a fuel transaction from the mobile app, and a JUnit 5 framework that simulated full transaction flows without dispenser hardware."
+    },
+    {
+      "name": "7-Eleven",
+      "location": "Irving, TX",
+      "position": "Java Software Developer",
+      "startDate": "2019-10",
+      "endDate": "2020-05",
+      "summary": "Wrote the foundational EMV transaction code for fuel dispensers — Spring State Machine and a byte-level communication layer — that the payments stack still runs on today. Built a Python/PyQt5 dispenser simulator for end-to-end testing without physical hardware."
+    },
+    {
+      "name": "TCompliance",
+      "location": "Dallas–Fort Worth, TX",
+      "position": "Software Developer Intern",
+      "startDate": "2018-06",
+      "endDate": "2019-06",
+      "summary": "Built and deployed GPS tracking devices and REST APIs (Java, Spark Framework) connecting the platform to LabCorp's lab systems for live specimen tracking and compliance reporting."
+    },
+    {
+      "name": "revaalo",
+      "location": "Bengaluru, India",
+      "position": "Software Developer",
+      "startDate": "2017-04",
+      "endDate": "2018-04",
+      "summary": "Built factory-automation software for the IoT device fleet powering ABB's Smart Factory initiative — server-side device control, automated reboot orchestration, and a Smart Factory database schema and IoT network topology designed from scratch."
+    },
+    {
+      "name": "NGCN Infosolutions",
+      "location": "Bengaluru, India",
+      "position": "Software Developer",
+      "startDate": "2015-04",
+      "endDate": "2017-03",
+      "summary": "Built inventory-and-billing software, an HRM platform with automated monthly payroll, and a job board with online applicant exams and resume management."
+    }
+  ],
+  "education": [
+    {
+      "institution": "Southern Arkansas University",
+      "area": "Computer and Information Sciences",
+      "studyType": "M.S.",
+      "startDate": "2018",
+      "endDate": "2019"
+    },
+    {
+      "institution": "GITAM University, Visakhapatnam",
+      "area": "Mechanical Engineering",
+      "studyType": "B.Tech.",
+      "startDate": "2013",
+      "endDate": "2017"
+    }
+  ],
+  "publications": { "count": 27, "source": "https://scholar.google.com/citations?user=tRuKSz4AAAAJ" },
+  "projects": [
+    { "name": "Forecourt payment & IoT platform", "url": "https://www.rohithv.com/work/fuel-dispenser-platform/" },
+    { "name": "PXE imaging station for payment hardware", "url": "https://www.rohithv.com/work/pxe-imaging-station/" },
+    { "name": "SevenlyTravel", "url": "https://www.rohithv.com/work/sevenlytravel/" },
+    { "name": "Fleet observability & silent-device detection", "url": "https://www.rohithv.com/work/fleet-observability/" }
+  ]
+}

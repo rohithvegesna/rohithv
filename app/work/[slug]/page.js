@@ -25,11 +25,15 @@ export async function generateMetadata({ params }) {
   };
 }
 
-function Block({ label, children }) {
+/* Sheet zone: a labeled region of the schematic sheet. */
+function Zone({ label, children }) {
   return (
     <section className="mt-12">
-      <h2 className="readout mb-5 flex items-center gap-3 text-muted">
-        <span className="inline-block h-px w-8 bg-line" aria-hidden="true" />
+      <h2 className="silk-label mb-5 flex items-center gap-3 text-gold">
+        <span
+          aria-hidden="true"
+          className="inline-block h-0.5 w-8 bg-copper"
+        />
         {label}
       </h2>
       {children}
@@ -42,6 +46,7 @@ export default async function CaseStudy({ params }) {
   const cs = caseStudies.find((c) => c.slug === slug);
   if (!cs) notFound();
 
+  const idx = caseStudies.indexOf(cs);
   const others = caseStudies.filter((c) => c.slug !== slug);
   const jsonLd = {
     "@context": "https://schema.org",
@@ -53,77 +58,101 @@ export default async function CaseStudy({ params }) {
   };
 
   return (
-    <main className="mx-auto max-w-3xl px-5 py-16 sm:px-8">
+    <main className="mx-auto max-w-4xl px-5 py-12 sm:px-10 sm:py-16">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
-      <nav aria-label="Breadcrumb" className="readout mb-10">
-        <Link href="/work/" className="text-muted transition-colors hover:text-ink">
+      <nav aria-label="Breadcrumb" className="silk-label mb-8">
+        <Link
+          href="/work/"
+          className="text-silk-muted transition-colors hover:text-silk"
+        >
           ← Work
         </Link>
       </nav>
 
-      <p className="readout text-amber">{cs.eyebrow}</p>
-      <h1 className="display mt-3 text-3xl font-bold leading-tight sm:text-4xl">
-        {cs.title}
-      </h1>
-      <p className="mt-5 text-lg leading-relaxed text-muted">{cs.summary}</p>
-      <p className="readout mt-6 text-muted">{cs.stack.join(" · ")}</p>
-
-      <Block label="Problem">
-        <div className="space-y-4 leading-relaxed">
-          {cs.problem.map((p) => (
-            <p key={p.slice(0, 32)}>{p}</p>
-          ))}
+      {/* the schematic sheet */}
+      <article className="sheet relative px-5 py-10 sm:px-12 sm:py-12">
+        <div className="sheet-coords top" aria-hidden="true">
+          <span>1</span>
+          <span>2</span>
+          <span>3</span>
+          <span>4</span>
         </div>
-      </Block>
-
-      <Block label="Constraints">
-        <ul className="space-y-3">
-          {cs.constraints.map((c) => (
-            <li key={c.slice(0, 32)} className="flex gap-3 leading-relaxed">
-              <span className="readout mt-1.5 shrink-0 text-amber" aria-hidden="true">
-                ▪
-              </span>
-              {c}
-            </li>
-          ))}
-        </ul>
-      </Block>
-
-      <Block label="Architecture">
-        <div className="space-y-4 leading-relaxed">
-          {cs.architecture.map((p) => (
-            <p key={p.slice(0, 32)}>{p}</p>
-          ))}
+        <div className="sheet-coords side" aria-hidden="true">
+          <span className="flex-1 pt-2">A</span>
+          <span className="flex-1">B</span>
+          <span className="flex-1">C</span>
+          <span className="flex-1">D</span>
         </div>
-      </Block>
 
-      <Block label="Outcome">
-        <ul className="space-y-3">
-          {cs.outcome.map((o) => (
-            <li key={o.slice(0, 32)} className="flex gap-3 leading-relaxed">
-              <span className="readout mt-1.5 shrink-0 text-accent" aria-hidden="true">
-                ▪
-              </span>
-              <span className={o.startsWith("TODO:") ? "text-muted italic" : ""}>
+        <header className="flex items-start justify-between gap-4">
+          <div>
+            <p className="silk-label text-copper">{cs.eyebrow}</p>
+            <h1 className="display mt-4 text-4xl text-silk sm:text-6xl">
+              {cs.title}
+            </h1>
+          </div>
+          <span className="designator mt-1" aria-hidden="true">
+            SH{idx + 1}
+          </span>
+        </header>
+        <p className="mt-6 max-w-2xl text-lg leading-relaxed text-silk-muted">
+          {cs.summary}
+        </p>
+        <p className="silk-label mt-6 border-y border-silk/15 py-3 text-silk-muted">
+          {cs.stack.join(" · ")}
+        </p>
+
+        <Zone label="Problem">
+          <div className="max-w-2xl space-y-4 leading-relaxed text-silk">
+            {cs.problem.map((p) => (
+              <p key={p.slice(0, 32)}>{p}</p>
+            ))}
+          </div>
+        </Zone>
+
+        <Zone label="Constraints">
+          <ul className="vias max-w-2xl space-y-4">
+            {cs.constraints.map((c) => (
+              <li key={c.slice(0, 32)} className="leading-relaxed text-silk">
+                {c}
+              </li>
+            ))}
+          </ul>
+        </Zone>
+
+        <Zone label="Architecture">
+          <div className="max-w-2xl space-y-4 leading-relaxed text-silk">
+            {cs.architecture.map((p) => (
+              <p key={p.slice(0, 32)}>{p}</p>
+            ))}
+          </div>
+        </Zone>
+
+        <Zone label="Outcome">
+          <ul className="vias max-w-2xl space-y-4">
+            {cs.outcome.map((o) => (
+              <li
+                key={o.slice(0, 32)}
+                className={`leading-relaxed ${
+                  o.startsWith("TODO:") ? "italic text-silk-muted" : "text-silk"
+                }`}
+              >
                 {o}
-              </span>
-            </li>
-          ))}
-        </ul>
-      </Block>
+              </li>
+            ))}
+          </ul>
+        </Zone>
+      </article>
 
-      <nav aria-label="More case studies" className="mt-16 border-t border-line pt-10">
-        <h2 className="readout mb-5 text-muted">More work</h2>
+      <nav aria-label="More case studies" className="mt-12">
+        <h2 className="silk-label mb-5 text-gold">More work</h2>
         <ul className="space-y-3">
           {others.map((o) => (
             <li key={o.slug}>
-              <Link
-                href={`/work/${o.slug}/`}
-                className="font-medium underline decoration-line underline-offset-4 transition-colors hover:decoration-accent"
-              >
+              <Link href={`/work/${o.slug}/`} className="trace-link font-bold">
                 {o.title}
               </Link>
             </li>
