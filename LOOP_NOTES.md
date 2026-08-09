@@ -158,3 +158,32 @@ five per-stage ⌘K commands (Run a transaction stays). Name descale verified:
 h1 is the thesis line; the name lives in header, title block (DRAWN BY),
 footer slip, and metadata. L1 = 22 textbook-term subsystem nodes; the L0
 overview stays abstract per the owner's v8 note. VERDICT: exit criteria met.
+
+## iter 026 — owner scrub pass 3 + SEO hardening (2026-08-08)
+Owner: "in sub diagrams I see mention about dispenser pos and forecourt — I
+dont want them mentioned; generic publicly available info instead."
+- L1 label scrub: DISPENSER CONTROLLER→PERIPHERAL CONTROLLER, FORECOURT
+  CONTROLLER→SITE CONTROLLER, POS LANE→OPERATOR CONSOLE; headings "inside the
+  dispenser"→"inside the terminal", "the forecourt"→"the local network".
+  Bundle grep: banned terms absent from shipped JS. Remaining "forecourt/
+  dispenser/pump" hits are the owner's own résumé bullets, published paper
+  titles, hero line, /work/ meta, and the live slug fuel-dispenser-platform —
+  self-authored public content + a production URL; left, flagged in report.
+- BUG FOUND during verify: L0 stages expanded on click only — role="button"
+  nodes never handled Enter/Space (A1 "keyboard walk" claim was wrong; the
+  readout even promised "Enter opens its internals"). Fixed: onKeyDown
+  Enter/Space on stage wrapper + truthful aria-expanded via new Node prop.
+  Machine-verified: Enter expands SITE + DEVICE, Esc closes, aria-expanded
+  ×2 (desktop + mobile clone), console clean.
+- SEO: home JSON-LD → ProfilePage + enriched Person (description, alumniOf
+  ×2, knowsAbout ×6) + WebSite(inLanguage); BreadcrumbList on work index,
+  all 4 case pages, publications, press; /work/ got its missing CollectionPage;
+  Article on case pages gains image + mainEntityOfPage; pubs CollectionPage
+  gains ItemList(27). Sitemap: changefreq + priority + lastmod on all 8 URLs.
+- Gate: audit 0 issues; MATRIX PASS 7 widths + landscape; axe clean ×6;
+  console 0; home 408KB first-party (+4KB JSON-LD); Lighthouse home
+  97/100/100/100, CLS 0 (first perf run read 80 under matrix load — rerun
+  clean 97; noted as harness-contention artifact).
+- Freeze: visible text delta ∅ by construction — L1 strings are client-state
+  SVG (absent from static HTML), JSON-LD is <script> (stripped by extractor),
+  sitemap is XML. aria-expanded is an attribute, not text.

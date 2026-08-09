@@ -34,13 +34,13 @@ const L1 = {
     note: "Three ways in, one kernel behind them.",
   },
   device: {
-    heading: "DEVICE — inside the dispenser",
-    nodes: ["EMV KERNEL", "SECURE PIN ENTRY", "DISPENSER CONTROLLER", "FIRMWARE CHANNEL"],
+    heading: "DEVICE — inside the terminal",
+    nodes: ["EMV KERNEL", "SECURE PIN ENTRY", "PERIPHERAL CONTROLLER", "FIRMWARE CHANNEL"],
     note: "Certified boundaries; the architecture works around them, never through them.",
   },
   site: {
-    heading: "SITE — the forecourt",
-    nodes: ["FORECOURT CONTROLLER", "POS LANE", "TERMINAL CONCENTRATOR", "EDGE GATEWAY", "STORE-AND-FORWARD QUEUE"],
+    heading: "SITE — the local network",
+    nodes: ["SITE CONTROLLER", "OPERATOR CONSOLE", "TERMINAL CONCENTRATOR", "EDGE GATEWAY", "STORE-AND-FORWARD QUEUE"],
     note: "When the WAN drops, the queue holds the day until the link returns.",
   },
   cloud: {
@@ -152,7 +152,16 @@ export default function DeepTrace({ buildDate }) {
     const geoH = { y: s.kind === "terminal" ? 76 : 72, h: s.kind === "terminal" ? 40 : 48 };
     const geoV = { x: s.kind === "terminal" ? 110 : 90, w: s.kind === "terminal" ? 140 : 180 };
     return (
-      <g key={s.id} onClick={() => toggle(s.id)}>
+      <g
+        key={s.id}
+        onClick={() => toggle(s.id)}
+        onKeyDown={(e) => {
+          if (e.key === "Enter" || e.key === " ") {
+            e.preventDefault();
+            toggle(s.id);
+          }
+        }}
+      >
         <Node
           x={vertical ? geoV.x : s.x}
           y={vertical ? 24 + i * 84 + (s.kind === "terminal" ? 4 : 0) : geoH.y}
@@ -161,6 +170,7 @@ export default function DeepTrace({ buildDate }) {
           kind={s.kind}
           title={s.title}
           detail={`${s.detail} Enter opens the detail sheet.`}
+          expanded={expanded === s.id}
         />
       </g>
     );

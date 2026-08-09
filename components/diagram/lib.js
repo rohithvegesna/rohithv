@@ -77,6 +77,7 @@ export function Node({
   detail,
   kind = "edge", // edge | cloud | terminal
   titleSize = 11,
+  expanded, // aria-expanded, for nodes that open a detail sheet
 }) {
   const setReadout = useContext(DiagramCtx);
   const cx = x + w / 2;
@@ -90,6 +91,7 @@ export function Node({
             tabIndex: 0,
             role: "button",
             "aria-label": `${title} — details`,
+            ...(expanded !== undefined ? { "aria-expanded": expanded } : {}),
             onFocus: () => setReadout(detail),
             onBlur: () => setReadout(null),
             onMouseEnter: () => setReadout(detail),
