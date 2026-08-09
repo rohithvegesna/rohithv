@@ -81,7 +81,7 @@ body {
 
 .tag {
   font-family: var(--font-martian), ui-monospace, monospace;
-  font-size: 0.68rem;
+  font-size: 0.7rem;
   font-weight: 500;
   letter-spacing: 0.14em;
   text-transform: uppercase;
@@ -398,6 +398,32 @@ body {
 .dg-packet-amber { fill: var(--amber); }
 .dg-packet-white { fill: var(--white); }
 .dg-packet-green { fill: var(--green); }
+.dg-packet-ring { fill: none; stroke: var(--amber); stroke-width: 1.6; }
+.dg-packet-dash { fill: var(--white); transform: scale(2.3, 0.55); }
+.dg-packet-sim {
+  fill: var(--white);
+  stroke: var(--amber);
+  stroke-width: 1.4;
+  animation: dg-travel 2.6s linear forwards;
+}
+.dg-tap { opacity: 0.45; }
+.dg-raillabel { fill: var(--muted); letter-spacing: 0.14em; }
+.dg-l0[data-offline] .dg-packet-amber,
+.dg-l0[data-offline] .dg-packet-white {
+  animation-play-state: paused;
+  opacity: 0.3;
+}
+.dg-queue circle {
+  fill: var(--amber);
+  opacity: 0;
+  animation: dg-queuepop 0.4s ease forwards;
+}
+@keyframes dg-queuepop {
+  to { opacity: 1; }
+}
+.dg-packet-bounce {
+  animation: dg-travel 1.2s linear infinite alternate;
+}
 
 @keyframes dg-travel {
   from { offset-distance: 0%; }
@@ -466,7 +492,7 @@ body {
 .dg-caption {
   margin-top: 0.7rem;
   font-family: var(--font-martian), monospace;
-  font-size: 0.68rem;
+  font-size: 0.7rem;
   letter-spacing: 0.1em;
   text-transform: uppercase;
   color: var(--muted);

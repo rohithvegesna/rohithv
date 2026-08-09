@@ -94,7 +94,7 @@ export default function Publications() {
                         </p>
                       )}
                       <p className="mt-1 text-sm text-muted">{pub.venue}</p>
-                      <p className="tag mt-2 text-muted">
+                      <p className="tag mt-2 break-all text-muted">
                         {pub.doi
                           ? `doi:${pub.doi.toLowerCase()}`
                           : "via google scholar"}

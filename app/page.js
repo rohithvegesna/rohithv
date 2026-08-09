@@ -1,4 +1,4 @@
-import { HeroTrace, HeroTraceMobile } from "@/components/diagram/diagrams";
+import DeepTrace from "@/components/diagram/DeepTrace";
 import Spine from "@/components/Spine";
 import AboutSection from "@/components/sections/AboutSection";
 import ExperienceSection from "@/components/sections/ExperienceSection";
@@ -81,13 +81,10 @@ export default function Home() {
         <p className="tag flex flex-wrap items-center gap-x-3 gap-y-1 text-amber">
           {site.role} · {site.company} · {site.location}
         </p>
-        <h1 className="display mt-5 text-[clamp(2.6rem,6vw,4.6rem)] text-fg">
-          Rohith Varma <span className="text-amber">Vegesna</span>
-        </h1>
-        <p className="mt-6 max-w-2xl text-xl font-semibold leading-snug text-fg sm:text-2xl">
+        <h1 className="display mt-5 max-w-3xl text-[clamp(1.9rem,4.2vw,3.3rem)] text-fg">
           I build the systems that let a fuel dispenser{" "}
           <span className="text-amber">take a payment.</span>
-        </p>
+        </h1>
         <p className="mt-4 max-w-2xl text-base leading-relaxed text-muted sm:text-lg">
           EMV at the pump, edge devices in the field, and the AWS backbone
           behind fuel-station automation for major U.S. retail brands — with{" "}
@@ -116,8 +113,7 @@ export default function Home() {
         </div>
 
         <div className="mt-12 sm:mt-16">
-          <HeroTrace />
-          <HeroTraceMobile />
+          <DeepTrace buildDate={new Date().toISOString().slice(0, 10)} />
         </div>
       </section>
 

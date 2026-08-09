@@ -145,3 +145,16 @@ each (protocol names — DHCP/PXE, TFTP — and operational sublabels removed);
 node readouts rewritten as plain-language one-liners with zero operational
 specifics. Captions shortened to match. Console 0, axe clean ×6, 396KB.
 VERDICT: PASS — the living-diagram identity is intact, the disclosure is gone.
+
+## Iters 020–025 — v9 Deep Trace
+020: first light — matrix flagged 8.3px title-block micro-labels (my own
+rule); axe flagged the dimmed log placeholder. 021: AA + font sweeps; kbd
+chip and friends to ≥11px. 022: nav couldn't wrap at 320 (15px overflow)
+and DOIs overflowed pubs (125px) — flex-wrap + break-all; MATRIX PASS
+(7 widths + landscape), axe clean ×6, interaction script captured expand +
+sim. 023–025: Lighthouse home 97 / desktop 100 / cs 98 (others structurally
+unchanged from v8's 97–98); three back-to-back runs green; Chanel cut = the
+five per-stage ⌘K commands (Run a transaction stays). Name descale verified:
+h1 is the thesis line; the name lives in header, title block (DRAWN BY),
+footer slip, and metadata. L1 = 22 textbook-term subsystem nodes; the L0
+overview stays abstract per the owner's v8 note. VERDICT: exit criteria met.

@@ -219,9 +219,16 @@ export function NoRoute() {
       </g>
       <Node x={16} y={102} w={90} h={36} kind="terminal" title="REQUEST" titleSize={10} />
       <Node x={150} y={94} w={120} h={52} title="ROUTER" sub="LOOKUP" />
+      <g className="dg-under" aria-hidden="true">
+        <circle className="dg-packet dg-packet-bounce dg-packet-amber" r="3"
+          style={{ offsetPath: 'path("M276 120 H310")' }} />
+      </g>
       <g className="dg-fault" aria-hidden="true">
         <path d="M322 108 L346 132 M346 108 L322 132" />
-        <text x={350} y={158} textAnchor="end" fontSize="9">
+        <text x={350} y={146} textAnchor="end" fontSize="9">
+          TTL EXPIRED
+        </text>
+        <text x={350} y={160} textAnchor="end" fontSize="9">
           NO ROUTE TO HOST
         </text>
       </g>

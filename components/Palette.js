@@ -27,6 +27,7 @@ const NETS = [
   { group: "Links", label: "LinkedIn", href: site.linkedin, external: true },
   { group: "Links", label: "Scholar", href: site.scholar, external: true },
   { group: "Links", label: "Copy email address", action: "copy-email" },
+  { group: "Diagram", label: "Run a transaction", action: "dg", cmd: "run-txn" },
 ];
 
 function matches(query, label) {
@@ -76,6 +77,15 @@ export default function Palette() {
       setCopied(true);
       return;
     }
+    if (net.action === "dg") {
+      dialogRef.current.close();
+      if (location.pathname !== "/") {
+        location.assign(net.cmd === "stage" ? `/#${net.stage}` : "/");
+        return;
+      }
+      dispatchEvent(new CustomEvent("dg:cmd", { detail: { cmd: net.cmd, stage: net.stage } }));
+      return;
+    }
     dialogRef.current.close();
     if (net.external) window.open(net.href, "_blank", "noopener");
     else window.location.assign(net.href);
@@ -107,7 +117,7 @@ export default function Palette() {
         className="tag my-1.5 flex items-center gap-2 rounded-full border-2 border-line px-3 py-1.5 text-muted transition-colors hover:border-amber hover:text-fg"
       >
         Search
-        <kbd className="hidden rounded-[1px] border border-line px-1 py-0.5 text-[0.6rem] sm:inline-block">
+        <kbd className="hidden rounded-[1px] border border-line px-1 py-0.5 text-[0.7rem] sm:inline-block">
           ⌘K
         </kbd>
       </button>
@@ -152,7 +162,7 @@ export default function Palette() {
                 <li
                   key={`g-${n.group}`}
                   role="presentation"
-                  className="tag px-2 pb-1 pt-3 text-[0.6rem] text-muted first:pt-1"
+                  className="tag px-2 pb-1 pt-3 text-[0.7rem] text-muted first:pt-1"
                 >
                   {n.group}
                 </li>
@@ -172,7 +182,7 @@ export default function Palette() {
                   {n.action === "copy-email" && copied ? "Copied" : n.label}
                 </span>
                 {n.external ? (
-                  <span aria-hidden="true" className="text-[0.65rem] opacity-70">
+                  <span aria-hidden="true" className="text-[0.7rem] opacity-70">
                     ↗
                   </span>
                 ) : null}
@@ -185,7 +195,7 @@ export default function Palette() {
             </li>
           ) : null}
         </ul>
-        <p className="tag border-t border-line/70 px-3 py-2 text-[0.6rem] text-muted">
+        <p className="tag border-t border-line/70 px-3 py-2 text-[0.7rem] text-muted">
           ↑↓ move · ↵ jump · esc close
         </p>
       </dialog>

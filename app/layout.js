@@ -40,9 +40,10 @@ export const metadata = {
 };
 
 const CONSOLE_EGG = `console.log(
-  "%c  tap ──▶ emv ──▶ controller ──▶ host ──▶ settle\\n" +
-  "  the trace is live. you are reading the source —\\n" +
-  "  good instinct. Search: Cmd/Ctrl+K · /resume.json",
+  "%c  TAP ─●─▶ DEVICE ─●─▶ SITE ─●─▶ CLOUD ─●─▶ SETTLED\\n" +
+  "        └──── telemetry ────┴──── obs rail ────┘\\n" +
+  "  the trace is live; the queue survives outages.\\n" +
+  "  ⌘K → 'Run a transaction' · data sheet: /resume.json",
   "color:#ffb454;font-family:monospace"
 );`;
 

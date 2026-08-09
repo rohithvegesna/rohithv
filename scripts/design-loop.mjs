@@ -27,6 +27,62 @@ const consoleLog = [];
 const transfers = {};
 const browser = await chromium.launch();
 
+const MATRIX = [320, 360, 390, 768, 1024, 1440, 1920];
+
+async function assertResponsive(page, tag, name) {
+  const fails = [];
+  const overflow = await page.evaluate(
+    () => document.scrollingElement.scrollWidth - window.innerWidth
+  );
+  if (overflow > 1) fails.push(`overflow ${overflow}px`);
+  const smallFont = await page.evaluate(() => {
+    let min = 99;
+    for (const el of document.querySelectorAll("body *:not(svg):not(svg *)")) {
+      if (!el.textContent?.trim() || !el.checkVisibility?.()) continue;
+      const fs = parseFloat(getComputedStyle(el).fontSize);
+      if (fs && fs < min) min = fs;
+    }
+    return min;
+  });
+  if (smallFont < 11) fails.push(`font ${smallFont.toFixed(1)}px`);
+  if (page.viewportSize().width <= 390) {
+    const smallTap = await page.evaluate(() => {
+      const bad = [];
+      for (const el of document.querySelectorAll("a.btn, button, [role=button]")) {
+        const r = el.getBoundingClientRect();
+        if (r.width === 0) continue;
+        if (r.height < 24) bad.push(el.textContent.trim().slice(0, 12));
+      }
+      return bad;
+    });
+    if (smallTap.length) fails.push(`taps: ${smallTap.join(",")}`);
+  }
+  return fails.map((f) => `[${tag}-${name}] ${f}`);
+}
+
+async function matrixPass(browser, routes) {
+  const problems = [];
+  for (const width of MATRIX) {
+    const ctx = await browser.newContext({
+      viewport: { width, height: width < 500 ? 780 : 900 },
+      hasTouch: width < 500,
+    });
+    const page = await ctx.newPage();
+    for (const [name, path] of routes) {
+      await page.goto(URL + path, { waitUntil: "networkidle" });
+      problems.push(...(await assertResponsive(page, `w${width}`, name)));
+    }
+    await ctx.close();
+  }
+  // landscape phone on /
+  const ctx = await browser.newContext({ viewport: { width: 844, height: 390 }, hasTouch: true });
+  const page = await ctx.newPage();
+  await page.goto(URL + "/", { waitUntil: "networkidle" });
+  problems.push(...(await assertResponsive(page, "w844x390", "home")));
+  await ctx.close();
+  return problems;
+}
+
 async function shoot(tag, viewport) {
   const ctx = await browser.newContext({ viewport });
   const page = await ctx.newPage();
@@ -61,6 +117,37 @@ async function shoot(tag, viewport) {
 await shoot("d", { width: 1600, height: 900 });
 await shoot("m", { width: 390, height: 844 });
 
+const RUN_MATRIX = arg("matrix", "");
+let matrixProblems = null;
+if (RUN_MATRIX) {
+  matrixProblems = await matrixPass(browser, ROUTES);
+  console.log(
+    matrixProblems.length
+      ? `MATRIX FAIL:\n  ${matrixProblems.join("\n  ")}`
+      : "MATRIX PASS (7 widths + landscape)"
+  );
+}
+
+// interaction: expand a stage, run a txn
+const RUN_IX = arg("interact", "");
+if (RUN_IX) {
+  const ctx = await browser.newContext({ viewport: { width: 1600, height: 900 } });
+  const page = await ctx.newPage();
+  await page.goto(URL + "/", { waitUntil: "networkidle" });
+  await page.evaluate("document.querySelector('.dg-l0 .dg-node[tabindex]')?.focus()");
+  await page.keyboard.press("Enter");
+  await page.waitForTimeout(600);
+  await page.screenshot({ path: `${DIR}/ix-expanded.png`, fullPage: false });
+  await page.keyboard.press("Escape");
+  await page.waitForTimeout(300);
+  const runBtn = page.locator("text=RUN TXN").first();
+  await runBtn.click();
+  await page.waitForTimeout(1600);
+  await page.screenshot({ path: `${DIR}/ix-simlog.png`, fullPage: false });
+  await ctx.close();
+  console.log("interaction captured");
+}
+
 let axeIssues = null;
 if (RUN_AXE) {
   const { default: AxeBuilder } = await import("@axe-core/playwright");
@@ -76,7 +163,7 @@ if (RUN_AXE) {
 }
 
 writeFileSync(`${DIR}/console.log`, consoleLog.join("\n") || "(clean)");
-const summary = { transfersKB: transfers, consoleIssues: consoleLog.length, axe: axeIssues };
+const summary = { transfersKB: transfers, consoleIssues: consoleLog.length, axe: axeIssues, matrix: matrixProblems };
 writeFileSync(`${DIR}/summary.json`, JSON.stringify(summary, null, 2));
 console.log(JSON.stringify({ consoleIssues: consoleLog.length, axe: axeIssues, homeKB: transfers["d-home"] }));
 await browser.close();
