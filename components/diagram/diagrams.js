@@ -1,32 +1,31 @@
 "use client";
 
-/* Every diagram on the site, built from the library. All labels are generic
-   industry terms — never internal system names. */
+/* Every diagram on the site, built from the library. Deliberately abstract:
+   high-level stages only — no protocols, no internals, no operational
+   specifics. The craft is in the language, not the disclosure. */
 
-import { Diagram, Node, Bus, Packet, Region, Ticks, StateGlyph } from "./lib";
+import { Diagram, Node, Bus, Packet, Region, Ticks } from "./lib";
 
 /* ---------------- DG1 — hero: life of a transaction ---------------- */
 
-const H_MAIN =
-  "M116 130 H548 L564 114 V92 H684 V172 H818 L834 156 V130 H850";
-const H_RETURN = "M684 86 H570 L554 102 V124 H300";
-const V_MAIN = "M180 44 V500";
+const H_MAIN = "M116 96 H844";
+const H_RETURN = "M700 82 H300";
+const V_MAIN = "M180 44 V420";
 
 export function HeroTrace() {
   return (
     <Diagram
-      viewBox="0 0 960 260"
-      label="Live diagram: a fuel transaction travels from card tap through the EMV dispenser, store controller, and payment host to settlement"
+      viewBox="0 0 960 190"
+      label="Live diagram: a payment travels from tap, through devices in the field and the cloud, to settled"
       className="dg-hero hidden sm:block"
       readoutDefault="Probe a stage — hover or Tab."
-      caption="Fig. 1 — Life of a transaction: tap to settlement."
+      caption="Fig. 1 — Life of a transaction."
     >
-      <Ticks x1={116} x2={850} y={242} n={14} />
-      <Bus d="M116 130 H170" />
-      <Bus d="M300 130 H360" />
-      <Bus d="M510 130 H548 L564 114 V92 H584" />
-      <Bus d="M684 114 V150" />
-      <Bus d="M784 172 H818 L834 156 V130 H850" />
+      <Ticks x1={116} x2={844} y={168} n={14} />
+      <Bus d="M116 96 H190" />
+      <Bus d="M330 96 H400" />
+      <Bus d="M540 96 H610" />
+      <Bus d="M750 96 H844" />
       <Bus d={H_RETURN} hot={false} />
 
       <g className="dg-under" aria-hidden="true">
@@ -36,21 +35,16 @@ export function HeroTrace() {
         <Packet path={H_RETURN} dur={5.5} delay={-1.6} hue="green" r={2.5} />
       </g>
 
-      <Node x={16} y={110} w={100} h={40} kind="terminal" title="CARD TAP"
-        detail="Contactless EMV — the six seconds of trust the whole pipeline exists to honor." />
-      <Node x={170} y={98} w={130} h={64} title="DISPENSER" sub="EMV KERNEL"
-        detail="A payment terminal bolted to a pump — kernel, state machine, and byte-level protocol at the edge." />
-      <Node x={360} y={98} w={150} h={64} title="STORE CONTROLLER" sub="STATE MACHINES"
-        detail="The site brain: buffers store-and-forward, retries the uplink, keeps fueling through dropped links." />
-      <Region x={560} y={40} w={250} h={180} tag="CLOUD" />
-      <Node x={584} y={70} w={200} h={44} kind="cloud" title="PAYMENT HOST"
-        detail="Authorizes in milliseconds; idempotency keys make retries safe when links flap." />
-      <Node x={584} y={150} w={200} h={44} kind="cloud" title="LEDGER"
-        detail="Hot state now, history forever — reconciliation runs as a stream, not a back office." />
-      <Node x={850} y={110} w={94} h={40} kind="terminal" title="SETTLE"
-        detail="Batch close: the day's fuel becomes money. Boring on purpose." />
-
-      <StateGlyph x={190} y={186} label="AUTH OK" period={7} delay={-1.2} />
+      <Node x={16} y={76} w={100} h={40} kind="terminal" title="TAP"
+        detail="Where a payment begins." />
+      <Node x={190} y={72} w={140} h={48} title="DEVICE"
+        detail="Hardware in the field, built to keep working." />
+      <Node x={400} y={72} w={140} h={48} title="SITE"
+        detail="Every location stays connected." />
+      <Node x={610} y={72} w={140} h={48} kind="cloud" title="CLOUD"
+        detail="Where the whole fleet comes together." />
+      <Node x={844} y={76} w={100} h={40} kind="terminal" title="SETTLED"
+        detail="Done, and accounted for." />
     </Diagram>
   );
 }
@@ -58,37 +52,34 @@ export function HeroTrace() {
 export function HeroTraceMobile() {
   return (
     <Diagram
-      viewBox="0 0 360 540"
-      label="Live diagram: a fuel transaction travels from card tap through the EMV dispenser, store controller, and payment host to settlement"
+      viewBox="0 0 360 460"
+      label="Live diagram: a payment travels from tap, through devices in the field and the cloud, to settled"
       className="dg-hero sm:hidden"
       readoutDefault="Probe a stage — tap a node."
-      caption="Fig. 1 — Life of a transaction: tap to settlement."
+      caption="Fig. 1 — Life of a transaction."
     >
-      <Bus d="M180 44 V500" />
+      <Bus d="M180 44 V420" />
       <g className="dg-under" aria-hidden="true">
         <Packet path={V_MAIN} dur={6.5} delay={-0.5} />
         <Packet path={V_MAIN} dur={6.5} delay={-3.4} hue="white" />
       </g>
-      <Node x={110} y={24} w={140} h={40} kind="terminal" title="CARD TAP"
-        detail="Contactless EMV — the six seconds of trust the whole pipeline exists to honor." />
-      <Node x={80} y={108} w={200} h={56} title="DISPENSER" sub="EMV KERNEL"
-        detail="A payment terminal bolted to a pump — kernel, state machine, and byte-level protocol at the edge." />
-      <Node x={80} y={204} w={200} h={56} title="STORE CONTROLLER" sub="STATE MACHINES" titleSize={10.5}
-        detail="The site brain: buffers store-and-forward, retries the uplink, keeps fueling through dropped links." />
-      <Region x={48} y={296} w={264} h={140} tag="CLOUD" />
-      <Node x={80} y={316} w={200} h={44} kind="cloud" title="PAYMENT HOST"
-        detail="Authorizes in milliseconds; idempotency keys make retries safe when links flap." />
-      <Node x={80} y={376} w={200} h={44} kind="cloud" title="LEDGER"
-        detail="Hot state now, history forever — reconciliation runs as a stream, not a back office." />
-      <Node x={110} y={470} w={140} h={40} kind="terminal" title="SETTLE"
-        detail="Batch close: the day's fuel becomes money. Boring on purpose." />
+      <Node x={110} y={24} w={140} h={40} kind="terminal" title="TAP"
+        detail="Where a payment begins." />
+      <Node x={90} y={108} w={180} h={48} title="DEVICE"
+        detail="Hardware in the field, built to keep working." />
+      <Node x={90} y={192} w={180} h={48} title="SITE"
+        detail="Every location stays connected." />
+      <Node x={90} y={276} w={180} h={48} kind="cloud" title="CLOUD"
+        detail="Where the whole fleet comes together." />
+      <Node x={110} y={396} w={140} h={40} kind="terminal" title="SETTLED"
+        detail="Done, and accounted for." />
     </Diagram>
   );
 }
 
-/* ---------------- case figures (portrait, one variant, legible at 360) ---------------- */
+/* -------- case figures: abstract, four stages, one variant -------- */
 
-function CaseDiagram({ label, caption, children, viewH = 480 }) {
+function CaseDiagram({ label, caption, children, viewH = 400 }) {
   return (
     <Diagram
       viewBox={`0 0 360 ${viewH}`}
@@ -102,132 +93,98 @@ function CaseDiagram({ label, caption, children, viewH = 480 }) {
   );
 }
 
-const P1 = "M180 40 V440";
+const P = "M180 36 V364";
+
 export function FigPlatform() {
   return (
     <CaseDiagram
-      label="Architecture: dispensers connect through a store controller to cloud ingestion, streaming, and storage"
-      caption="Fig. 1 — One contract from forecourt to fleet."
+      label="Diagram: devices in the field connect through each site to the cloud and operations"
+      caption="Fig. 1 — From the field to the fleet."
     >
-      <Bus d={P1} />
-      <Bus d="M96 84 V110 L112 126 H140" hot={false} />
-      <Bus d="M264 84 V110 L248 126 H220" hot={false} />
+      <Bus d={P} />
       <g className="dg-under" aria-hidden="true">
-        <Packet path={P1} dur={6} delay={-0.4} />
-        <Packet path={P1} dur={6} delay={-3.2} hue="white" />
+        <Packet path={P} dur={6} delay={-0.4} />
+        <Packet path={P} dur={6} delay={-3.2} hue="white" />
       </g>
-      <Region x={24} y={20} w={312} h={64} tag="FORECOURT" />
-      <Node x={40} y={36} w={112} h={40} title="DISPENSER" titleSize={10}
-        detail="Heterogeneous hardware, one contract — every pump state is a first-class transition." />
-      <Node x={208} y={36} w={112} h={40} title="DISPENSER" titleSize={10}
-        detail="Heterogeneous hardware, one contract — every pump state is a first-class transition." />
-      <Node x={80} y={126} w={200} h={52} title="STORE CONTROLLER" sub="STORE-AND-FORWARD" titleSize={10.5}
-        detail="A dropped link degrades to delayed telemetry, never to lost transactions." />
-      <Region x={48} y={210} w={264} h={196} tag="CLOUD" />
-      <Node x={80} y={230} w={200} h={42} kind="cloud" title="IOT GATEWAY"
-        detail="Per-device identity over MQTT — nothing anonymous gets a byte in." />
-      <Node x={80} y={288} w={200} h={42} kind="cloud" title="STREAM"
-        detail="Telemetry fans into stream processing while it is still moving." />
-      <Node x={80} y={346} w={200} h={42} kind="cloud" title="STORE"
-        detail="Hot state and operational history, written idempotently." />
-      <Node x={110} y={420} w={140} h={38} kind="terminal" title="OPS"
-        detail="Commands flow back down with explicit acks — a maybe-applied command is worse than a failed one." />
+      <Region x={40} y={16} w={280} h={72} tag="FIELD" />
+      <Node x={90} y={32} w={180} h={44} title="DEVICES"
+        detail="Many kinds of hardware, one way of talking to them." />
+      <Node x={90} y={128} w={180} h={48} title="SITE"
+        detail="Keeps running even when the connection doesn't." />
+      <Node x={90} y={224} w={180} h={48} kind="cloud" title="CLOUD"
+        detail="One place to see and steer everything." />
+      <Node x={110} y={344} w={140} h={40} kind="terminal" title="OPS"
+        detail="People, with the full picture." />
     </CaseDiagram>
   );
 }
 
-const P2 = "M180 40 V440";
 export function FigPXE() {
   return (
     <CaseDiagram
-      label="Pipeline: a factory-fresh device network-boots, streams an image, validates, and comes out sealed"
-      caption="Fig. 1 — Plug in, walk away: the imaging line."
+      label="Diagram: a new device boots from the network, receives its setup, and comes out ready"
+      caption="Fig. 1 — Plug in, walk away."
     >
-      <Bus d={P2} />
+      <Bus d={P} />
       <g className="dg-under" aria-hidden="true">
-        <Packet path={P2} dur={6.5} delay={-0.8} />
-        <Packet path={P2} dur={6.5} delay={-4} hue="white" />
+        <Packet path={P} dur={6.5} delay={-0.8} />
+        <Packet path={P} dur={6.5} delay={-4} hue="white" />
       </g>
-      <Node x={110} y={24} w={140} h={38} kind="terminal" title="POWER ON"
-        detail="No keyboard, no USB stick, no human — the bench does the rest." />
-      <Node x={80} y={100} w={200} h={44} title="DHCP / PXE"
-        detail="The device asks the network who it is; hardware identity picks the image." />
-      <Node x={80} y={172} w={200} h={44} title="BOOTLOADER" sub="TFTP"
-        detail="A tiny loader arrives over the wire and takes it from there." />
-      <Node x={80} y={244} w={200} h={44} title="IMAGE STREAM"
-        detail="The OS and device-specific config stream straight onto the appliance." />
-      <Node x={80} y={316} w={200} h={44} title="VALIDATE"
-        detail="Every unit passes the same gate — known-good, not assumed-good." />
-      <Node x={110} y={402} w={140} h={38} kind="terminal" title="SEALED"
-        detail="What leaves the bench is fleet-ready payment hardware." />
-      <StateGlyph x={292} y={338} label="PASS" period={6.5} delay={-2} />
+      <Node x={110} y={16} w={140} h={40} kind="terminal" title="POWER ON"
+        detail="No keyboard, no checklist, no human." />
+      <Node x={90} y={104} w={180} h={48} title="NETWORK BOOT"
+        detail="The bench recognizes the device on its own." />
+      <Node x={90} y={200} w={180} h={48} title="SET UP"
+        detail="Everything the device needs, applied automatically." />
+      <Node x={110} y={324} w={140} h={40} kind="terminal" title="READY"
+        detail="Known-good, not assumed-good." />
     </CaseDiagram>
   );
 }
 
-const P3 = "M180 40 V440";
 export function FigBooking() {
   return (
     <CaseDiagram
-      label="Flow: a search fans out to supplier APIs, locks a price, authorizes payment, then confirms the booking"
+      label="Diagram: a search reaches travel suppliers, payment is held, and the booking confirms"
       caption="Fig. 1 — Charged without a room is not a state."
     >
-      <Bus d={P3} />
-      <Bus d="M112 218 H80 V196" hot={false} />
-      <Bus d="M248 218 H280 V196" hot={false} />
+      <Bus d={P} />
       <g className="dg-under" aria-hidden="true">
-        <Packet path={P3} dur={6.5} delay={-0.6} hue="white" />
-        <Packet path={P3} dur={6.5} delay={-3.6} />
+        <Packet path={P} dur={6.5} delay={-0.6} hue="white" />
+        <Packet path={P} dur={6.5} delay={-3.6} />
       </g>
-      <Node x={110} y={24} w={140} h={38} kind="terminal" title="SEARCH"
-        detail="One app, both stores, live inventory." />
-      <Node x={80} y={100} w={200} h={44} title="AGGREGATOR"
-        detail="Supplier chaos normalized into one internal shape, cached where terms allow." />
-      <Region x={28} y={170} w={304} h={78} tag="SUPPLIERS" />
-      <Node x={44} y={186} w={104} h={40} title="API A" titleSize={10}
-        detail="Price and availability that disagree with themselves between search and checkout." />
-      <Node x={212} y={186} w={104} h={40} title="API B" titleSize={10}
-        detail="Price and availability that disagree with themselves between search and checkout." />
-      <Node x={80} y={272} w={200} h={44} title="PRICE LOCK"
-        detail="Re-verified against the supplier immediately before any money moves." />
-      <Node x={80} y={344} w={200} h={44} title="PAYMENT AUTH"
-        detail="Held, not captured, until the supplier confirms — two-phase by design." />
-      <Node x={110} y={420} w={140} h={38} kind="terminal" title="CONFIRMED"
-        detail="The only failure mode is 'booking didn't happen' — never 'charged without a room'." />
+      <Node x={110} y={16} w={140} h={40} kind="terminal" title="SEARCH"
+        detail="One app, live inventory." />
+      <Node x={90} y={104} w={180} h={48} title="SUPPLIERS"
+        detail="Many sources, one answer." />
+      <Node x={90} y={200} w={180} h={48} title="PAYMENT"
+        detail="Held until the booking is certain." />
+      <Node x={110} y={324} w={140} h={40} kind="terminal" title="CONFIRMED"
+        detail="The only failure allowed is a booking that simply didn't happen." />
     </CaseDiagram>
   );
 }
 
-const P4 = "M180 40 V440";
 export function FigObservability() {
   return (
     <CaseDiagram
-      label="Path: fleet telemetry rides a bus into metrics, alarm rules watch for silence, and on-call gets paged"
+      label="Diagram: the fleet reports in, signals are watched, and people get alerted"
       caption="Fig. 1 — The dangerous failure is silence."
     >
-      <Bus d={P4} />
-      <Bus d="M96 84 V104 L112 120 H140" hot={false} />
-      <Bus d="M264 84 V104 L248 120 H220" hot={false} />
+      <Bus d={P} />
       <g className="dg-under" aria-hidden="true">
-        <Packet path={P4} dur={6} delay={-1} />
-        <Packet path={P4} dur={6} delay={-3.8} hue="white" />
+        <Packet path={P} dur={6} delay={-1} />
+        <Packet path={P} dur={6} delay={-3.8} hue="white" />
       </g>
-      <Region x={24} y={20} w={312} h={64} tag="FLEET" />
-      <Node x={40} y={36} w={112} h={40} title="DEVICE 01" titleSize={10}
-        detail="Emits structured metrics from the logs it already writes — instrumentation costs a log line." />
-      <Node x={208} y={36} w={112} h={40} title="DEVICE 02" titleSize={10}
-        detail="This one went quiet once. Silence is a signal too." />
-      <Node x={80} y={120} w={200} h={44} title="TELEMETRY BUS"
-        detail="No new agents on constrained edges — the pipeline that exists carries the metrics." />
-      <Node x={80} y={192} w={200} h={44} kind="cloud" title="METRICS STORE"
-        detail="Per site, per device type, fleet-wide — one system, three questions." />
-      <Node x={80} y={264} w={200} h={44} kind="cloud" title="ALARM RULES" sub="HEARTBEAT EXPECTED"
-        detail="Inverted alarms: fire on the absence of expected telemetry, scoped so one dead link is one incident." />
-      <Node x={110} y={402} w={140} h={38} kind="terminal" title="ON-CALL"
-        detail="Every alarm is one a human should act on — alert fatigue is the failure mode of monitoring." />
-      <Bus d="M180 308 V402" />
-      <StateGlyph x={288} y={286} label="SILENT" hue="amber" period={9} delay={-5} />
-      <StateGlyph x={288} y={420} label="PAGED" period={9} delay={-4.6} />
+      <Region x={40} y={16} w={280} h={72} tag="FLEET" />
+      <Node x={90} y={32} w={180} h={44} title="DEVICES"
+        detail="Thousands of them, reporting in." />
+      <Node x={90} y={128} w={180} h={48} title="SIGNALS"
+        detail="What arrives matters. What stops arriving matters more." />
+      <Node x={90} y={224} w={180} h={48} kind="cloud" title="WATCH"
+        detail="Quiet is a condition worth an alarm." />
+      <Node x={110} y={344} w={140} h={40} kind="terminal" title="ON-CALL"
+        detail="Only alarms a human should act on." />
     </CaseDiagram>
   );
 }

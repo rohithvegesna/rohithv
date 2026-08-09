@@ -136,3 +136,12 @@ removal remains the deleted v3 schematic's own figcaption (enumerated
 since v7). Triple gate: facts instant ✓, craft bookmarkable ✓,
 template test — a living EMV pipeline with per-stage readouts and a
 paper-figure system is reproducible by no template ✓. VERDICT: exit.
+
+## Iter 019 — abstraction pass (owner request)
+All diagrams reduced to high-level stages only: hero is now TAP → DEVICE →
+SITE → CLOUD → SETTLED (no EMV kernel, no state machines, no payment-host/
+ledger internals, no auth glyph); case figures cut to four abstract stages
+each (protocol names — DHCP/PXE, TFTP — and operational sublabels removed);
+node readouts rewritten as plain-language one-liners with zero operational
+specifics. Captions shortened to match. Console 0, axe clean ×6, 396KB.
+VERDICT: PASS — the living-diagram identity is intact, the disclosure is gone.
