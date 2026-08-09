@@ -28,7 +28,7 @@ export async function generateMetadata({ params }) {
 function Zone({ label, children }) {
   return (
     <section className="mt-14">
-      <h2 className="section-h !text-2xl">{label}</h2>
+      <h2 className="strip-sign sign-label !text-[0.8rem]">{label}</h2>
       <div className="mt-6">{children}</div>
     </section>
   );
@@ -55,29 +55,29 @@ export default async function CaseStudy({ params }) {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
-      <nav aria-label="Breadcrumb" className="silk-label mb-10">
+      <nav aria-label="Breadcrumb" className="sign-label mb-10">
         <Link
           href="/work/"
-          className="text-silk-muted transition-colors hover:text-silk"
+          className="text-steel transition-colors hover:text-ink"
         >
           ← Work
         </Link>
       </nav>
 
       <article>
-        <p className="silk-label text-copper">{cs.eyebrow}</p>
-        <h1 className="display mt-4 text-4xl text-silk sm:text-6xl">
+        <p className="sign-label text-green">{cs.eyebrow}</p>
+        <h1 className="display mt-4 text-4xl text-ink sm:text-6xl">
           {cs.title}
         </h1>
-        <p className="mt-6 max-w-2xl text-lg leading-relaxed text-silk-muted">
+        <p className="mt-6 max-w-2xl text-lg leading-relaxed text-steel">
           {cs.summary}
         </p>
-        <p className="silk-label mt-7 border-y border-silk/12 py-3 text-silk-muted">
+        <p className="sign-label mt-7 border-y border-ink/15 py-3 text-steel">
           {cs.stack.join(" · ")}
         </p>
 
         <Zone label="Problem">
-          <div className="max-w-2xl space-y-4 leading-relaxed text-silk">
+          <div className="max-w-2xl space-y-4 leading-relaxed text-ink">
             {cs.problem.map((p) => (
               <p key={p.slice(0, 32)}>{p}</p>
             ))}
@@ -85,9 +85,9 @@ export default async function CaseStudy({ params }) {
         </Zone>
 
         <Zone label="Constraints">
-          <ul className="vias max-w-2xl space-y-4">
+          <ul className="checks max-w-2xl space-y-4">
             {cs.constraints.map((c) => (
-              <li key={c.slice(0, 32)} className="leading-relaxed text-silk">
+              <li key={c.slice(0, 32)} className="leading-relaxed text-ink">
                 {c}
               </li>
             ))}
@@ -95,7 +95,7 @@ export default async function CaseStudy({ params }) {
         </Zone>
 
         <Zone label="Architecture">
-          <div className="max-w-2xl space-y-4 leading-relaxed text-silk">
+          <div className="max-w-2xl space-y-4 leading-relaxed text-ink">
             {cs.architecture.map((p) => (
               <p key={p.slice(0, 32)}>{p}</p>
             ))}
@@ -103,12 +103,12 @@ export default async function CaseStudy({ params }) {
         </Zone>
 
         <Zone label="Outcome">
-          <ul className="vias max-w-2xl space-y-4">
+          <ul className="checks max-w-2xl space-y-4">
             {cs.outcome.map((o) => (
               <li
                 key={o.slice(0, 32)}
                 className={`leading-relaxed ${
-                  o.startsWith("TODO:") ? "italic text-silk-muted" : "text-silk"
+                  o.startsWith("TODO:") ? "italic text-steel" : "text-ink"
                 }`}
               >
                 {o}
@@ -120,13 +120,13 @@ export default async function CaseStudy({ params }) {
 
       <nav
         aria-label="More case studies"
-        className="mt-16 border-t border-silk/12 pt-10"
+        className="mt-16 border-t border-ink/15 pt-10"
       >
-        <h2 className="mb-5 text-xl font-bold text-silk">More work</h2>
+        <h2 className="mb-5 text-xl font-bold text-ink">More work</h2>
         <ul className="space-y-3">
           {others.map((o) => (
             <li key={o.slug}>
-              <Link href={`/work/${o.slug}/`} className="trace-link font-bold">
+              <Link href={`/work/${o.slug}/`} className="u-link font-bold">
                 {o.title}
               </Link>
             </li>

@@ -6,7 +6,7 @@ export default function PublicationsPreview() {
   const recentPubs = publications.slice(0, 3);
   return (
     <>
-      <p className="max-w-2xl leading-relaxed text-silk-muted">
+      <p className="max-w-2xl leading-relaxed text-steel">
         {publications.length} peer-reviewed works — IEEE conference papers and
         journal articles — on federated learning, secure LLM deployment, and
         the cloud-native architecture of fuel systems.
@@ -14,12 +14,12 @@ export default function PublicationsPreview() {
       <ul className="mt-8 space-y-5">
         {recentPubs.map((pub) => (
           <li key={pub.title} className="flex items-baseline gap-4">
-            <span className="silk-label shrink-0 text-gold">{pub.year}</span>
+            <span className="sign-label shrink-0 text-green">{pub.year}</span>
             <a
               href={pub.doi ? `https://doi.org/${pub.doi}` : site.scholar}
               target="_blank"
               rel="noopener noreferrer"
-              className="trace-link font-bold"
+              className="u-link font-bold"
             >
               {pub.title}
             </a>
@@ -27,7 +27,7 @@ export default function PublicationsPreview() {
         ))}
       </ul>
       <p className="mt-8">
-        <Link href="/publications/" className="silk-label text-gold">
+        <Link href="/publications/" className="sign-label text-green">
           All {publications.length} publications →
         </Link>
       </p>

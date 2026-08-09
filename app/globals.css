@@ -1,51 +1,41 @@
 @import "tailwindcss";
 
 /*
-  v3 — "Copper, quiet". The circuit-board identity survives as finish, not
-  navigation: FR-4 warm black, copper, ENIG gold, silkscreen ink. Familiar
-  structure; craft in type, spacing, and micro-interaction.
+  v7 — "Full Service": porcelain-enamel service-station signage.
+  Cream field, committed pump green, ink lettering, service red for small
+  marks. Light theme only; materiality from enamel panels, not hairlines.
 */
 :root {
-  color-scheme: dark;
-  --substrate: #161210;
-  --substrate-2: #1d1815;
-  --substrate-3: #0f0c0a;
-  --copper: #c9834a;
-  --copper-dim: #8a5a34;
-  --gold: #e2b96b;
-  --gold-bright: #f0cd85;
-  --silk: #f2ead9;
-  --silk-muted: #a89a8b;
-  --silk-faint: #6e635a;
-  --led: #8fd98f;
-  --led-off: #3a4438;
-  --drc-red: #e0705a;
-
-  --frame: 12px;
-  --energy: 0;
+  color-scheme: light;
+  --cream: #f5f0e4;
+  --porcelain: #fdfbf4;
+  --green: #175339;
+  --green-deep: #0f3d29;
+  --ink: #1d201c;
+  --red: #ab2b1e;
+  --steel: #5c6157;
+  --chrome: #c9cdc2;
+  --paper: #fffef8;
 }
 
 @theme inline {
-  --color-substrate: var(--substrate);
-  --color-substrate-2: var(--substrate-2);
-  --color-substrate-3: var(--substrate-3);
-  --color-copper: var(--copper);
-  --color-copper-dim: var(--copper-dim);
-  --color-gold: var(--gold);
-  --color-gold-bright: var(--gold-bright);
-  --color-silk: var(--silk);
-  --color-silk-muted: var(--silk-muted);
-  --color-silk-faint: var(--silk-faint);
-  --color-led: var(--led);
-  --color-drc: var(--drc-red);
-  --font-shoulders: var(--font-big-shoulders);
-  --font-overpass: var(--font-overpass-sans);
-  --font-mono: var(--font-overpass-mono);
+  --color-cream: var(--cream);
+  --color-porcelain: var(--porcelain);
+  --color-green: var(--green);
+  --color-green-deep: var(--green-deep);
+  --color-ink: var(--ink);
+  --color-red: var(--red);
+  --color-steel: var(--steel);
+  --color-chrome: var(--chrome);
+  --color-paper: var(--paper);
+  --font-display: var(--font-jost);
+  --font-body: var(--font-franklin);
+  --font-receipt: var(--font-courier);
 }
 
 ::selection {
-  background: var(--gold);
-  color: var(--substrate);
+  background: var(--green);
+  color: var(--porcelain);
 }
 
 html {
@@ -54,224 +44,158 @@ html {
 }
 
 body {
-  background: var(--substrate);
-  color: var(--silk);
-  font-family: var(--font-overpass-sans), ui-sans-serif, system-ui, sans-serif;
-  background-image: radial-gradient(
-      circle at 1px 1px,
-      rgba(242, 234, 217, 0.02) 1px,
-      transparent 0
-    );
-  background-size: 24px 24px;
+  background: var(--cream);
+  color: var(--ink);
+  font-family: var(--font-franklin), ui-sans-serif, system-ui, sans-serif;
 }
 
 :focus-visible {
-  outline: 2px solid var(--gold);
+  outline: 3px solid var(--green);
   outline-offset: 3px;
-  border-radius: 2px;
+  border-radius: 3px;
 }
 
 /* ---------- type roles ---------- */
 
-/* Display: Big Shoulders — reserved for the name, page titles, and the
-   contact close. Sentence case except the name. */
 .display {
-  font-family: var(--font-big-shoulders), ui-sans-serif, sans-serif;
-  font-weight: 780;
-  line-height: 0.95;
-  letter-spacing: 0.005em;
+  font-family: var(--font-jost), ui-sans-serif, sans-serif;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+  line-height: 1.02;
 }
 
-/* Small instrument label — eyebrows, dates, metadata. */
-.silk-label {
-  font-family: var(--font-overpass-mono), ui-monospace, monospace;
-  font-size: 0.72rem;
+.sign-label {
+  font-family: var(--font-jost), sans-serif;
+  font-size: 0.74rem;
   font-weight: 600;
-  letter-spacing: 0.14em;
+  letter-spacing: 0.22em;
   text-transform: uppercase;
 }
 
-/* Section heading: calm, unmistakably a heading. */
 .section-h {
-  font-size: 1.7rem;
-  line-height: 1.15;
+  font-family: var(--font-jost), sans-serif;
+  font-size: 1.6rem;
   font-weight: 700;
-  color: var(--silk);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--ink);
 }
-.section-h::after {
+
+/* ---------- enamel panel ---------- */
+
+.enamel {
+  position: relative;
+  background: var(--porcelain);
+  border: 2px solid var(--ink);
+  border-radius: 14px;
+  box-shadow:
+    inset 0 0 0 4px var(--porcelain),
+    inset 0 0 0 5px color-mix(in srgb, var(--green) 30%, transparent),
+    0 2px 0 color-mix(in srgb, var(--ink) 18%, transparent);
+}
+.enamel::before {
   content: "";
-  display: block;
-  width: 2.5rem;
-  height: 3px;
-  margin-top: 0.6rem;
-  background: var(--copper);
-  border-radius: 1px;
-}
-
-/* ---------- board edge (quiet identity frame) ---------- */
-
-.board-edge {
-  position: fixed;
-  inset: calc(var(--frame) - 7px);
-  border: 1px solid color-mix(in srgb, var(--silk) 14%, transparent);
+  position: absolute;
+  inset: 0;
+  border-radius: 12px;
+  background: linear-gradient(
+    172deg,
+    rgba(255, 255, 255, 0.55),
+    rgba(255, 255, 255, 0) 34%
+  );
   pointer-events: none;
-  z-index: 60;
-}
-.board-edge i {
-  position: absolute;
-  width: 12px;
-  height: 12px;
-  border: 2px solid color-mix(in srgb, var(--copper) 75%, transparent);
-  border-radius: 50%;
-}
-.board-edge i:nth-child(1) { top: 5px; left: 5px; }
-.board-edge i:nth-child(2) { top: 5px; right: 5px; }
-.board-edge i:nth-child(3) { bottom: 5px; left: 5px; }
-.board-edge i:nth-child(4) { bottom: 5px; right: 5px; }
-
-@media (max-width: 640px) {
-  :root { --frame: 8px; }
-  .board-edge i { width: 9px; height: 9px; border-width: 1.5px; }
-  .rail::before,
-  .rail::after {
-    left: 10px;
-  }
 }
 
-/* ---------- the bus rail (quiet spine, energized by scroll) ---------- */
-
-.rail {
+/* green strip sign with screw heads */
+.strip-sign {
   position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.8rem;
+  background: var(--green);
+  color: var(--porcelain);
+  border-radius: 8px;
+  padding: 0.55rem 2.2rem;
+  box-shadow: inset 0 0 0 2px color-mix(in srgb, var(--porcelain) 45%, transparent);
 }
-.rail::before {
+.strip-sign::before,
+.strip-sign::after {
   content: "";
   position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  width: 2px;
-  background: color-mix(in srgb, var(--copper-dim) 45%, transparent);
-}
-.rail::after {
-  content: "";
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  width: 2px;
-  background: linear-gradient(var(--gold), var(--copper));
-  transform-origin: top;
-  transform: scaleY(var(--energy));
-  will-change: transform;
-}
-
-/* ---------- vias as list markers ---------- */
-
-.vias {
-  list-style: none;
-}
-.vias > li {
-  position: relative;
-  padding-left: 1.6rem;
-}
-.vias > li::before {
-  content: "";
-  position: absolute;
-  left: 0;
-  top: 0.44em;
-  width: 11px;
-  height: 11px;
+  top: 50%;
+  width: 7px;
+  height: 7px;
+  margin-top: -3.5px;
   border-radius: 50%;
-  border: 3px solid var(--copper);
-  background: var(--substrate-3);
+  background: radial-gradient(circle at 35% 35%, #e8e5da, #8d9188 70%);
 }
+.strip-sign::before { left: 9px; }
+.strip-sign::after { right: 9px; }
 
-/* ---------- buttons (gold pads) ---------- */
+/* ---------- buttons ---------- */
 
-.pad,
-.pad-nc {
-  display: inline-block;
-  font-family: var(--font-overpass-mono), monospace;
-  font-size: 0.8rem;
-  font-weight: 700;
-  letter-spacing: 0.08em;
-  padding: 0.72rem 1.25rem;
-  border-radius: 2px;
-  transition: background-color 140ms ease, color 140ms ease,
-    border-color 140ms ease, transform 140ms ease;
+.pill,
+.pill-outline {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  font-family: var(--font-jost), sans-serif;
+  font-weight: 600;
+  font-size: 0.92rem;
+  letter-spacing: 0.06em;
+  padding: 0.68rem 1.5rem;
+  border-radius: 999px;
+  transition: transform 140ms ease, background-color 140ms ease,
+    color 140ms ease, box-shadow 140ms ease;
 }
-.pad:active,
-.pad-nc:active {
+.pill {
+  background: var(--green);
+  color: var(--porcelain);
+  border: 2px solid var(--green-deep);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.28);
+}
+.pill:hover {
+  background: var(--green-deep);
+}
+.pill:active {
   transform: translateY(1px);
 }
-.pad {
-  background: var(--gold);
-  color: var(--substrate);
-  border: 1px solid var(--gold);
+.pill-outline {
+  border: 2px solid var(--ink);
+  color: var(--ink);
+  background: var(--porcelain);
 }
-.pad:hover {
-  background: var(--gold-bright);
-  border-color: var(--gold-bright);
-}
-.pad-nc {
-  border: 1px solid color-mix(in srgb, var(--gold) 55%, transparent);
-  color: var(--gold);
-}
-.pad-nc:hover {
-  border-color: var(--gold);
-  background: color-mix(in srgb, var(--gold) 10%, transparent);
+.pill-outline:hover {
+  background: var(--ink);
+  color: var(--porcelain);
 }
 
-/* ---------- prose links ---------- */
+/* tap-to-pay CTA: contactless arcs wake on hover */
+.cta-pay .arcs path {
+  opacity: 0.45;
+  transition: opacity 120ms ease;
+}
+.cta-pay:hover .arcs path {
+  opacity: 1;
+}
+.cta-pay:hover .arcs path:nth-child(2) { transition-delay: 60ms; }
+.cta-pay:hover .arcs path:nth-child(3) { transition-delay: 120ms; }
+.cta-pay:active {
+  box-shadow: 0 0 0 4px color-mix(in srgb, var(--green) 30%, transparent);
+}
 
-.trace-link {
-  color: var(--silk);
+/* ---------- links ---------- */
+
+.u-link {
+  color: var(--ink);
   text-decoration: underline;
-  text-decoration-color: var(--copper);
+  text-decoration-color: var(--green);
   text-decoration-thickness: 2px;
   text-underline-offset: 4px;
-  transition: text-decoration-color 140ms ease, color 140ms ease;
+  transition: color 140ms ease, text-decoration-color 140ms ease;
 }
-.trace-link:hover {
-  color: var(--gold-bright);
-  text-decoration-color: var(--gold);
-}
-
-/* ---------- cards (work) ---------- */
-
-.card {
-  position: relative;
-  border: 1px solid color-mix(in srgb, var(--silk) 16%, transparent);
-  background: var(--substrate-2);
-  border-radius: 3px;
-  transition: border-color 160ms ease, transform 160ms ease,
-    box-shadow 160ms ease;
-}
-.card:hover,
-.card:focus-within {
-  border-color: var(--gold);
-  transform: translateY(-2px);
-  box-shadow: 0 10px 28px -18px rgba(0, 0, 0, 0.9);
-}
-.card .led {
-  transition: background-color 160ms ease, box-shadow 160ms ease;
-}
-.card:hover .led,
-.card:focus-within .led {
-  background: var(--led);
-  box-shadow: 0 0 6px var(--led);
-}
-
-.led {
-  display: inline-block;
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  background: var(--led-off);
-}
-.led-on {
-  background: var(--led);
-  box-shadow: 0 0 6px var(--led);
+.u-link:hover {
+  color: var(--green);
 }
 
 /* ---------- nav ---------- */
@@ -279,17 +203,27 @@ body {
 .nav-link {
   position: relative;
   display: inline-block;
-  padding: 0.7rem 0.15rem;
+  padding: 0.7rem 0.2rem;
+  font-family: var(--font-jost), sans-serif;
+  font-weight: 600;
+  font-size: 0.86rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--steel);
   transition: color 140ms ease;
+}
+.nav-link:hover {
+  color: var(--ink);
 }
 .nav-link::after {
   content: "";
   position: absolute;
   left: 0;
   right: 0;
-  bottom: 0.35rem;
-  height: 2px;
-  background: var(--gold);
+  bottom: 0.4rem;
+  height: 3px;
+  border-radius: 2px;
+  background: var(--green);
   transform: scaleX(0);
   transform-origin: left;
   transition: transform 160ms ease;
@@ -299,75 +233,147 @@ body {
   transform: scaleX(1);
 }
 .nav-link[aria-current="page"] {
-  color: var(--silk);
+  color: var(--ink);
 }
 
-/* ---------- 404 ratsnest ---------- */
+/* ---------- pump bays (work cards) ---------- */
 
-.airwire {
-  stroke: var(--silk-muted);
-  stroke-width: 1;
-  stroke-dasharray: 5 6;
-  fill: none;
+.bay {
+  position: relative;
+  background: var(--porcelain);
+  border: 2px solid var(--ink);
+  border-radius: 12px;
+  overflow: hidden;
+  transition: transform 160ms ease, box-shadow 160ms ease;
+  box-shadow: 0 2px 0 color-mix(in srgb, var(--ink) 18%, transparent);
 }
-
-/* ---------- ambient schematic ---------- */
-
-.sch-node rect {
-  fill: var(--substrate-2);
-  stroke: var(--silk-muted);
-  transition: stroke 140ms ease;
+.bay:hover,
+.bay:focus-within {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 20px -12px rgba(29, 32, 28, 0.5);
 }
-.sch-node:hover rect {
-  stroke: var(--gold);
+.bay .nozzle {
+  transition: transform 180ms ease;
 }
-.sch-node:hover .sch-led {
-  fill: var(--led);
-}
-.sch-trace {
-  stroke: var(--copper);
-  stroke-width: 2;
-  fill: none;
-}
-.sch-trace-hot {
-  stroke: var(--gold);
-  stroke-width: 2;
-  fill: none;
-  opacity: 0;
-  transition: opacity 600ms ease;
-}
-.energized .sch-trace-hot {
-  opacity: 1;
-}
-.sch-packet {
-  fill: var(--gold-bright);
-  offset-rotate: 0deg;
-}
-.sch-figure.paused .sch-packet {
-  animation-play-state: paused;
+.bay:hover .nozzle,
+.bay:focus-within .nozzle {
+  transform: translateY(-5px) rotate(-6deg);
 }
 
-@keyframes travel {
-  from { offset-distance: 0%; }
-  to { offset-distance: 100%; }
+/* ---------- lane divider ---------- */
+
+.lane {
+  border: 0;
+  height: 0;
+  border-top: 3px dashed color-mix(in srgb, var(--steel) 45%, transparent);
+  margin: 0 auto;
+  width: min(52rem, 78%);
 }
 
-/* ---------- search palette ---------- */
+/* ---------- flip counter ---------- */
+
+.flip-digit {
+  position: relative;
+  display: inline-block;
+  background: var(--ink);
+  color: var(--paper);
+  font-family: var(--font-jost), sans-serif;
+  font-weight: 700;
+  border-radius: 6px;
+  overflow: hidden;
+}
+.flip-digit::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 50%;
+  height: 1.5px;
+  background: rgba(245, 240, 228, 0.28);
+}
+.flip-anim {
+  animation: flipin 700ms cubic-bezier(0.3, 1.2, 0.4, 1) backwards;
+}
+.flip-anim:nth-child(2) {
+  animation-delay: 160ms;
+}
+@keyframes flipin {
+  from { transform: rotateX(-92deg); }
+  to { transform: rotateX(0); }
+}
+
+/* ---------- receipt (footer/contact) ---------- */
+
+.receipt {
+  font-family: var(--font-courier), monospace;
+  background: var(--paper);
+  color: var(--ink);
+  border-left: 2px solid var(--ink);
+  border-right: 2px solid var(--ink);
+}
+.receipt-edge {
+  height: 14px;
+  background-image: radial-gradient(
+    circle 7px at 8px 8px,
+    var(--cream) 6.5px,
+    var(--paper) 7px
+  );
+  background-size: 16px 14px;
+  background-repeat: repeat-x;
+}
+.receipt-edge.bottom {
+  transform: rotate(180deg);
+}
+
+/* ---------- search dialog ---------- */
 
 dialog.probe {
-  background: var(--substrate-2);
-  color: var(--silk);
-  border: 1px solid var(--gold);
-  border-radius: 3px;
+  background: var(--porcelain);
+  color: var(--ink);
+  border: 2px solid var(--ink);
+  border-radius: 12px;
   padding: 0;
   width: min(560px, calc(100vw - 2rem));
   margin: 12vh auto auto;
+  box-shadow: 0 12px 40px -18px rgba(29, 32, 28, 0.45);
 }
 dialog.probe::backdrop {
-  background: rgba(15, 12, 10, 0.75);
+  background: rgba(29, 32, 28, 0.35);
 }
 
-/* ---------- reduced motion: designed static states ---------- */
+/* ---------- check bullets (service-order items) ---------- */
+
+.checks {
+  list-style: none;
+}
+.checks > li {
+  position: relative;
+  padding-left: 1.8rem;
+}
+.checks > li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.28em;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  border: 2.5px solid var(--green);
+  background: var(--porcelain);
+}
+.checks > li::after {
+  content: "";
+  position: absolute;
+  left: 4.5px;
+  top: calc(0.28em + 3px);
+  width: 5px;
+  height: 8px;
+  border-right: 2.5px solid var(--green);
+  border-bottom: 2.5px solid var(--green);
+  transform: rotate(40deg);
+}
+
+/* ---------- reduced motion ---------- */
 
 @media (prefers-reduced-motion: reduce) {
   html {
@@ -380,17 +386,11 @@ dialog.probe::backdrop {
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
   }
-  .rail::after {
-    transform: scaleY(1);
+  .flip-anim {
+    animation: none;
   }
-  .sch-packet {
-    display: none;
-  }
-  .sch-trace-hot {
-    opacity: 1;
-  }
-  .card:hover,
-  .card:focus-within {
+  .bay:hover,
+  .bay:focus-within {
     transform: none;
   }
 }

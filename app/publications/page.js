@@ -41,8 +41,8 @@ export default function Publications() {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
-      <h1 className="display text-5xl text-silk sm:text-7xl">Publications</h1>
-      <p className="mt-6 max-w-2xl leading-relaxed text-silk-muted">
+      <h1 className="display text-5xl text-ink sm:text-7xl">Publications</h1>
+      <p className="mt-6 max-w-2xl leading-relaxed text-steel">
         {publications.length} peer-reviewed works — {ieeeCount} IEEE conference
         papers among them — on federated learning, secure LLM deployment, and
         the cloud-native architecture behind fuel systems. Full record on{" "}
@@ -50,7 +50,7 @@ export default function Publications() {
           href={SCHOLAR_URL}
           target="_blank"
           rel="noopener noreferrer"
-          className="trace-link"
+          className="u-link"
         >
           Google Scholar
         </a>
@@ -59,8 +59,8 @@ export default function Publications() {
 
       {years.map((year) => (
         <section key={year} className="mt-12">
-          <h2 className="silk-label mb-6 flex items-center gap-3 text-gold">
-            <span aria-hidden="true" className="inline-block h-0.5 w-8 bg-copper" />
+          <h2 className="sign-label mb-6 flex items-center gap-3 text-green">
+            <span aria-hidden="true" className="inline-block h-0.5 w-8 bg-green" />
             {year}
           </h2>
           <ul className="space-y-0">
@@ -71,10 +71,10 @@ export default function Publications() {
                 return (
                   <li
                     key={pub.title}
-                    className="grid grid-cols-[2.6rem_1fr] gap-x-4 border-t border-silk/12 py-5 last:border-b sm:grid-cols-[3.2rem_1fr_auto]"
+                    className="grid grid-cols-[2.6rem_1fr] gap-x-4 border-t border-ink/15 py-5 last:border-b sm:grid-cols-[3.2rem_1fr_auto]"
                   >
                     <span
-                      className="silk-label pt-1 text-silk-faint"
+                      className="sign-label pt-1 text-steel"
                       aria-hidden="true"
                     >
                       {String(item).padStart(3, "0")}
@@ -84,17 +84,17 @@ export default function Publications() {
                         href={pub.doi ? `https://doi.org/${pub.doi}` : SCHOLAR_URL}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="trace-link font-bold leading-snug"
+                        className="u-link font-bold leading-snug"
                       >
                         {pub.title}
                       </a>
                       {!soloAuthor(pub) && (
-                        <p className="mt-1.5 text-sm text-silk-muted">
+                        <p className="mt-1.5 text-sm text-steel">
                           {pub.authors}
                         </p>
                       )}
-                      <p className="mt-1 text-sm text-silk-muted">{pub.venue}</p>
-                      <p className="silk-label mt-2 text-silk-muted">
+                      <p className="mt-1 text-sm text-steel">{pub.venue}</p>
+                      <p className="sign-label mt-2 text-steel">
                         {pub.doi
                           ? `doi:${pub.doi.toLowerCase()}`
                           : "via google scholar"}
@@ -102,7 +102,7 @@ export default function Publications() {
                       </p>
                     </div>
                     {isIEEE(pub) ? (
-                      <span className="silk-label col-start-2 mt-2 h-fit w-fit border border-gold/50 px-1.5 py-0.5 text-gold sm:col-start-3 sm:mt-1">
+                      <span className="sign-label col-start-2 mt-2 h-fit w-fit border border-green/60 px-1.5 py-0.5 text-green sm:col-start-3 sm:mt-1">
                         IEEE
                       </span>
                     ) : null}

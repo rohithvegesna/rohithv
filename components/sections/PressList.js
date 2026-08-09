@@ -6,20 +6,20 @@ export default function PressList({ HeadingTag = "h2" }) {
       {press.map((item) => (
         <li
           key={item.link}
-          className="border-t border-silk/12 py-8 last:border-b"
+          className="border-t border-ink/15 py-8 last:border-b"
         >
-          <p className="silk-label text-copper">{item.date}</p>
+          <p className="sign-label text-green">{item.date}</p>
           <HeadingTag className="mt-3 text-xl font-bold leading-snug">
             <a
               href={item.link}
               target="_blank"
               rel="noopener noreferrer"
-              className="trace-link"
+              className="u-link"
             >
               {item.title}
             </a>
           </HeadingTag>
-          <p className="mt-3 max-w-2xl text-sm leading-relaxed text-silk-muted">
+          <p className="mt-3 max-w-2xl text-sm leading-relaxed text-steel">
             {item.description}
           </p>
         </li>

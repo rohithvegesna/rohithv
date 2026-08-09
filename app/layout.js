@@ -1,27 +1,26 @@
 import Script from "next/script";
-import { Big_Shoulders, Overpass, Overpass_Mono } from "next/font/google";
+import { Jost, Libre_Franklin, Courier_Prime } from "next/font/google";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
-import Current from "@/components/Current";
 import { site } from "@/data/site";
 import "./globals.css";
 
-const bigShoulders = Big_Shoulders({
-  variable: "--font-big-shoulders",
-  subsets: ["latin"],
-  axes: ["opsz"],
-  display: "swap",
-});
-
-const overpass = Overpass({
-  variable: "--font-overpass-sans",
+const jost = Jost({
+  variable: "--font-jost",
   subsets: ["latin"],
   display: "swap",
 });
 
-const overpassMono = Overpass_Mono({
-  variable: "--font-overpass-mono",
+const franklin = Libre_Franklin({
+  variable: "--font-franklin",
   subsets: ["latin"],
+  display: "swap",
+});
+
+const courier = Courier_Prime({
+  variable: "--font-courier",
+  subsets: ["latin"],
+  weight: ["400", "700"],
   display: "swap",
 });
 
@@ -47,43 +46,32 @@ export const metadata = {
 };
 
 const CONSOLE_EGG = `console.log(
-  "%c  ●───────────────────────────●\\n" +
-  "  │  ROHITHV.COM   REV C        │\\n" +
-  "  │  FR-4 · COPPER · SILKSCREEN │\\n" +
-  "  │  drawn by R.V. Vegesna      │\\n" +
-  "  ●───────────────────────────●\\n" +
-  "  You read source. Good instinct.\\n" +
-  "  Search: Cmd/Ctrl+K\\n" +
-  "  Data sheet: /resume.json",
-  "color:#c9834a;font-family:monospace"
+  "%c  ┌──────────────────────────────┐\\n" +
+  "  │   FULL SERVICE · OPEN LATE   │\\n" +
+  "  │   pump's on — ring the bell  │\\n" +
+  "  └──────────────────────────────┘\\n" +
+  "  Search: Cmd/Ctrl+K · Data sheet: /resume.json",
+  "color:#175339;font-family:monospace"
 );`;
 
 export default function RootLayout({ children }) {
   return (
     <html
       lang="en"
-      suppressHydrationWarning
-      className={`${bigShoulders.variable} ${overpass.variable} ${overpassMono.variable} h-full antialiased`}
+      className={`${jost.variable} ${franklin.variable} ${courier.variable} h-full antialiased`}
     >
       <body className="flex min-h-full flex-col">
         <a
           href="#main"
-          className="silk-label absolute left-1/2 top-2 z-[70] -translate-x-1/2 -translate-y-16 bg-gold px-3 py-2 text-substrate transition-transform focus:translate-y-0"
+          className="sign-label absolute left-1/2 top-2 z-[70] -translate-x-1/2 -translate-y-16 rounded-md bg-green px-3 py-2 text-porcelain transition-transform focus:translate-y-0"
         >
           Skip to content
         </a>
-        <div className="board-edge" aria-hidden="true">
-          <i></i>
-          <i></i>
-          <i></i>
-          <i></i>
-        </div>
         <Header />
         <div id="main" className="flex-1">
           {children}
         </div>
         <Footer />
-        <Current />
         <script dangerouslySetInnerHTML={{ __html: CONSOLE_EGG }} />
         <Script
           src="https://www.googletagmanager.com/gtag/js?id=G-FET9JB3RQT"

@@ -7,28 +7,32 @@ const links = [
   { href: site.scholar, label: "Scholar" },
 ];
 
+/* The salvaged receipt — the footer prints like a pump ticket. */
 export default function Footer() {
   return (
-    <footer className="border-t border-silk/12">
-      <div className="silk-label mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-x-8 gap-y-3 px-5 py-7 text-silk-muted sm:px-10">
-        <p>
-          © {new Date().getFullYear()} {site.name} · {site.location}
-        </p>
-        <ul className="flex flex-wrap items-center gap-5">
-          {links.map((l) => (
-            <li key={l.label}>
-              <a
-                href={l.href}
-                className="transition-colors hover:text-silk"
-                {...(l.href.startsWith("http")
-                  ? { target: "_blank", rel: "noopener noreferrer" }
-                  : {})}
-              >
-                {l.label}
-              </a>
-            </li>
-          ))}
-        </ul>
+    <footer className="mt-20 flex justify-center px-5 pb-14">
+      <div className="w-full max-w-md">
+        <div className="receipt-edge" aria-hidden="true" />
+        <div className="receipt px-6 py-5 text-[0.82rem] leading-relaxed">
+          <ul className="flex flex-wrap justify-center gap-x-5 gap-y-1">
+            {links.map((l) => (
+              <li key={l.label}>
+                <a
+                  href={l.href}
+                  className="u-link font-bold"
+                  {...(l.href.startsWith("http")
+                    ? { target: "_blank", rel: "noopener noreferrer" }
+                    : {})}
+                >
+                  {l.label}
+                </a>
+              </li>
+            ))}
+          </ul>
+          <p className="mt-3 border-t border-dashed border-ink/40 pt-3 text-center text-[0.74rem]">
+            © {new Date().getFullYear()} {site.name} · {site.location}
+          </p>
+        </div>
       </div>
     </footer>
   );

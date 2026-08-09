@@ -19,8 +19,8 @@ export const metadata = {
 export default function WorkIndex() {
   return (
     <main className="mx-auto max-w-6xl px-5 py-12 sm:px-10 sm:py-16">
-      <h1 className="display text-5xl text-silk sm:text-7xl">Selected work</h1>
-      <p className="mt-6 max-w-2xl leading-relaxed text-silk-muted">
+      <h1 className="display text-5xl text-ink sm:text-7xl">Selected work</h1>
+      <p className="mt-6 max-w-2xl leading-relaxed text-steel">
         Four systems, each written up the way engineering work actually goes:
         problem, constraints, architecture, outcome.
       </p>
@@ -32,16 +32,16 @@ export default function WorkIndex() {
             className="card group flex flex-col p-6 sm:p-7"
           >
             <div className="flex items-start justify-between gap-3">
-              <p className="silk-label text-silk-muted">{cs.eyebrow}</p>
+              <p className="sign-label text-steel">{cs.eyebrow}</p>
               <span className="led mt-0.5 shrink-0" aria-hidden="true" />
             </div>
-            <h2 className="mt-4 text-xl font-bold leading-snug text-silk">
+            <h2 className="mt-4 text-xl font-bold leading-snug text-ink">
               {cs.title}
             </h2>
-            <p className="mt-3 flex-1 text-sm leading-relaxed text-silk-muted">
+            <p className="mt-3 flex-1 text-sm leading-relaxed text-steel">
               {cs.summary}
             </p>
-            <p className="silk-label mt-6 flex items-center gap-2 text-gold">
+            <p className="sign-label mt-6 flex items-center gap-2 text-green">
               Read case study
               <span
                 aria-hidden="true"

@@ -14,7 +14,7 @@ export default function NavLinks() {
   const pathname = usePathname();
   return (
     <nav aria-label="Main">
-      <ul className="silk-label flex items-center gap-3 sm:gap-6">
+      <ul className="sign-label flex items-center gap-3 sm:gap-6">
         {nav.map((item) => {
           const section = item.href.split("#")[0];
           const active =
@@ -24,7 +24,7 @@ export default function NavLinks() {
               <Link
                 href={item.href}
                 aria-current={active}
-                className="nav-link text-silk-muted hover:text-silk"
+                className="nav-link text-steel hover:text-ink"
               >
                 {item.label}
               </Link>

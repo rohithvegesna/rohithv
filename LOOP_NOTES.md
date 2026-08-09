@@ -85,3 +85,30 @@ outstanding).
 4. Drive C: approach road top-speed run, handbrake turn at the apron.
 Report each as: floaty / grippy / twitchy / heavy (+ camera: laggy/tight).
 Then hit "dump config" and paste the JSON; next session bakes it in.
+
+## Iter 012 — v7 theme first light (static)
+Full-Service 1962 shipped across all routes. Harness rebuilt as
+design-loop.mjs (screens + grayscale + console + axe + transfer).
+FAIL: pubs color-contrast ×27 (faded item numbers); 2 console errors
+(the 404 route's own document — expected, now filtered); transfer
+metric measured decoded bytes.
+
+## Iter 013 — a11y + measurement
+text-steel/80 → text-steel; first-party-only encoded transfer (GA is
+third-party, lazy). Result: console 0, axe clean ×6 routes, home 429KB.
+
+## Iter 014 — eyes-on critique
+Hero name rescaled (3-line poster kept deliberate at 2 sizes down),
+crest EST. 2015 unclipped, 5-second transcript PASS, keyboard walk
+PASS (skip link first, outlines everywhere), 360px + case page + pubs
++ 404 shots reviewed. Lighthouse static: 97/98 mobile, 100 desktop,
+100 a11y/bp/seo everywhere, CLS 0.
+
+## Iter 015 — Chanel + exit
+Removed the footer's second perforation strip. 3× full runs green
+(console 0, axe clean, 428KB). Freeze diff: adds Pump 01–04, the flip
+digits (2,7,27) and the caption duplicate 'peer-reviewed publications';
+removes the deleted schematic's figcaption (theme-bound decoration of
+the banned circuit-board signature — enumerated, accepted). Diet:
+out/ 9.0MB → 2.8MB; deps −4 (three, rapier, postprocessing, n8ao);
+home first-party transfer 428KB incl. fonts. VERDICT: exit criteria met.
