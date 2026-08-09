@@ -6,8 +6,10 @@ import WorkGrid from "@/components/sections/WorkGrid";
 import PublicationsPreview from "@/components/sections/PublicationsPreview";
 import SkillsSection from "@/components/sections/SkillsSection";
 import ContactSection from "@/components/sections/ContactSection";
-import { site } from "@/data/site";
+import { site, education } from "@/data/site";
 import { publications } from "@/data/publications";
+
+const BUILD_DATE = new Date().toISOString().slice(0, 10);
 
 export const metadata = {
   title: "Rohith Varma Vegesna — Senior Software Engineer & Tech Lead",
@@ -28,13 +30,36 @@ const jsonLd = {
   "@context": "https://schema.org",
   "@graph": [
     {
+      "@type": "ProfilePage",
+      "@id": `${site.url}/#profilepage`,
+      url: `${site.url}/`,
+      name: "Rohith Varma Vegesna — Senior Software Engineer & Tech Lead",
+      inLanguage: "en-US",
+      dateModified: BUILD_DATE,
+      mainEntity: { "@id": `${site.url}/#person` },
+      isPartOf: { "@id": `${site.url}/#website` },
+    },
+    {
       "@type": "Person",
       "@id": `${site.url}/#person`,
       name: site.name,
       url: site.url,
       image: `${site.url}/profile.webp`,
+      description: site.description,
       jobTitle: "Senior Software Engineer & Tech Lead",
       worksFor: { "@type": "Organization", name: site.company },
+      alumniOf: education.map((e) => ({
+        "@type": "CollegeOrUniversity",
+        name: e.org,
+      })),
+      knowsAbout: [
+        "EMV payment systems",
+        "IoT and edge computing",
+        "AWS cloud architecture",
+        "Distributed systems",
+        "Java and Spring Boot",
+        "Fleet observability",
+      ],
       address: {
         "@type": "PostalAddress",
         addressLocality: "Dallas–Fort Worth",
@@ -49,6 +74,7 @@ const jsonLd = {
       "@id": `${site.url}/#website`,
       url: site.url,
       name: site.name,
+      inLanguage: "en-US",
       publisher: { "@id": `${site.url}/#person` },
     },
   ],
@@ -113,7 +139,7 @@ export default function Home() {
         </div>
 
         <div className="mt-12 sm:mt-16">
-          <DeepTrace buildDate={new Date().toISOString().slice(0, 10)} />
+          <DeepTrace buildDate={BUILD_DATE} />
         </div>
       </section>
 

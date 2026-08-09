@@ -19,10 +19,26 @@ export const metadata = {
 export default function Press() {
   const jsonLd = {
     "@context": "https://schema.org",
-    "@type": "CollectionPage",
-    name: "Press — Rohith Varma Vegesna",
-    url: `${site.url}/press/`,
-    about: { "@type": "Person", name: site.name, url: site.url },
+    "@graph": [
+      {
+        "@type": "CollectionPage",
+        name: "Press — Rohith Varma Vegesna",
+        url: `${site.url}/press/`,
+        about: { "@type": "Person", name: site.name, url: site.url },
+      },
+      {
+        "@type": "BreadcrumbList",
+        itemListElement: [
+          {
+            "@type": "ListItem",
+            position: 1,
+            name: "Home",
+            item: `${site.url}/`,
+          },
+          { "@type": "ListItem", position: 2, name: "Press" },
+        ],
+      },
+    ],
   };
 
   return (

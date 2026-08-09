@@ -46,11 +46,35 @@ export default async function CaseStudy({ params }) {
   const others = caseStudies.filter((c) => c.slug !== slug);
   const jsonLd = {
     "@context": "https://schema.org",
-    "@type": "Article",
-    headline: cs.title,
-    description: cs.summary,
-    url: `${site.url}/work/${cs.slug}/`,
-    author: { "@type": "Person", name: site.name, url: site.url },
+    "@graph": [
+      {
+        "@type": "Article",
+        headline: cs.title,
+        description: cs.summary,
+        url: `${site.url}/work/${cs.slug}/`,
+        image: `${site.url}/og.png`,
+        mainEntityOfPage: `${site.url}/work/${cs.slug}/`,
+        author: { "@type": "Person", name: site.name, url: site.url },
+      },
+      {
+        "@type": "BreadcrumbList",
+        itemListElement: [
+          {
+            "@type": "ListItem",
+            position: 1,
+            name: "Home",
+            item: `${site.url}/`,
+          },
+          {
+            "@type": "ListItem",
+            position: 2,
+            name: "Work",
+            item: `${site.url}/work/`,
+          },
+          { "@type": "ListItem", position: 3, name: cs.title },
+        ],
+      },
+    ],
   };
 
   return (

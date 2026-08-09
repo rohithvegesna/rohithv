@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { caseStudies } from "@/data/work";
+import { site } from "@/data/site";
 
 export const metadata = {
   title: "Work",
@@ -16,9 +17,32 @@ export const metadata = {
   },
 };
 
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "CollectionPage",
+      name: "Work — Rohith Varma Vegesna",
+      url: `${site.url}/work/`,
+      about: { "@type": "Person", name: site.name, url: site.url },
+    },
+    {
+      "@type": "BreadcrumbList",
+      itemListElement: [
+        { "@type": "ListItem", position: 1, name: "Home", item: `${site.url}/` },
+        { "@type": "ListItem", position: 2, name: "Work" },
+      ],
+    },
+  ],
+};
+
 export default function WorkIndex() {
   return (
     <main className="mx-auto max-w-6xl px-5 py-12 sm:px-10 sm:py-16">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
       <h1 className="display text-5xl text-fg sm:text-7xl">Selected work</h1>
       <p className="mt-6 max-w-2xl leading-relaxed text-muted">
         Four systems, each written up the way engineering work actually goes:

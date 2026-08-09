@@ -27,10 +27,30 @@ export default function Publications() {
   const ieeeCount = publications.filter(isIEEE).length;
   const jsonLd = {
     "@context": "https://schema.org",
-    "@type": "CollectionPage",
-    name: "Publications — Rohith Varma Vegesna",
-    url: `${site.url}/publications/`,
-    about: { "@type": "Person", name: site.name, url: site.url },
+    "@graph": [
+      {
+        "@type": "CollectionPage",
+        name: "Publications — Rohith Varma Vegesna",
+        url: `${site.url}/publications/`,
+        about: { "@type": "Person", name: site.name, url: site.url },
+        mainEntity: {
+          "@type": "ItemList",
+          numberOfItems: publications.length,
+        },
+      },
+      {
+        "@type": "BreadcrumbList",
+        itemListElement: [
+          {
+            "@type": "ListItem",
+            position: 1,
+            name: "Home",
+            item: `${site.url}/`,
+          },
+          { "@type": "ListItem", position: 2, name: "Publications" },
+        ],
+      },
+    ],
   };
 
   const itemNo = new Map(publications.map((p, i) => [p.title, i + 1]));
