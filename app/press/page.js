@@ -31,8 +31,8 @@ export default function Press() {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
-      <h1 className="display text-5xl text-ink sm:text-7xl">Press</h1>
-      <p className="mt-6 max-w-2xl leading-relaxed text-steel">
+      <h1 className="display text-5xl text-fg sm:text-7xl">Press</h1>
+      <p className="mt-6 max-w-2xl leading-relaxed text-muted">
         Coverage of my work on smart fueling systems, fuel-station
         cybersecurity, and IoT-driven automation.
       </p>

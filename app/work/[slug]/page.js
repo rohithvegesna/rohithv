@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { caseStudies } from "@/data/work";
+import { CaseFigure } from "@/components/diagram/diagrams";
 import { site } from "@/data/site";
 
 export function generateStaticParams() {
@@ -28,7 +29,10 @@ export async function generateMetadata({ params }) {
 function Zone({ label, children }) {
   return (
     <section className="mt-14">
-      <h2 className="strip-sign sign-label !text-[0.8rem]">{label}</h2>
+      <h2 className="dock-h flex items-center gap-3 !text-[1.05rem]">
+        <span aria-hidden="true" className="inline-block h-0.5 w-7 bg-amber" />
+        {label}
+      </h2>
       <div className="mt-6">{children}</div>
     </section>
   );
@@ -55,29 +59,33 @@ export default async function CaseStudy({ params }) {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
-      <nav aria-label="Breadcrumb" className="sign-label mb-10">
+      <nav aria-label="Breadcrumb" className="tag mb-10">
         <Link
           href="/work/"
-          className="text-steel transition-colors hover:text-ink"
+          className="text-muted transition-colors hover:text-fg"
         >
           ← Work
         </Link>
       </nav>
 
       <article>
-        <p className="sign-label text-green">{cs.eyebrow}</p>
-        <h1 className="display mt-4 text-4xl text-ink sm:text-6xl">
+        <p className="tag text-amber">{cs.eyebrow}</p>
+        <h1 className="display mt-4 text-4xl text-fg sm:text-6xl">
           {cs.title}
         </h1>
-        <p className="mt-6 max-w-2xl text-lg leading-relaxed text-steel">
+        <p className="mt-6 max-w-2xl text-lg leading-relaxed text-muted">
           {cs.summary}
         </p>
-        <p className="sign-label mt-7 border-y border-ink/15 py-3 text-steel">
+        <p className="tag mt-7 border-y border-line/70 py-3 text-muted">
           {cs.stack.join(" · ")}
         </p>
 
+        <div className="mx-auto mt-12 max-w-md">
+          <CaseFigure slug={cs.slug} />
+        </div>
+
         <Zone label="Problem">
-          <div className="max-w-2xl space-y-4 leading-relaxed text-ink">
+          <div className="max-w-2xl space-y-4 leading-relaxed text-fg">
             {cs.problem.map((p) => (
               <p key={p.slice(0, 32)}>{p}</p>
             ))}
@@ -85,9 +93,9 @@ export default async function CaseStudy({ params }) {
         </Zone>
 
         <Zone label="Constraints">
-          <ul className="checks max-w-2xl space-y-4">
+          <ul className="acks max-w-2xl space-y-4">
             {cs.constraints.map((c) => (
-              <li key={c.slice(0, 32)} className="leading-relaxed text-ink">
+              <li key={c.slice(0, 32)} className="leading-relaxed text-fg">
                 {c}
               </li>
             ))}
@@ -95,7 +103,7 @@ export default async function CaseStudy({ params }) {
         </Zone>
 
         <Zone label="Architecture">
-          <div className="max-w-2xl space-y-4 leading-relaxed text-ink">
+          <div className="max-w-2xl space-y-4 leading-relaxed text-fg">
             {cs.architecture.map((p) => (
               <p key={p.slice(0, 32)}>{p}</p>
             ))}
@@ -103,12 +111,12 @@ export default async function CaseStudy({ params }) {
         </Zone>
 
         <Zone label="Outcome">
-          <ul className="checks max-w-2xl space-y-4">
+          <ul className="acks max-w-2xl space-y-4">
             {cs.outcome.map((o) => (
               <li
                 key={o.slice(0, 32)}
                 className={`leading-relaxed ${
-                  o.startsWith("TODO:") ? "italic text-steel" : "text-ink"
+                  o.startsWith("TODO:") ? "italic text-muted" : "text-fg"
                 }`}
               >
                 {o}
@@ -120,9 +128,9 @@ export default async function CaseStudy({ params }) {
 
       <nav
         aria-label="More case studies"
-        className="mt-16 border-t border-ink/15 pt-10"
+        className="mt-16 border-t border-line/70 pt-10"
       >
-        <h2 className="mb-5 text-xl font-bold text-ink">More work</h2>
+        <h2 className="mb-5 text-xl font-bold text-fg">More work</h2>
         <ul className="space-y-3">
           {others.map((o) => (
             <li key={o.slug}>

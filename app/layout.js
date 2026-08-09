@@ -1,26 +1,20 @@
 import Script from "next/script";
-import { Jost, Libre_Franklin, Courier_Prime } from "next/font/google";
+import { Instrument_Sans, Martian_Mono } from "next/font/google";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { site } from "@/data/site";
 import "./globals.css";
 
-const jost = Jost({
-  variable: "--font-jost",
+const instrument = Instrument_Sans({
+  variable: "--font-instrument",
   subsets: ["latin"],
   display: "swap",
 });
 
-const franklin = Libre_Franklin({
-  variable: "--font-franklin",
+const martian = Martian_Mono({
+  variable: "--font-martian",
   subsets: ["latin"],
-  display: "swap",
-});
-
-const courier = Courier_Prime({
-  variable: "--font-courier",
-  subsets: ["latin"],
-  weight: ["400", "700"],
+  weight: ["400", "500", "600"],
   display: "swap",
 });
 
@@ -46,24 +40,22 @@ export const metadata = {
 };
 
 const CONSOLE_EGG = `console.log(
-  "%c  ┌──────────────────────────────┐\\n" +
-  "  │   FULL SERVICE · OPEN LATE   │\\n" +
-  "  │   pump's on — ring the bell  │\\n" +
-  "  └──────────────────────────────┘\\n" +
-  "  Search: Cmd/Ctrl+K · Data sheet: /resume.json",
-  "color:#175339;font-family:monospace"
+  "%c  tap ──▶ emv ──▶ controller ──▶ host ──▶ settle\\n" +
+  "  the trace is live. you are reading the source —\\n" +
+  "  good instinct. Search: Cmd/Ctrl+K · /resume.json",
+  "color:#ffb454;font-family:monospace"
 );`;
 
 export default function RootLayout({ children }) {
   return (
     <html
       lang="en"
-      className={`${jost.variable} ${franklin.variable} ${courier.variable} h-full antialiased`}
+      className={`${instrument.variable} ${martian.variable} h-full antialiased`}
     >
       <body className="flex min-h-full flex-col">
         <a
           href="#main"
-          className="sign-label absolute left-1/2 top-2 z-[70] -translate-x-1/2 -translate-y-16 rounded-md bg-green px-3 py-2 text-porcelain transition-transform focus:translate-y-0"
+          className="tag absolute left-1/2 top-2 z-[70] -translate-x-1/2 -translate-y-16 rounded-sm bg-amber px-3 py-2 text-ground transition-transform focus:translate-y-0"
         >
           Skip to content
         </a>

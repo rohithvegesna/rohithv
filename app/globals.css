@@ -1,41 +1,48 @@
 @import "tailwindcss";
 
 /*
-  v7 — "Full Service": porcelain-enamel service-station signage.
-  Cream field, committed pump green, ink lettering, service red for small
-  marks. Light theme only; materiality from enamel panels, not hairlines.
+  v8 — "The Trace": the engineering made visible. After-hours lab:
+  blue-graphite ground; light exists only where meaning exists — the trace,
+  the packets, focus. Signal system from night-forecourt lighting:
+  sodium amber (payment/energy), arc white (data), ack green (state),
+  fault red (reserved for the 404).
 */
 :root {
-  color-scheme: light;
-  --cream: #f5f0e4;
-  --porcelain: #fdfbf4;
-  --green: #175339;
-  --green-deep: #0f3d29;
-  --ink: #1d201c;
-  --red: #ab2b1e;
-  --steel: #5c6157;
-  --chrome: #c9cdc2;
-  --paper: #fffef8;
+  color-scheme: dark;
+  --ground: #0e1116;
+  --raised: #151a21;
+  --well: #0a0d11;
+  --line: #2a313c;
+  --fg: #e9edf2;
+  --muted: #98a2ad;
+  --amber: #ffb454;
+  --amber-deep: #cc8a33;
+  --white: #eef3f7;
+  --green: #7ad3a2;
+  --red: #ff6b5e;
+  --slip: #f2eee3;
+  --progress: 0; /* spine energize, set by JS */
 }
 
 @theme inline {
-  --color-cream: var(--cream);
-  --color-porcelain: var(--porcelain);
-  --color-green: var(--green);
-  --color-green-deep: var(--green-deep);
-  --color-ink: var(--ink);
-  --color-red: var(--red);
-  --color-steel: var(--steel);
-  --color-chrome: var(--chrome);
-  --color-paper: var(--paper);
-  --font-display: var(--font-jost);
-  --font-body: var(--font-franklin);
-  --font-receipt: var(--font-courier);
+  --color-ground: var(--ground);
+  --color-raised: var(--raised);
+  --color-well: var(--well);
+  --color-line: var(--line);
+  --color-fg: var(--fg);
+  --color-muted: var(--muted);
+  --color-amber: var(--amber);
+  --color-arc: var(--white);
+  --color-ack: var(--green);
+  --color-fault: var(--red);
+  --color-slip: var(--slip);
+  --font-sans: var(--font-instrument);
+  --font-mono: var(--font-martian);
 }
 
 ::selection {
-  background: var(--green);
-  color: var(--porcelain);
+  background: var(--amber);
+  color: var(--ground);
 }
 
 html {
@@ -44,158 +51,151 @@ html {
 }
 
 body {
-  background: var(--cream);
-  color: var(--ink);
-  font-family: var(--font-franklin), ui-sans-serif, system-ui, sans-serif;
+  background: var(--ground);
+  color: var(--fg);
+  font-family: var(--font-instrument), ui-sans-serif, system-ui, sans-serif;
+  /* faint engineering grid — barely there */
+  background-image: linear-gradient(
+      color-mix(in srgb, var(--line) 24%, transparent) 1px,
+      transparent 1px
+    ),
+    linear-gradient(
+      90deg,
+      color-mix(in srgb, var(--line) 24%, transparent) 1px,
+      transparent 1px
+    );
+  background-size: 56px 56px;
 }
 
 :focus-visible {
-  outline: 3px solid var(--green);
+  outline: 2px solid var(--amber);
   outline-offset: 3px;
-  border-radius: 3px;
+  border-radius: 2px;
 }
 
 /* ---------- type roles ---------- */
 
+.mono {
+  font-family: var(--font-martian), ui-monospace, monospace;
+}
+
+.tag {
+  font-family: var(--font-martian), ui-monospace, monospace;
+  font-size: 0.68rem;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
 .display {
-  font-family: var(--font-jost), ui-sans-serif, sans-serif;
-  font-weight: 700;
-  letter-spacing: 0.01em;
-  line-height: 1.02;
+  font-weight: 650;
+  letter-spacing: -0.025em;
+  line-height: 1.0;
 }
 
-.sign-label {
-  font-family: var(--font-jost), sans-serif;
-  font-size: 0.74rem;
-  font-weight: 600;
-  letter-spacing: 0.22em;
-  text-transform: uppercase;
-}
-
-.section-h {
-  font-family: var(--font-jost), sans-serif;
-  font-size: 1.6rem;
-  font-weight: 700;
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
-  color: var(--ink);
-}
-
-/* ---------- enamel panel ---------- */
-
-.enamel {
+/* section dock: a tick joins the heading to the spine */
+.dock {
   position: relative;
-  background: var(--porcelain);
-  border: 2px solid var(--ink);
-  border-radius: 14px;
-  box-shadow:
-    inset 0 0 0 4px var(--porcelain),
-    inset 0 0 0 5px color-mix(in srgb, var(--green) 30%, transparent),
-    0 2px 0 color-mix(in srgb, var(--ink) 18%, transparent);
 }
-.enamel::before {
+.dock::before {
   content: "";
   position: absolute;
-  inset: 0;
-  border-radius: 12px;
-  background: linear-gradient(
-    172deg,
-    rgba(255, 255, 255, 0.55),
-    rgba(255, 255, 255, 0) 34%
-  );
-  pointer-events: none;
+  left: -1.55rem;
+  top: 0.62em;
+  width: 1.05rem;
+  height: 2px;
+  background: var(--amber);
+}
+.dock-h {
+  font-size: 1.35rem;
+  font-weight: 650;
+  letter-spacing: -0.01em;
+  color: var(--fg);
+}
+.dock-h .tag {
+  color: var(--amber);
+  margin-right: 0.9rem;
 }
 
-/* green strip sign with screw heads */
-.strip-sign {
+/* ---------- the spine (DG2) ---------- */
+
+.spine {
   position: relative;
-  display: inline-flex;
-  align-items: center;
-  gap: 0.8rem;
-  background: var(--green);
-  color: var(--porcelain);
-  border-radius: 8px;
-  padding: 0.55rem 2.2rem;
-  box-shadow: inset 0 0 0 2px color-mix(in srgb, var(--porcelain) 45%, transparent);
 }
-.strip-sign::before,
-.strip-sign::after {
+.spine::before {
   content: "";
   position: absolute;
-  top: 50%;
-  width: 7px;
-  height: 7px;
-  margin-top: -3.5px;
-  border-radius: 50%;
-  background: radial-gradient(circle at 35% 35%, #e8e5da, #8d9188 70%);
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: 2px;
+  background: var(--line);
 }
-.strip-sign::before { left: 9px; }
-.strip-sign::after { right: 9px; }
+.spine::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: 2px;
+  background: linear-gradient(var(--white), var(--amber));
+  transform-origin: top;
+  transform: scaleY(var(--progress));
+  will-change: transform;
+}
 
 /* ---------- buttons ---------- */
 
-.pill,
-.pill-outline {
+.btn,
+.btn-ghost {
   display: inline-flex;
   align-items: center;
   gap: 0.55rem;
-  font-family: var(--font-jost), sans-serif;
+  font-family: var(--font-martian), monospace;
+  font-size: 0.78rem;
   font-weight: 600;
-  font-size: 0.92rem;
-  letter-spacing: 0.06em;
-  padding: 0.68rem 1.5rem;
-  border-radius: 999px;
-  transition: transform 140ms ease, background-color 140ms ease,
-    color 140ms ease, box-shadow 140ms ease;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  padding: 0.7rem 1.35rem;
+  border-radius: 3px;
+  transition: background-color 140ms ease, color 140ms ease,
+    border-color 140ms ease, transform 140ms ease;
 }
-.pill {
-  background: var(--green);
-  color: var(--porcelain);
-  border: 2px solid var(--green-deep);
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.28);
+.btn {
+  background: var(--amber);
+  color: var(--ground);
+  border: 1px solid var(--amber);
 }
-.pill:hover {
-  background: var(--green-deep);
+.btn:hover {
+  background: var(--white);
+  border-color: var(--white);
 }
-.pill:active {
+.btn:active {
   transform: translateY(1px);
 }
-.pill-outline {
-  border: 2px solid var(--ink);
-  color: var(--ink);
-  background: var(--porcelain);
+.btn-ghost {
+  border: 1px solid var(--line);
+  color: var(--fg);
+  background: transparent;
 }
-.pill-outline:hover {
-  background: var(--ink);
-  color: var(--porcelain);
-}
-
-/* tap-to-pay CTA: contactless arcs wake on hover */
-.cta-pay .arcs path {
-  opacity: 0.45;
-  transition: opacity 120ms ease;
-}
-.cta-pay:hover .arcs path {
-  opacity: 1;
-}
-.cta-pay:hover .arcs path:nth-child(2) { transition-delay: 60ms; }
-.cta-pay:hover .arcs path:nth-child(3) { transition-delay: 120ms; }
-.cta-pay:active {
-  box-shadow: 0 0 0 4px color-mix(in srgb, var(--green) 30%, transparent);
+.btn-ghost:hover {
+  border-color: var(--amber);
+  color: var(--amber);
 }
 
 /* ---------- links ---------- */
 
 .u-link {
-  color: var(--ink);
+  color: var(--fg);
   text-decoration: underline;
-  text-decoration-color: var(--green);
-  text-decoration-thickness: 2px;
+  text-decoration-color: color-mix(in srgb, var(--amber) 65%, transparent);
+  text-decoration-thickness: 1.5px;
   text-underline-offset: 4px;
   transition: color 140ms ease, text-decoration-color 140ms ease;
 }
 .u-link:hover {
-  color: var(--green);
+  color: var(--amber);
+  text-decoration-color: var(--amber);
 }
 
 /* ---------- nav ---------- */
@@ -203,27 +203,26 @@ body {
 .nav-link {
   position: relative;
   display: inline-block;
-  padding: 0.7rem 0.2rem;
-  font-family: var(--font-jost), sans-serif;
-  font-weight: 600;
-  font-size: 0.86rem;
-  letter-spacing: 0.12em;
+  padding: 0.7rem 0.15rem;
+  font-family: var(--font-martian), monospace;
+  font-size: 0.7rem;
+  font-weight: 500;
+  letter-spacing: 0.13em;
   text-transform: uppercase;
-  color: var(--steel);
+  color: var(--muted);
   transition: color 140ms ease;
 }
 .nav-link:hover {
-  color: var(--ink);
+  color: var(--fg);
 }
 .nav-link::after {
   content: "";
   position: absolute;
   left: 0;
   right: 0;
-  bottom: 0.4rem;
-  height: 3px;
-  border-radius: 2px;
-  background: var(--green);
+  bottom: 0.42rem;
+  height: 2px;
+  background: var(--amber);
   transform: scaleX(0);
   transform-origin: left;
   transition: transform 160ms ease;
@@ -233,147 +232,273 @@ body {
   transform: scaleX(1);
 }
 .nav-link[aria-current="page"] {
-  color: var(--ink);
+  color: var(--fg);
 }
 
-/* ---------- pump bays (work cards) ---------- */
+/* ---------- cards: branches off the trace ---------- */
 
-.bay {
+.branch {
   position: relative;
-  background: var(--porcelain);
-  border: 2px solid var(--ink);
-  border-radius: 12px;
-  overflow: hidden;
-  transition: transform 160ms ease, box-shadow 160ms ease;
-  box-shadow: 0 2px 0 color-mix(in srgb, var(--ink) 18%, transparent);
+  background: var(--raised);
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  transition: border-color 160ms ease, transform 160ms ease;
 }
-.bay:hover,
-.bay:focus-within {
-  transform: translateY(-3px);
-  box-shadow: 0 8px 20px -12px rgba(29, 32, 28, 0.5);
-}
-.bay .nozzle {
-  transition: transform 180ms ease;
-}
-.bay:hover .nozzle,
-.bay:focus-within .nozzle {
-  transform: translateY(-5px) rotate(-6deg);
-}
-
-/* ---------- lane divider ---------- */
-
-.lane {
-  border: 0;
-  height: 0;
-  border-top: 3px dashed color-mix(in srgb, var(--steel) 45%, transparent);
-  margin: 0 auto;
-  width: min(52rem, 78%);
-}
-
-/* ---------- flip counter ---------- */
-
-.flip-digit {
-  position: relative;
-  display: inline-block;
-  background: var(--ink);
-  color: var(--paper);
-  font-family: var(--font-jost), sans-serif;
-  font-weight: 700;
-  border-radius: 6px;
-  overflow: hidden;
-}
-.flip-digit::after {
+.branch::before {
+  /* stub joining the card back toward the spine */
   content: "";
   position: absolute;
-  left: 0;
-  right: 0;
-  top: 50%;
-  height: 1.5px;
-  background: rgba(245, 240, 228, 0.28);
+  left: -1.55rem;
+  top: 2rem;
+  width: 1.55rem;
+  height: 2px;
+  background: var(--line);
+  transition: background-color 160ms ease;
 }
-.flip-anim {
-  animation: flipin 700ms cubic-bezier(0.3, 1.2, 0.4, 1) backwards;
+.branch:hover,
+.branch:focus-within {
+  border-color: var(--amber);
+  transform: translateY(-2px);
 }
-.flip-anim:nth-child(2) {
-  animation-delay: 160ms;
+.branch:hover::before,
+.branch:focus-within::before {
+  background: var(--amber);
 }
-@keyframes flipin {
-  from { transform: rotateX(-92deg); }
-  to { transform: rotateX(0); }
+.branch .dg-dot {
+  transition: background-color 160ms ease, box-shadow 160ms ease;
+}
+.branch:hover .dg-dot,
+.branch:focus-within .dg-dot {
+  background: var(--amber);
+  box-shadow: 0 0 8px color-mix(in srgb, var(--amber) 70%, transparent);
 }
 
-/* ---------- receipt (footer/contact) ---------- */
+.dg-dot {
+  display: inline-block;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--line);
+}
 
-.receipt {
-  font-family: var(--font-courier), monospace;
-  background: var(--paper);
-  color: var(--ink);
-  border-left: 2px solid var(--ink);
-  border-right: 2px solid var(--ink);
+/* acks: green check ticks for constraint/outcome lists */
+.acks {
+  list-style: none;
 }
-.receipt-edge {
-  height: 14px;
-  background-image: radial-gradient(
-    circle 7px at 8px 8px,
-    var(--cream) 6.5px,
-    var(--paper) 7px
-  );
-  background-size: 16px 14px;
-  background-repeat: repeat-x;
+.acks > li {
+  position: relative;
+  padding-left: 1.7rem;
 }
-.receipt-edge.bottom {
-  transform: rotate(180deg);
+.acks > li::before {
+  content: "";
+  position: absolute;
+  left: 2px;
+  top: 0.5em;
+  width: 8px;
+  height: 5px;
+  border-left: 2px solid var(--green);
+  border-bottom: 2px solid var(--green);
+  transform: rotate(-45deg);
+}
+
+/* the settled slip (footer) */
+.slip {
+  font-family: var(--font-martian), monospace;
+  background: var(--slip);
+  color: #23262b;
+  border-radius: 3px;
+  box-shadow: 0 6px 24px -14px rgba(0, 0, 0, 0.8);
+}
+
+/* ---------- diagram library styles ---------- */
+
+.dg-svg {
+  display: block;
+  font-family: var(--font-martian), ui-monospace, monospace;
+}
+
+.dg-bus {
+  stroke: var(--line);
+  stroke-width: 2;
+  fill: none;
+}
+.dg-hot {
+  stroke: color-mix(in srgb, var(--amber) 62%, transparent);
+  stroke-width: 1;
+  fill: none;
+}
+
+.dg-node rect:first-of-type {
+  fill: var(--raised);
+  stroke: var(--line);
+  stroke-width: 1;
+  transition: stroke 140ms ease;
+}
+.dg-node .dg-corner {
+  fill: none;
+  stroke: var(--muted);
+  stroke-width: 1.2;
+  opacity: 0.65;
+  transition: stroke 140ms ease, opacity 140ms ease;
+}
+.dg-node .dg-title {
+  fill: var(--fg);
+  font-weight: 600;
+  letter-spacing: 0.09em;
+}
+.dg-node .dg-sub {
+  fill: var(--muted);
+  letter-spacing: 0.12em;
+}
+.dg-node[tabindex]:hover rect:first-of-type,
+.dg-node[tabindex]:focus-visible rect:first-of-type {
+  stroke: var(--amber);
+}
+.dg-node[tabindex]:hover .dg-corner,
+.dg-node[tabindex]:focus-visible .dg-corner {
+  stroke: var(--amber);
+  opacity: 1;
+}
+.dg-node[tabindex] {
+  cursor: pointer;
+  outline: none;
+}
+.dg-node-terminal rect:first-of-type {
+  fill: var(--well);
+}
+.dg-node-cloud rect:first-of-type {
+  fill: color-mix(in srgb, var(--raised) 72%, var(--well));
+}
+
+.dg-region rect {
+  fill: none;
+  stroke: color-mix(in srgb, var(--muted) 45%, transparent);
+  stroke-dasharray: 5 6;
+}
+.dg-region-tagbg {
+  fill: var(--ground);
+  stroke: none;
+}
+.dg-region-tag {
+  fill: var(--muted);
+  letter-spacing: 0.16em;
+}
+
+.dg-ticks {
+  stroke: color-mix(in srgb, var(--muted) 40%, transparent);
+  stroke-width: 1;
+}
+
+.dg-packet {
+  offset-rotate: 0deg;
+  animation-name: dg-travel;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+}
+.dg-packet-amber { fill: var(--amber); }
+.dg-packet-white { fill: var(--white); }
+.dg-packet-green { fill: var(--green); }
+
+@keyframes dg-travel {
+  from { offset-distance: 0%; }
+  to { offset-distance: 100%; }
+}
+
+.dg-paused .dg-packet,
+.dg-paused .dg-state {
+  animation-play-state: paused;
+}
+
+.dg-state circle {
+  animation: dg-blink var(--dur, 7s) steps(1) infinite;
+  animation-duration: inherit;
+  animation-delay: inherit;
+}
+.dg-state text {
+  letter-spacing: 0.12em;
+  animation: dg-blink-t inherit;
+}
+.dg-state {
+  animation-name: dg-noop;
+  animation-iteration-count: infinite;
+}
+.dg-state-green circle { fill: var(--green); }
+.dg-state-green text { fill: var(--green); }
+.dg-state-amber circle { fill: var(--amber); }
+.dg-state-amber text { fill: var(--amber); }
+.dg-state circle,
+.dg-state text {
+  opacity: 0;
+  animation-name: dg-blink;
+  animation-timing-function: ease;
+  animation-iteration-count: infinite;
+  animation-duration: inherit;
+  animation-delay: inherit;
+}
+
+@keyframes dg-noop { to { opacity: 1; } }
+@keyframes dg-blink {
+  0%, 62% { opacity: 0; }
+  66%, 88% { opacity: 1; }
+  94%, 100% { opacity: 0; }
+}
+
+.dg-fault path {
+  stroke: var(--red);
+  stroke-width: 2.5;
+  fill: none;
+}
+.dg-fault text {
+  fill: var(--red);
+  letter-spacing: 0.14em;
+}
+
+.dg-readout {
+  min-height: 2.4rem;
+  margin-top: 0.9rem;
+  padding-left: 0.9rem;
+  border-left: 2px solid var(--amber);
+  font-family: var(--font-martian), monospace;
+  font-size: 0.78rem;
+  line-height: 1.5;
+  color: var(--muted);
+}
+.dg-caption {
+  margin-top: 0.7rem;
+  font-family: var(--font-martian), monospace;
+  font-size: 0.68rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+/* load moment: the hero trace draws in once (skipped under reduced motion) */
+.dg-hero .dg-bus {
+  stroke-dasharray: 1200;
+  stroke-dashoffset: 0;
+  animation: dg-draw 1.1s ease-out backwards;
+}
+@keyframes dg-draw {
+  from { stroke-dashoffset: 1200; }
+  to { stroke-dashoffset: 0; }
 }
 
 /* ---------- search dialog ---------- */
 
 dialog.probe {
-  background: var(--porcelain);
-  color: var(--ink);
-  border: 2px solid var(--ink);
-  border-radius: 12px;
+  background: var(--raised);
+  color: var(--fg);
+  border: 1px solid var(--amber);
+  border-radius: 4px;
   padding: 0;
   width: min(560px, calc(100vw - 2rem));
   margin: 12vh auto auto;
-  box-shadow: 0 12px 40px -18px rgba(29, 32, 28, 0.45);
 }
 dialog.probe::backdrop {
-  background: rgba(29, 32, 28, 0.35);
+  background: rgba(6, 8, 11, 0.7);
 }
 
-/* ---------- check bullets (service-order items) ---------- */
-
-.checks {
-  list-style: none;
-}
-.checks > li {
-  position: relative;
-  padding-left: 1.8rem;
-}
-.checks > li::before {
-  content: "";
-  position: absolute;
-  left: 0;
-  top: 0.28em;
-  width: 14px;
-  height: 14px;
-  border-radius: 50%;
-  border: 2.5px solid var(--green);
-  background: var(--porcelain);
-}
-.checks > li::after {
-  content: "";
-  position: absolute;
-  left: 4.5px;
-  top: calc(0.28em + 3px);
-  width: 5px;
-  height: 8px;
-  border-right: 2.5px solid var(--green);
-  border-bottom: 2.5px solid var(--green);
-  transform: rotate(40deg);
-}
-
-/* ---------- reduced motion ---------- */
+/* ---------- reduced motion: frozen mid-flight, fully lit ---------- */
 
 @media (prefers-reduced-motion: reduce) {
   html {
@@ -382,15 +507,24 @@ dialog.probe::backdrop {
   *,
   *::before,
   *::after {
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
   }
-  .flip-anim {
+  .dg-packet {
+    animation-play-state: paused; /* negative delays park them mid-path */
+  }
+  .dg-state circle,
+  .dg-state text {
+    animation: none;
+    opacity: 1;
+  }
+  .dg-hero .dg-bus {
     animation: none;
   }
-  .bay:hover,
-  .bay:focus-within {
+  .spine::after {
+    transform: scaleY(1);
+  }
+  .branch:hover,
+  .branch:focus-within {
     transform: none;
   }
 }

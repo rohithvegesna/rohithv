@@ -104,10 +104,10 @@ export default function Palette() {
       <button
         type="button"
         onClick={open}
-        className="sign-label my-1.5 flex items-center gap-2 rounded-full border-2 border-ink/40 px-3 py-1.5 text-steel transition-colors hover:border-green hover:text-ink"
+        className="tag my-1.5 flex items-center gap-2 rounded-full border-2 border-line px-3 py-1.5 text-muted transition-colors hover:border-amber hover:text-fg"
       >
         Search
-        <kbd className="hidden rounded-[1px] border border-ink/30 px-1 py-0.5 text-[0.6rem] sm:inline-block">
+        <kbd className="hidden rounded-[1px] border border-line px-1 py-0.5 text-[0.6rem] sm:inline-block">
           ⌘K
         </kbd>
       </button>
@@ -119,7 +119,7 @@ export default function Palette() {
           if (e.target === dialogRef.current) dialogRef.current.close();
         }}
       >
-        <div className="border-b border-ink/15 p-3">
+        <div className="border-b border-line/70 p-3">
           <input
             ref={inputRef}
             value={query}
@@ -135,7 +135,7 @@ export default function Palette() {
             aria-activedescendant={active ? `net-${NETS.indexOf(active)}` : undefined}
             aria-label="Search pages"
             placeholder="Search pages…"
-            className="w-full bg-transparent text-sm tracking-wide text-ink placeholder:text-steel focus:outline-none"
+            className="w-full bg-transparent text-sm tracking-wide text-fg placeholder:text-muted focus:outline-none"
           />
         </div>
         <ul
@@ -152,7 +152,7 @@ export default function Palette() {
                 <li
                   key={`g-${n.group}`}
                   role="presentation"
-                  className="sign-label px-2 pb-1 pt-3 text-[0.6rem] text-steel first:pt-1"
+                  className="tag px-2 pb-1 pt-3 text-[0.6rem] text-muted first:pt-1"
                 >
                   {n.group}
                 </li>
@@ -165,7 +165,7 @@ export default function Palette() {
                 onClick={() => run(n)}
                 onMouseMove={() => setCursor(hits.indexOf(n))}
                 className={`flex cursor-pointer items-center justify-between gap-3 px-2 py-1.5 text-sm ${
-                  isActive ? "bg-green text-porcelain" : "text-ink"
+                  isActive ? "bg-amber text-ground" : "text-fg"
                 }`}
               >
                 <span>
@@ -180,12 +180,12 @@ export default function Palette() {
             ];
           })}
           {hits.length === 0 ? (
-            <li role="presentation" className="px-2 py-3 text-sm text-steel">
+            <li role="presentation" className="px-2 py-3 text-sm text-muted">
               No results
             </li>
           ) : null}
         </ul>
-        <p className="sign-label border-t border-ink/15 px-3 py-2 text-[0.6rem] text-steel">
+        <p className="tag border-t border-line/70 px-3 py-2 text-[0.6rem] text-muted">
           ↑↓ move · ↵ jump · esc close
         </p>
       </dialog>

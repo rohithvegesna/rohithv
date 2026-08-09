@@ -112,3 +112,27 @@ removes the deleted schematic's figcaption (theme-bound decoration of
 the banned circuit-board signature — enumerated, accepted). Diet:
 out/ 9.0MB → 2.8MB; deps −4 (three, rapier, postprocessing, n8ao);
 home first-party transfer 428KB incl. fonts. VERDICT: exit criteria met.
+
+## Iter 016 — v8 first light (static)
+The Trace shipped: library (Node/Bus/Packet/Region/Ticks/StateGlyph),
+DG1 hero pipeline h+v, spine with docked sections, branch cards, case
+figures on all four slugs, NO ROUTE TO HOST 404, slip footer, new
+fonts/tokens. Console 0, axe clean ×6, home 403KB. RSC pitfall fixed
+(client-module component map → CaseFigure lookup component).
+
+## Iter 017 — mechanics + clip
+404 label clip fixed (text ran off the viewBox). Verified live: spine
+energize 0→0.59 on scroll, node probe writes the readout on focus,
+packets ride offset-path (19.4%→24.8% in 500ms). 360px diagram variant
+reviewed — designed, legible, not a shrink.
+
+## Iter 018 — Chanel + exit
+Removed the hero's second state glyph (BATCH); AUTH OK stays, paired
+with the green return packet. Lighthouse static: home 98 / others
+97–98 / desktop 100, all 100 a11y-bp-seo, CLS 0, LCP 0.5s desktop.
+3× full runs green (console 0, axe clean, 398KB). Freeze ledger:
+adds TXN SETTLED ✓, two probe hints, five Fig captions; the one
+removal remains the deleted v3 schematic's own figcaption (enumerated
+since v7). Triple gate: facts instant ✓, craft bookmarkable ✓,
+template test — a living EMV pipeline with per-stage readouts and a
+paper-figure system is reproducible by no template ✓. VERDICT: exit.

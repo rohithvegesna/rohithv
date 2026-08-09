@@ -7,32 +7,32 @@ const links = [
   { href: site.scholar, label: "Scholar" },
 ];
 
-/* The salvaged receipt — the footer prints like a pump ticket. */
+/* The trace terminates settled: the slip. */
 export default function Footer() {
   return (
-    <footer className="mt-20 flex justify-center px-5 pb-14">
-      <div className="w-full max-w-md">
-        <div className="receipt-edge" aria-hidden="true" />
-        <div className="receipt px-6 py-5 text-[0.82rem] leading-relaxed">
-          <ul className="flex flex-wrap justify-center gap-x-5 gap-y-1">
-            {links.map((l) => (
-              <li key={l.label}>
-                <a
-                  href={l.href}
-                  className="u-link font-bold"
-                  {...(l.href.startsWith("http")
-                    ? { target: "_blank", rel: "noopener noreferrer" }
-                    : {})}
-                >
-                  {l.label}
-                </a>
-              </li>
-            ))}
-          </ul>
-          <p className="mt-3 border-t border-dashed border-ink/40 pt-3 text-center text-[0.74rem]">
+    <footer className="mt-24 border-t border-line">
+      <div className="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-x-10 gap-y-6 px-5 py-10 sm:px-10">
+        <div className="slip px-5 py-4 text-[0.72rem] leading-relaxed">
+          <p className="font-semibold tracking-[0.14em]">TXN SETTLED ✓</p>
+          <p className="mt-1 opacity-80">
             © {new Date().getFullYear()} {site.name} · {site.location}
           </p>
         </div>
+        <ul className="tag flex flex-wrap items-center gap-5 text-muted">
+          {links.map((l) => (
+            <li key={l.label}>
+              <a
+                href={l.href}
+                className="transition-colors hover:text-amber"
+                {...(l.href.startsWith("http")
+                  ? { target: "_blank", rel: "noopener noreferrer" }
+                  : {})}
+              >
+                {l.label}
+              </a>
+            </li>
+          ))}
+        </ul>
       </div>
     </footer>
   );

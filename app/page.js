@@ -1,5 +1,5 @@
-import Crest from "@/components/Crest";
-import FlipStat from "@/components/FlipStat";
+import { HeroTrace, HeroTraceMobile } from "@/components/diagram/diagrams";
+import Spine from "@/components/Spine";
 import AboutSection from "@/components/sections/AboutSection";
 import ExperienceSection from "@/components/sections/ExperienceSection";
 import WorkGrid from "@/components/sections/WorkGrid";
@@ -54,34 +54,15 @@ const jsonLd = {
   ],
 };
 
-function PayArcs() {
+function Dock({ id, heading, children }) {
   return (
-    <svg
-      viewBox="0 0 20 20"
-      className="arcs h-4 w-4"
-      aria-hidden="true"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-    >
-      <path d="M9 10.7 a1.8 1.8 0 0 1 0-1.4" />
-      <path d="M6 12.5 a4.5 4.5 0 0 1 0-5" />
-      <path d="M3.5 15 a8 8 0 0 1 0-10" />
-    </svg>
-  );
-}
-
-function Section({ id, heading, children }) {
-  return (
-    <section
-      aria-labelledby={id}
-      className="mx-auto max-w-6xl px-5 py-14 sm:px-10 sm:py-20"
-    >
-      <h2 id={id} className="strip-sign section-h !text-[1.05rem]">
-        {heading}
-      </h2>
-      <div className="mt-9">{children}</div>
+    <section aria-labelledby={id} className="py-12 pl-6 sm:py-16 sm:pl-10">
+      <div className="dock">
+        <h2 id={id} className="dock-h">
+          {heading}
+        </h2>
+      </div>
+      <div className="mt-8 max-w-5xl">{children}</div>
     </section>
   );
 }
@@ -93,92 +74,74 @@ export default function Home() {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
+      <Spine />
 
-      {/* Hero — the station road sign frames the introduction. */}
-      <section className="mx-auto grid max-w-6xl items-center gap-10 px-5 pt-14 sm:px-10 sm:pt-20 lg:grid-cols-[1.35fr_1fr]">
-        <div>
-          <p className="sign-label flex flex-wrap items-center gap-x-3 gap-y-1 text-green">
-            {site.role} · {site.company} · {site.location}
-          </p>
-          <h1 className="display mt-4 text-[clamp(2.7rem,5.6vw,4.7rem)] uppercase text-ink">
-            Rohith Varma <span className="text-green">Vegesna</span>
-          </h1>
-          <p className="mt-6 max-w-2xl text-2xl font-bold leading-snug text-ink sm:text-[1.7rem]">
-            I build the systems that let a fuel dispenser{" "}
-            <span className="text-green">take a payment.</span>
-          </p>
-          <p className="mt-4 max-w-2xl text-lg leading-relaxed text-steel">
-            EMV at the pump, edge devices in the field, and the AWS backbone
-            behind fuel-station automation for major U.S. retail brands — with{" "}
-            {publications.length} peer-reviewed publications along the way.
-          </p>
-          <div className="mt-8 flex flex-wrap items-center gap-3">
-            <a href={`mailto:${site.email}`} className="pill cta-pay">
-              <PayArcs />
-              Email me
-            </a>
-            <a
-              href={site.github}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="pill-outline"
-            >
-              GitHub
-            </a>
-            <a
-              href={site.linkedin}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="pill-outline"
-            >
-              LinkedIn
-            </a>
-          </div>
+      {/* Hero — the facts first, framed by the living pipeline. */}
+      <section className="mx-auto max-w-6xl px-5 pt-14 sm:px-10 sm:pt-20">
+        <p className="tag flex flex-wrap items-center gap-x-3 gap-y-1 text-amber">
+          {site.role} · {site.company} · {site.location}
+        </p>
+        <h1 className="display mt-5 text-[clamp(2.6rem,6vw,4.6rem)] text-fg">
+          Rohith Varma <span className="text-amber">Vegesna</span>
+        </h1>
+        <p className="mt-6 max-w-2xl text-xl font-semibold leading-snug text-fg sm:text-2xl">
+          I build the systems that let a fuel dispenser{" "}
+          <span className="text-amber">take a payment.</span>
+        </p>
+        <p className="mt-4 max-w-2xl text-base leading-relaxed text-muted sm:text-lg">
+          EMV at the pump, edge devices in the field, and the AWS backbone
+          behind fuel-station automation for major U.S. retail brands — with{" "}
+          {publications.length} peer-reviewed publications along the way.
+        </p>
+        <div className="mt-8 flex flex-wrap items-center gap-3">
+          <a href={`mailto:${site.email}`} className="btn">
+            Email me
+          </a>
+          <a
+            href={site.github}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="btn-ghost"
+          >
+            GitHub
+          </a>
+          <a
+            href={site.linkedin}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="btn-ghost"
+          >
+            LinkedIn
+          </a>
         </div>
 
-        {/* the sign stack */}
-        <div className="relative mx-auto w-full max-w-[17rem] lg:max-w-xs">
-          <div className="enamel px-5 pb-1 pt-3">
-            <Crest className="w-full" />
-          </div>
-          <div className="enamel mt-3 px-5 py-5">
-            <FlipStat
-              digits={publications.length}
-              caption="peer-reviewed publications"
-            />
-          </div>
-          <div
-            aria-hidden="true"
-            className="mx-auto h-16 w-3.5 rounded-b-sm border-x-2 border-b-2 border-ink bg-chrome lg:h-24"
-          />
+        <div className="mt-12 sm:mt-16">
+          <HeroTrace />
+          <HeroTraceMobile />
         </div>
       </section>
 
-      <hr className="lane mt-2" />
-
-      <Section id="about" heading="About">
-        <AboutSection />
-      </Section>
-      <hr className="lane" />
-      <Section id="experience" heading="Experience">
-        <ExperienceSection />
-      </Section>
-      <hr className="lane" />
-      <Section id="work" heading="Selected work">
-        <WorkGrid />
-      </Section>
-      <hr className="lane" />
-      <Section id="publications" heading="Publications">
-        <PublicationsPreview />
-      </Section>
-      <hr className="lane" />
-      <Section id="skills" heading="Skills">
-        <SkillsSection />
-      </Section>
-      <hr className="lane" />
-      <Section id="contact" heading="Contact">
-        <ContactSection />
-      </Section>
+      {/* The spine: the hero's main line continues down the page. */}
+      <div className="spine mx-auto mt-8 max-w-6xl px-5 sm:px-10">
+        <Dock id="about" heading="About">
+          <AboutSection />
+        </Dock>
+        <Dock id="experience" heading="Experience">
+          <ExperienceSection />
+        </Dock>
+        <Dock id="work" heading="Selected work">
+          <WorkGrid />
+        </Dock>
+        <Dock id="publications" heading="Publications">
+          <PublicationsPreview />
+        </Dock>
+        <Dock id="skills" heading="Skills">
+          <SkillsSection />
+        </Dock>
+        <Dock id="contact" heading="Contact">
+          <ContactSection />
+        </Dock>
+      </div>
     </main>
   );
 }

@@ -7,21 +7,21 @@ export default function ExperienceSection() {
         {experience.map((company) => (
           <li key={company.org}>
             <div className="flex flex-wrap items-baseline gap-x-4 gap-y-1">
-              <h3 className="text-2xl font-bold text-ink">{company.org}</h3>
-              <p className="sign-label text-steel">{company.place}</p>
+              <h3 className="text-2xl font-bold text-fg">{company.org}</h3>
+              <p className="tag text-muted">{company.place}</p>
             </div>
-            <ol className="mt-6 space-y-10 border-l-2 border-green/40 pl-7 sm:pl-9">
+            <ol className="mt-6 space-y-10 border-l-2 border-line pl-7 sm:pl-9">
               {company.roles.map((role) => (
                 <li key={role.period} className="relative">
                   <span
                     aria-hidden="true"
-                    className="absolute -left-[34px] top-1 h-3 w-3 rounded-full border-[3px] border-green bg-cream sm:-left-[42px]"
+                    className="absolute -left-[34px] top-1 h-3 w-3 rounded-full border-[3px] border-amber bg-ground sm:-left-[42px]"
                   />
-                  <p className="sign-label text-green">{role.period}</p>
-                  <h4 className="mt-1.5 text-lg font-bold text-ink">
+                  <p className="tag text-amber">{role.period}</p>
+                  <h4 className="mt-1.5 text-lg font-bold text-fg">
                     {role.title}
                   </h4>
-                  <p className="mt-2.5 max-w-2xl leading-relaxed text-steel">
+                  <p className="mt-2.5 max-w-2xl leading-relaxed text-muted">
                     {role.body}
                   </p>
                 </li>
@@ -30,16 +30,16 @@ export default function ExperienceSection() {
           </li>
         ))}
       </ol>
-      <h3 className="mb-6 mt-16 text-xl font-bold text-ink">Education</h3>
+      <h3 className="mb-6 mt-16 text-xl font-bold text-fg">Education</h3>
       <ul className="space-y-3">
         {education.map((ed) => (
           <li
             key={ed.title}
             className="flex flex-wrap items-baseline gap-x-4 gap-y-1"
           >
-            <span className="sign-label text-green">{ed.period}</span>
-            <span className="font-bold text-ink">{ed.title}</span>
-            <span className="text-sm text-steel">
+            <span className="tag text-amber">{ed.period}</span>
+            <span className="font-bold text-fg">{ed.title}</span>
+            <span className="text-sm text-muted">
               {ed.org}, {ed.place}
             </span>
           </li>
