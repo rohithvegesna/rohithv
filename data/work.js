@@ -1,7 +1,7 @@
 /*
   Case studies. Architecture patterns are described generically — no internal
-  component names, hostnames, or confidential details. Metrics that could not
-  be verified from source material carry a visible TODO for the site owner.
+  component names, hostnames, or confidential details. Only owner-verified
+  metrics appear here.
 */
 export const caseStudies = [
   {
@@ -37,7 +37,6 @@ export const caseStudies = [
     outcome: [
       "The platform runs fuel-station automation across major fuel retail brands in the United States.",
       "Reconciliation between dispensed fuel and recorded transactions became an automated stream instead of a manual back-office task.",
-      "TODO: add owner-verified fleet size, transaction volume, and reliability figures.",
     ],
   },
   {
@@ -70,7 +69,6 @@ export const caseStudies = [
     outcome: [
       "Provisioning a unit went from a technician-hours task to plug in, wait, unplug.",
       "Every imaged unit passes an identical validation gate before deployment.",
-      "TODO: add owner-verified throughput (units/day) and error-rate reduction.",
     ],
   },
   {
@@ -102,7 +100,6 @@ export const caseStudies = [
     ],
     outcome: [
       "Shipped as a working product with live supplier inventory and real payment flows, run by a founding team.",
-      "TODO: add owner-verified booking volume and current product status.",
     ],
   },
   {
@@ -136,7 +133,6 @@ export const caseStudies = [
     outcome: [
       "Silent failures surface as first-class incidents instead of being discovered by store staff or reconciliation gaps.",
       "Usage-pattern baselines feed proactive maintenance alerts for dispensers and tank gauges — published as peer-reviewed work.",
-      "TODO: add owner-verified detection-time improvement and incident metrics.",
     ],
   },
 ];

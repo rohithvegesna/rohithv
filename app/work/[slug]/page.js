@@ -137,12 +137,7 @@ export default async function CaseStudy({ params }) {
         <Zone label="Outcome">
           <ul className="acks max-w-2xl space-y-4">
             {cs.outcome.map((o) => (
-              <li
-                key={o.slice(0, 32)}
-                className={`leading-relaxed ${
-                  o.startsWith("TODO:") ? "italic text-muted" : "text-fg"
-                }`}
-              >
+              <li key={o.slice(0, 32)} className="leading-relaxed text-fg">
                 {o}
               </li>
             ))}
