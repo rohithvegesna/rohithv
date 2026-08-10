@@ -9,6 +9,7 @@ export const site = {
   github: "https://github.com/rohithvegesna",
   linkedin: "https://www.linkedin.com/in/rohithvegesna/",
   scholar: "https://scholar.google.com/citations?user=tRuKSz4AAAAJ",
+  orcid: "https://orcid.org/0009-0004-7568-9188",
   description:
     "Senior Software Engineer & Tech Lead building secure payment and IoT infrastructure for fuel retail at national scale. 20+ IEEE publications.",
 };

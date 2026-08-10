@@ -5,11 +5,29 @@
     "label": "Senior Software Engineer & Tech Lead",
     "email": "rohithvegesna@gmail.com",
     "url": "https://www.rohithv.com",
-    "location": { "city": "Dallas–Fort Worth", "region": "TX", "countryCode": "US" },
+    "location": {
+      "city": "Dallas–Fort Worth",
+      "region": "TX",
+      "countryCode": "US"
+    },
     "profiles": [
-      { "network": "GitHub", "url": "https://github.com/rohithvegesna" },
-      { "network": "LinkedIn", "url": "https://www.linkedin.com/in/rohithvegesna/" },
-      { "network": "Google Scholar", "url": "https://scholar.google.com/citations?user=tRuKSz4AAAAJ" }
+      {
+        "network": "GitHub",
+        "url": "https://github.com/rohithvegesna"
+      },
+      {
+        "network": "LinkedIn",
+        "url": "https://www.linkedin.com/in/rohithvegesna/"
+      },
+      {
+        "network": "Google Scholar",
+        "url": "https://scholar.google.com/citations?user=tRuKSz4AAAAJ"
+      },
+      {
+        "network": "ORCID",
+        "username": "0009-0004-7568-9188",
+        "url": "https://orcid.org/0009-0004-7568-9188"
+      }
     ]
   },
   "work": [
@@ -85,11 +103,26 @@
       "endDate": "2017"
     }
   ],
-  "publications": { "count": 27, "source": "https://scholar.google.com/citations?user=tRuKSz4AAAAJ" },
+  "publications": {
+    "count": 27,
+    "source": "https://scholar.google.com/citations?user=tRuKSz4AAAAJ"
+  },
   "projects": [
-    { "name": "Forecourt payment & IoT platform", "url": "https://www.rohithv.com/work/fuel-dispenser-platform/" },
-    { "name": "PXE imaging station for payment hardware", "url": "https://www.rohithv.com/work/pxe-imaging-station/" },
-    { "name": "SevenlyTravel", "url": "https://www.rohithv.com/work/sevenlytravel/" },
-    { "name": "Fleet observability & silent-device detection", "url": "https://www.rohithv.com/work/fleet-observability/" }
+    {
+      "name": "Forecourt payment & IoT platform",
+      "url": "https://www.rohithv.com/work/fuel-dispenser-platform/"
+    },
+    {
+      "name": "PXE imaging station for payment hardware",
+      "url": "https://www.rohithv.com/work/pxe-imaging-station/"
+    },
+    {
+      "name": "SevenlyTravel",
+      "url": "https://www.rohithv.com/work/sevenlytravel/"
+    },
+    {
+      "name": "Fleet observability & silent-device detection",
+      "url": "https://www.rohithv.com/work/fleet-observability/"
+    }
   ]
 }
