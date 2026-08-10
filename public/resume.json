@@ -27,6 +27,16 @@
         "network": "ORCID",
         "username": "0009-0004-7568-9188",
         "url": "https://orcid.org/0009-0004-7568-9188"
+      },
+      {
+        "network": "IEEE Xplore",
+        "username": "331330311010189",
+        "url": "https://ieeexplore.ieee.org/author/331330311010189"
+      },
+      {
+        "network": "ResearchGate",
+        "username": "Rohith-Vegesna-4",
+        "url": "https://www.researchgate.net/profile/Rohith-Vegesna-4"
       }
     ]
   },

@@ -67,7 +67,14 @@ const jsonLd = {
         addressCountry: "US",
       },
       email: `mailto:${site.email}`,
-      sameAs: [site.linkedin, site.github, site.scholar, site.orcid],
+      sameAs: [
+        site.linkedin,
+        site.github,
+        site.scholar,
+        site.orcid,
+        site.ieee,
+        site.researchgate,
+      ],
     },
     {
       "@type": "WebSite",
