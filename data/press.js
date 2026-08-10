@@ -19,9 +19,9 @@ export const press = [
     "link": "https://www.analyticsinsight.net/tech-news/transforming-fuel-station-operations-the-impact-of-automation-and-real-time-analytics"
   },
   {
-    "title": "Rohith Varma Vegesna Recognized as 22nd Certified Global Tech Hero",
+    "title": "Rohith Varma Vegesna Recognized as 222nd Certified Global Tech Hero",
     "date": "Apr 2, 2025",
-    "description": "ThisDayLive features my recognition as the 22nd Certified Global Tech Hero for groundbreaking contributions in secure fuel technology and digital innovation.",
+    "description": "ThisDayLive features my recognition as the 222nd Certified Global Tech Hero for groundbreaking contributions in secure fuel technology and digital innovation.",
     "link": "https://www.thisdaylive.com/index.php/2025/04/02/rohith-varma-vegesna-recognized-as-22nd-certified-global-tech-hero"
   },
   {
