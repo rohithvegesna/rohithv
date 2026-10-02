@@ -14,7 +14,7 @@ export default function NavLinks() {
   const pathname = usePathname();
   return (
     <nav aria-label="Main">
-      <ul className="tag flex flex-wrap items-center gap-x-3 gap-y-0 sm:gap-x-6">
+      <ul className="tag flex flex-wrap items-center gap-x-2.5 gap-y-0 sm:gap-x-6">
         {nav.map((item) => {
           const section = item.href.split("#")[0];
           const active =

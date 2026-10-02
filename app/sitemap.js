@@ -14,6 +14,7 @@ export default function sitemap() {
     })),
     { path: "/publications/", priority: 0.9, changeFrequency: "monthly" },
     { path: "/press/", priority: 0.7, changeFrequency: "yearly" },
+    { path: "/play/", priority: 0.4, changeFrequency: "yearly" },
   ];
   const lastModified = new Date();
   return routes.map((r) => ({

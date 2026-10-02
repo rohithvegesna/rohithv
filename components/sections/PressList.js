@@ -8,8 +8,14 @@ export default function PressList({ HeadingTag = "h2" }) {
           key={item.link}
           className="border-t border-line/70 py-8 last:border-b"
         >
-          <p className="tag text-amber">{item.date}</p>
-          <HeadingTag className="mt-3 text-xl font-bold leading-snug">
+          <p className="tag flex flex-wrap items-center gap-x-3 gap-y-1">
+            <span className="text-amber">{item.date}</span>
+            <span aria-hidden="true" className="text-line">
+              ·
+            </span>
+            <span className="chip">{item.outlet}</span>
+          </p>
+          <HeadingTag className="mt-4 text-xl font-bold leading-snug">
             <a
               href={item.link}
               target="_blank"

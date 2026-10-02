@@ -6,6 +6,7 @@
 export const caseStudies = [
   {
     slug: "fuel-dispenser-platform",
+    stages: ["DEVICES", "SITE", "CLOUD", "OPS"],
     title: "Forecourt payment & IoT platform",
     eyebrow: "7-Eleven · DEX/FuelControl · 2021—present",
     summary:
@@ -41,6 +42,7 @@ export const caseStudies = [
   },
   {
     slug: "pxe-imaging-station",
+    stages: ["POWER ON", "NETWORK BOOT", "SET UP", "READY"],
     title: "PXE imaging station for payment hardware",
     eyebrow: "Hardware automation · side project turned tool",
     summary:
@@ -73,6 +75,7 @@ export const caseStudies = [
   },
   {
     slug: "sevenlytravel",
+    stages: ["SEARCH", "SUPPLIERS", "PAYMENT", "CONFIRMED"],
     title: "SevenlyTravel",
     eyebrow: "Founder · travel booking platform",
     summary:
@@ -104,6 +107,7 @@ export const caseStudies = [
   },
   {
     slug: "fleet-observability",
+    stages: ["DEVICES", "SIGNALS", "WATCH", "ON-CALL"],
     title: "Fleet observability & silent-device detection",
     eyebrow: "7-Eleven · telemetry & monitoring",
     summary:

@@ -28,6 +28,7 @@ const NETS = [
   { group: "Links", label: "Scholar", href: site.scholar, external: true },
   { group: "Links", label: "Copy email address", action: "copy-email" },
   { group: "Diagram", label: "Run a transaction", action: "dg", cmd: "run-txn" },
+  { group: "Play", label: "Light the fleet", href: "/play/" },
 ];
 
 function matches(query, label) {
@@ -114,9 +115,15 @@ export default function Palette() {
       <button
         type="button"
         onClick={open}
-        className="tag my-1.5 flex items-center gap-2 rounded-full border-2 border-line px-3 py-1.5 text-muted transition-colors hover:border-amber hover:text-fg"
+        aria-label="Search"
+        className="tag my-1.5 flex items-center gap-2 rounded-full border-2 border-line px-2.5 py-1.5 text-muted transition-colors hover:border-amber hover:text-fg sm:px-3"
       >
-        Search
+        {/* probe glyph: a lens on a short lead — icon-only on phones */}
+        <svg viewBox="0 0 16 16" className="h-3.5 w-3.5 shrink-0" aria-hidden="true">
+          <circle cx="6.5" cy="6.5" r="4.4" fill="none" stroke="currentColor" strokeWidth="1.7" />
+          <path d="M10 10 L14.2 14.2" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" />
+        </svg>
+        <span className="hidden sm:inline">Search</span>
         <kbd className="hidden rounded-[1px] border border-line px-1 py-0.5 text-[0.7rem] sm:inline-block">
           ⌘K
         </kbd>

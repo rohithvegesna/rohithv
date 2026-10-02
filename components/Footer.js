@@ -5,6 +5,7 @@ const links = [
   { href: site.github, label: "GitHub" },
   { href: site.linkedin, label: "LinkedIn" },
   { href: site.scholar, label: "Scholar" },
+  { href: "/play/", label: "Play" },
 ];
 
 /* The trace terminates settled: the slip. */

@@ -26,6 +26,12 @@ export default function NotFound() {
       <Link href="/" className="btn mt-9">
         Return to base
       </Link>
+      <p className="tag mt-8 text-muted">
+        Or, while the device is quiet,{" "}
+        <Link href="/play/" className="text-amber">
+          light the fleet →
+        </Link>
+      </p>
     </main>
   );
 }

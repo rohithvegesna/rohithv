@@ -1,4 +1,4 @@
-import Link from "next/link";
+import WorkCard from "@/components/WorkCard";
 import { caseStudies } from "@/data/work";
 import { site } from "@/data/site";
 
@@ -49,32 +49,8 @@ export default function WorkIndex() {
         problem, constraints, architecture, outcome.
       </p>
       <div className="mt-12 grid gap-5 sm:grid-cols-2">
-        {caseStudies.map((cs) => (
-          <Link
-            key={cs.slug}
-            href={`/work/${cs.slug}/`}
-            className="card group flex flex-col p-6 sm:p-7"
-          >
-            <div className="flex items-start justify-between gap-3">
-              <p className="tag text-muted">{cs.eyebrow}</p>
-              <span className="led mt-0.5 shrink-0" aria-hidden="true" />
-            </div>
-            <h2 className="mt-4 text-xl font-bold leading-snug text-fg">
-              {cs.title}
-            </h2>
-            <p className="mt-3 flex-1 text-sm leading-relaxed text-muted">
-              {cs.summary}
-            </p>
-            <p className="tag mt-6 flex items-center gap-2 text-amber">
-              Read case study
-              <span
-                aria-hidden="true"
-                className="font-mono transition-transform duration-150 group-hover:translate-x-1"
-              >
-                →
-              </span>
-            </p>
-          </Link>
+        {caseStudies.map((cs, i) => (
+          <WorkCard key={cs.slug} cs={cs} seed={i} HeadingTag="h2" stub={false} />
         ))}
       </div>
     </main>

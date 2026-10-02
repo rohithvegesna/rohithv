@@ -1,5 +1,6 @@
 import DeepTrace from "@/components/diagram/DeepTrace";
 import Spine from "@/components/Spine";
+import Readouts from "@/components/sections/Readouts";
 import AboutSection from "@/components/sections/AboutSection";
 import ExperienceSection from "@/components/sections/ExperienceSection";
 import WorkGrid from "@/components/sections/WorkGrid";
@@ -7,9 +8,22 @@ import PublicationsPreview from "@/components/sections/PublicationsPreview";
 import SkillsSection from "@/components/sections/SkillsSection";
 import ContactSection from "@/components/sections/ContactSection";
 import { site, education } from "@/data/site";
-import { publications } from "@/data/publications";
+import { publications, isIEEE } from "@/data/publications";
+import { press } from "@/data/press";
 
 const BUILD_DATE = new Date().toISOString().slice(0, 10);
+
+/* Headline figures, all derived from the data files at build time. */
+const YEARS = Math.floor(
+  (Date.now() - Date.parse(`${site.careerStart}-01T00:00:00Z`)) /
+    (365.25 * 86400e3)
+);
+const readouts = [
+  { label: "Years building", value: YEARS, suffix: "+", href: "/#experience" },
+  { label: "Peer-reviewed papers", value: publications.length, href: "/publications/" },
+  { label: "IEEE conference papers", value: publications.filter(isIEEE).length, href: "/publications/" },
+  { label: "Press features", value: press.length, href: "/press/" },
+];
 
 export const metadata = {
   title: "Rohith Varma Vegesna — Senior Software Engineer & Tech Lead",
@@ -87,11 +101,15 @@ const jsonLd = {
   ],
 };
 
-function Dock({ id, heading, children }) {
+/* A section docked to the spine: sheet number, heading, then the content. */
+function Dock({ id, index, heading, children }) {
   return (
     <section aria-labelledby={id} className="py-12 pl-6 sm:py-16 sm:pl-10">
       <div className="dock">
         <h2 id={id} className="dock-h">
+          <span className="tag" aria-hidden="true">
+            {index}
+          </span>
           {heading}
         </h2>
       </div>
@@ -148,26 +166,29 @@ export default function Home() {
         <div className="mt-12 sm:mt-16">
           <DeepTrace buildDate={BUILD_DATE} />
         </div>
+
+        {/* the panel's instruments: the headline figures */}
+        <Readouts items={readouts} />
       </section>
 
       {/* The spine: the hero's main line continues down the page. */}
       <div className="spine mx-auto mt-8 max-w-6xl px-5 sm:px-10">
-        <Dock id="about" heading="About">
+        <Dock id="about" index="01" heading="About">
           <AboutSection />
         </Dock>
-        <Dock id="experience" heading="Experience">
+        <Dock id="experience" index="02" heading="Experience">
           <ExperienceSection />
         </Dock>
-        <Dock id="work" heading="Selected work">
+        <Dock id="work" index="03" heading="Selected work">
           <WorkGrid />
         </Dock>
-        <Dock id="publications" heading="Publications">
+        <Dock id="publications" index="04" heading="Publications">
           <PublicationsPreview />
         </Dock>
-        <Dock id="skills" heading="Skills">
+        <Dock id="skills" index="05" heading="Skills">
           <SkillsSection />
         </Dock>
-        <Dock id="contact" heading="Contact">
+        <Dock id="contact" index="06" heading="Contact">
           <ContactSection />
         </Dock>
       </div>

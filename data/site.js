@@ -4,6 +4,7 @@ export const site = {
   role: "Senior Software Engineer & Tech Lead",
   company: "7-Eleven",
   location: "Dallas–Fort Worth, TX",
+  careerStart: "2015-04", // first engineering role; drives the "years" readout
   url: "https://www.rohithv.com",
   email: "rohithvegesna@gmail.com",
   github: "https://github.com/rohithvegesna",

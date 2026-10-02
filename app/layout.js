@@ -43,7 +43,7 @@ const CONSOLE_EGG = `console.log(
   "%c  TAP ─●─▶ DEVICE ─●─▶ SITE ─●─▶ CLOUD ─●─▶ SETTLED\\n" +
   "        └──── telemetry ────┴──── obs rail ────┘\\n" +
   "  the trace is live; the queue survives outages.\\n" +
-  "  ⌘K → 'Run a transaction' · data sheet: /resume.json",
+  "  ⌘K → 'Run a transaction' · data sheet: /resume.json · a game: /play",
   "color:#ffb454;font-family:monospace"
 );`;
 

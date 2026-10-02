@@ -21,6 +21,7 @@
   --green: #7ad3a2;
   --red: #ff6b5e;
   --slip: #f2eee3;
+  --dim: #5c6877; /* de-emphasis mark: 3.3:1 on ground, 3.1:1 on raised */
   --progress: 0; /* spine energize, set by JS */
 }
 
@@ -36,6 +37,7 @@
   --color-ack: var(--green);
   --color-fault: var(--red);
   --color-slip: var(--slip);
+  --color-dim: var(--dim);
   --font-sans: var(--font-instrument);
   --font-mono: var(--font-martian);
 }
@@ -375,9 +377,11 @@ body {
   stroke: color-mix(in srgb, var(--muted) 45%, transparent);
   stroke-dasharray: 5 6;
 }
-.dg-region-tagbg {
+.dg-region rect.dg-region-tagbg {
+  /* outranks `.dg-region rect` so the tag chip masks the dashed border */
   fill: var(--ground);
   stroke: none;
+  stroke-dasharray: none;
 }
 .dg-region-tag {
   fill: var(--muted);
@@ -524,6 +528,268 @@ dialog.probe::backdrop {
   background: rgba(6, 8, 11, 0.7);
 }
 
+/* ---------- v10 — instrumented: readouts, chips, mini traces, chart ---------- */
+
+/* readouts: the headline figures as a row of instruments */
+.readouts .readout {
+  border-left: 1px solid var(--line);
+}
+.readouts .readout:first-child {
+  border-left: 0;
+}
+.readout-v {
+  font-size: clamp(1.8rem, 3vw, 2.4rem);
+  font-weight: 650;
+  letter-spacing: -0.02em;
+  line-height: 1;
+}
+@media (max-width: 39.99rem) {
+  .readouts .readout:nth-child(odd) {
+    border-left: 0;
+  }
+  .readouts .readout:nth-child(n + 3) {
+    border-top: 1px solid var(--line);
+  }
+  /* phones: name + search share a row, the four nav links share the next,
+     even at 320px */
+  .brand .tag {
+    letter-spacing: 0.1em;
+  }
+  .nav-link {
+    letter-spacing: 0.06em;
+    padding: 0.55rem 0;
+  }
+}
+
+/* chips: stack items, BOM parts, filter buttons */
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  font-family: var(--font-martian), ui-monospace, monospace;
+  font-size: 0.7rem;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  line-height: 1.2;
+  padding: 0.32rem 0.6rem;
+  border: 1px solid var(--line);
+  border-radius: 2px;
+  color: var(--muted);
+  background: color-mix(in srgb, var(--raised) 70%, transparent);
+  transition: border-color 140ms ease, color 140ms ease,
+    background-color 140ms ease;
+}
+.chip-btn {
+  cursor: pointer;
+}
+.chip-btn:hover {
+  border-color: var(--amber);
+  color: var(--fg);
+}
+.chip-btn[aria-pressed="true"] {
+  background: var(--amber);
+  border-color: var(--amber);
+  color: var(--ground);
+}
+
+/* mini trace: a case study's stages as stations on one short bus */
+.mini-trace {
+  overflow: visible;
+}
+.mt-bus {
+  stroke: var(--line);
+  stroke-width: 1.5;
+  fill: none;
+  transition: stroke 160ms ease;
+}
+.mt-tap {
+  stroke: var(--line);
+  stroke-width: 1;
+  fill: none;
+}
+.mt-node rect {
+  fill: var(--well);
+  stroke: var(--line);
+  stroke-width: 1;
+  transition: stroke 160ms ease;
+}
+.mt-node text {
+  fill: var(--muted);
+  font-family: var(--font-martian), ui-monospace, monospace;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  transition: fill 160ms ease;
+}
+.branch:hover .mt-bus,
+.branch:focus-within .mt-bus {
+  stroke: color-mix(in srgb, var(--amber) 62%, transparent);
+}
+.branch:hover .mt-node rect,
+.branch:focus-within .mt-node rect {
+  stroke: color-mix(in srgb, var(--amber) 55%, var(--line));
+}
+.branch:hover .mt-node text,
+.branch:focus-within .mt-node text {
+  fill: var(--fg);
+}
+.branch-free::before {
+  display: none; /* no spine to join on index pages */
+}
+
+/* publications chart: one series, thin columns, hairline grid */
+.pc-grid {
+  stroke: var(--line);
+  stroke-width: 1;
+}
+.pc-axis {
+  fill: var(--muted);
+  font-family: var(--font-martian), ui-monospace, monospace;
+  letter-spacing: 0.08em;
+}
+.pc-cap {
+  fill: var(--fg);
+  font-family: var(--font-martian), ui-monospace, monospace;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+}
+.pc-col {
+  fill: var(--amber);
+  transform-box: fill-box;
+  transform-origin: 50% 100%;
+  animation: pc-grow 0.55s cubic-bezier(0.2, 0.7, 0.2, 1) backwards;
+  transition: fill 140ms ease, filter 140ms ease;
+}
+.pc-dim .pc-col {
+  fill: var(--dim);
+}
+.pc-hit {
+  outline: none;
+}
+.pc-hit[tabindex] {
+  cursor: pointer;
+}
+.pc-ring {
+  fill: transparent; /* painted, so the whole band is the hit target */
+  stroke: transparent;
+  stroke-width: 1.5;
+  transition: stroke 140ms ease;
+}
+.pc-hit[tabindex]:hover .pc-col,
+.pc-hit:focus-visible .pc-col {
+  filter: brightness(1.15);
+}
+.pc-hit:focus-visible .pc-ring {
+  stroke: var(--amber);
+}
+.pc-hit[aria-pressed="true"] .pc-ring {
+  stroke: color-mix(in srgb, var(--amber) 45%, transparent);
+}
+@keyframes pc-grow {
+  from {
+    transform: scaleY(0);
+  }
+}
+
+/* ---------- light the fleet: the small game ---------- */
+
+.fl-board {
+  display: grid;
+  width: 100%;
+  max-width: 22rem;
+  border: 1px solid var(--line);
+  background: var(--well);
+}
+.fl-tile {
+  position: relative;
+  display: block;
+  aspect-ratio: 1;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+  outline: none;
+  touch-action: manipulation;
+}
+.fl-tile svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+  transition: transform 180ms cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+.fl-tile::after {
+  /* the grid between tiles, drawn on the right and bottom edge of each */
+  content: "";
+  position: absolute;
+  inset: 0;
+  box-shadow: inset -1px -1px 0 0 color-mix(in srgb, var(--line) 70%, transparent);
+  pointer-events: none;
+  transition: box-shadow 140ms ease;
+}
+.fl-tile:hover::after {
+  box-shadow: inset 0 0 0 1px var(--muted);
+}
+.fl-tile:focus-visible::after {
+  box-shadow: inset 0 0 0 2px var(--amber);
+}
+.fl-glow {
+  stroke: transparent;
+  stroke-width: 9;
+  stroke-linecap: round;
+  transition: stroke 160ms ease;
+}
+.fl-trace {
+  stroke: color-mix(in srgb, var(--muted) 40%, var(--line));
+  stroke-width: 3;
+  stroke-linecap: round;
+  transition: stroke 160ms ease;
+}
+.fl-joint {
+  fill: color-mix(in srgb, var(--muted) 40%, var(--line));
+  transition: fill 160ms ease;
+}
+.fl-site {
+  fill: var(--raised);
+  stroke: color-mix(in srgb, var(--muted) 50%, var(--line));
+  stroke-width: 1.5;
+  transition: stroke 160ms ease;
+}
+.fl-led {
+  fill: var(--line);
+  transition: fill 160ms ease;
+}
+.fl-hub {
+  fill: var(--raised);
+  stroke: var(--amber);
+  stroke-width: 1.5;
+}
+.fl-hubcore {
+  fill: var(--amber);
+}
+.fl-on .fl-trace,
+.fl-on .fl-site {
+  stroke: var(--amber);
+}
+.fl-on .fl-glow {
+  stroke: color-mix(in srgb, var(--amber) 22%, transparent);
+}
+.fl-on .fl-joint,
+.fl-on .fl-led {
+  fill: var(--amber);
+}
+.fl-won .fl-on .fl-trace,
+.fl-won .fl-on .fl-led,
+.fl-won .fl-hubcore {
+  animation: fl-settle 1.8s ease-in-out infinite;
+}
+@keyframes fl-settle {
+  50% {
+    stroke: var(--white);
+    fill: var(--white);
+  }
+}
+
 /* ---------- reduced motion: frozen mid-flight, fully lit ---------- */
 
 @media (prefers-reduced-motion: reduce) {
@@ -544,6 +810,14 @@ dialog.probe::backdrop {
     opacity: 1;
   }
   .dg-hero .dg-bus {
+    animation: none;
+  }
+  .pc-col {
+    animation: none;
+  }
+  .fl-won .fl-on .fl-trace,
+  .fl-won .fl-on .fl-led,
+  .fl-won .fl-hubcore {
     animation: none;
   }
   .spine::after {

@@ -2,6 +2,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { caseStudies } from "@/data/work";
 import { CaseFigure } from "@/components/diagram/diagrams";
+import WorkCard from "@/components/WorkCard";
 import { site } from "@/data/site";
 
 export function generateStaticParams() {
@@ -43,7 +44,9 @@ export default async function CaseStudy({ params }) {
   const cs = caseStudies.find((c) => c.slug === slug);
   if (!cs) notFound();
 
-  const others = caseStudies.filter((c) => c.slug !== slug);
+  /* the next two in sequence, so the rail stays an even pair of cards */
+  const at = caseStudies.indexOf(cs);
+  const next = [1, 2].map((k) => caseStudies[(at + k) % caseStudies.length]);
   const jsonLd = {
     "@context": "https://schema.org",
     "@graph": [
@@ -100,9 +103,16 @@ export default async function CaseStudy({ params }) {
         <p className="mt-6 max-w-2xl text-lg leading-relaxed text-muted">
           {cs.summary}
         </p>
-        <p className="tag mt-7 border-y border-line/70 py-3 text-muted">
-          {cs.stack.join(" · ")}
-        </p>
+        <ul
+          aria-label="Stack"
+          className="mt-7 flex flex-wrap gap-2 border-y border-line/70 py-4"
+        >
+          {cs.stack.map((s) => (
+            <li key={s} className="chip">
+              {s}
+            </li>
+          ))}
+        </ul>
 
         <div className="mx-auto mt-12 max-w-md">
           <CaseFigure slug={cs.slug} />
@@ -149,16 +159,17 @@ export default async function CaseStudy({ params }) {
         aria-label="More case studies"
         className="mt-16 border-t border-line/70 pt-10"
       >
-        <h2 className="mb-5 text-xl font-bold text-fg">More work</h2>
-        <ul className="space-y-3">
-          {others.map((o) => (
-            <li key={o.slug}>
-              <Link href={`/work/${o.slug}/`} className="u-link font-bold">
-                {o.title}
-              </Link>
-            </li>
+        <div className="mb-6 flex flex-wrap items-baseline justify-between gap-x-6 gap-y-2">
+          <h2 className="text-xl font-bold text-fg">More work</h2>
+          <Link href="/work/" className="tag text-amber">
+            All case studies →
+          </Link>
+        </div>
+        <div className="grid gap-5 sm:grid-cols-2">
+          {next.map((o, i) => (
+            <WorkCard key={o.slug} cs={o} seed={i + 1} stub={false} />
           ))}
-        </ul>
+        </div>
       </nav>
     </main>
   );

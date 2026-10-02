@@ -249,3 +249,16 @@ export const publications = [
     doi: "10.5281/ZENODO.14942136",
   },
 ];
+
+export const isIEEE = (pub) => Boolean(pub.doi?.startsWith("10.1109"));
+
+/* Counts per year over the full span (zeros kept), for any subset. */
+export function pubsByYear(list = publications) {
+  const years = publications.map((p) => p.year);
+  const out = [];
+  for (let y = Math.min(...years); y <= Math.max(...years); y++) {
+    const inYear = list.filter((p) => p.year === y);
+    out.push({ year: y, count: inYear.length, ieee: inYear.filter(isIEEE).length });
+  }
+  return out;
+}
