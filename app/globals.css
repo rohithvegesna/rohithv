@@ -691,6 +691,91 @@ dialog.probe::backdrop {
   }
 }
 
+/* ---------- fill to the cent: the pump game ---------- */
+
+.pump {
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  background: var(--well);
+  padding: 1.25rem;
+}
+@media (min-width: 40rem) {
+  .pump {
+    padding: 1.6rem 1.75rem;
+  }
+}
+.pump-big {
+  font-family: var(--font-martian), ui-monospace, monospace;
+  font-size: clamp(2.3rem, 7vw, 3.6rem);
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  line-height: 1;
+  color: var(--amber);
+}
+.pump-mid {
+  font-family: var(--font-martian), ui-monospace, monospace;
+  font-size: 1.35rem;
+  font-weight: 500;
+  line-height: 1;
+  color: var(--fg);
+}
+/* mechanical digits: each column is a strip of 0–9 that rolls */
+.roll {
+  display: inline-flex;
+  line-height: 1;
+}
+.roll-col {
+  display: inline-block;
+  width: 1ch;
+  height: 1em;
+  overflow: hidden;
+  text-align: center;
+}
+.roll-strip {
+  display: flex;
+  flex-direction: column;
+  transition: transform 90ms linear;
+}
+.roll-strip > span {
+  display: block;
+  height: 1em;
+}
+.pump-trigger {
+  display: block;
+  width: 100%;
+  padding: 1.1rem 1rem;
+  border: 2px solid var(--amber);
+  border-radius: 4px;
+  background: transparent;
+  color: var(--amber);
+  font-family: var(--font-martian), ui-monospace, monospace;
+  font-size: 0.85rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  cursor: pointer;
+  touch-action: none;
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-touch-callout: none;
+  transition: background-color 120ms ease, color 120ms ease,
+    box-shadow 120ms ease, transform 120ms ease;
+}
+.pump-trigger.is-on {
+  background: var(--amber);
+  color: var(--ground);
+  box-shadow: 0 0 28px color-mix(in srgb, var(--amber) 45%, transparent);
+  transform: translateY(1px);
+}
+.pump-trigger:disabled {
+  opacity: 0.4;
+  cursor: default;
+}
+.pump-trigger:focus-visible {
+  outline: 2px solid var(--white);
+  outline-offset: 3px;
+}
+
 /* ---------- light the fleet: the small game ---------- */
 
 .fl-board {
@@ -819,6 +904,10 @@ dialog.probe::backdrop {
   .fl-won .fl-on .fl-led,
   .fl-won .fl-hubcore {
     animation: none;
+  }
+  .pump-trigger.is-on {
+    box-shadow: none;
+    transform: none;
   }
   .spine::after {
     transform: scaleY(1);

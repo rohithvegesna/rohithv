@@ -1,5 +1,7 @@
+import Link from "next/link";
 import DeepTrace from "@/components/diagram/DeepTrace";
 import Spine from "@/components/Spine";
+import PumpGameLoader from "@/components/game/PumpGameLoader";
 import Readouts from "@/components/sections/Readouts";
 import AboutSection from "@/components/sections/AboutSection";
 import ExperienceSection from "@/components/sections/ExperienceSection";
@@ -188,7 +190,22 @@ export default function Home() {
         <Dock id="skills" index="05" heading="Skills">
           <SkillsSection />
         </Dock>
-        <Dock id="contact" index="06" heading="Contact">
+        <Dock id="play" index="06" heading="Play">
+          <p className="max-w-2xl leading-relaxed text-muted">
+            The $20 game, the way everyone plays it at the pump: hold the
+            trigger, let go on the cent. Five fills, faster each time, and a
+            worn nozzle that keeps counting after you release.
+          </p>
+          <div className="mt-8 max-w-3xl">
+            <PumpGameLoader />
+          </div>
+          <p className="mt-6">
+            <Link href="/play/" className="tag text-amber">
+              Another game: light the fleet →
+            </Link>
+          </p>
+        </Dock>
+        <Dock id="contact" index="07" heading="Contact">
           <ContactSection />
         </Dock>
       </div>

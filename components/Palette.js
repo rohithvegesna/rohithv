@@ -28,7 +28,8 @@ const NETS = [
   { group: "Links", label: "Scholar", href: site.scholar, external: true },
   { group: "Links", label: "Copy email address", action: "copy-email" },
   { group: "Diagram", label: "Run a transaction", action: "dg", cmd: "run-txn" },
-  { group: "Play", label: "Light the fleet", href: "/play/" },
+  { group: "Play", label: "Fill to the cent", href: "/play/#pump" },
+  { group: "Play", label: "Light the fleet", href: "/play/#fleet" },
 ];
 
 function matches(query, label) {

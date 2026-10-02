@@ -29,7 +29,7 @@ export default function NotFound() {
       <p className="tag mt-8 text-muted">
         Or, while the device is quiet,{" "}
         <Link href="/play/" className="text-amber">
-          light the fleet →
+          fill a tank to the cent →
         </Link>
       </p>
     </main>
